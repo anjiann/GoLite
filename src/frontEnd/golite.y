@@ -65,14 +65,14 @@ void yyerror(const char *s) {
 %type <progval> program
 %type <stmts> stmts
 %type <func> funcdec 
-%type <dec> topdecl dec vardec parameters parameter
+%type <dec> topdecl dec vardec param
 %type <stmt> stmts stmt printstmt ifstmt elsestmt switchstmt switchbody forstmt simplestmt returnstmt 
 %type <exp> exp
 %type <ident> ident
 %type <type> type opttype
 
-%type <exps> exps
-%type <vardecs> parameters
+%type <exps> exps optexps
+%type <vardecs> params optparams
 
 %token <identifier> tIDENTIFIER
 %token <intval> tINTLITERAL
@@ -214,7 +214,7 @@ stmts           : %empty { $$ = new NStatements();}
                 | stmts stmt { $1.push_back($<stmt>2); }
                 ;
 
-/* ======= DECLARATIONS ======= */
+/* ================= DECLARATIONS ================= */
 dec             : tVAR vardec { $$ = $2; }
                 | tTYPE tIDENTIFIER type tSEMICOLON { $$ = new NDecType($2, $3); }
                 ;
@@ -224,13 +224,11 @@ vardec          : exps type tSEMICOLON { $$ = new NDecVar(*$1, *$2); delete $1; 
                 ;
 
 /* function definitions */
-funcdec         : tFUNC tIDENTIFIER tLBRACE parameters tRBRACE opttype tLPAREN stmts tRPAREN tSEMICOLON
+funcdec         : tFUNC tIDENTIFIER tLBRACE optparams tRBRACE opttype tLPAREN stmts tRPAREN tSEMICOLON
                     { $$ = new NDecFunc(*$2, *$4, *$6, *$8); delete $4; }
-		        |  tFUNC tIDENTIFIER tLBRACE tRBRACE opttype tLPAREN stmts tRPAREN tSEMICOLON 
-                    { $$ = new NDecFunc(*$2, *$6, *$8); }
                 ;
 
-/* ======= STATEMENTS ======= */
+/* ================== STATEMENTS ================== */
 
 /* TODO weeder for break, continue, return*/
 stmt            : 
@@ -241,12 +239,12 @@ stmt            :
                 | switchstmt {$$ = $1;}
                 | forstmt {$$ = $1;}
                 | returnstmt {$$ = $1;}
-                | dec 
-                | tSEMICOLON 
-                | simplestmt
+                | dec { $$ = new NStmtDec(*$1); }
+                | tSEMICOLON { $$ = new NStmtEmpty(); }
+                | simplestmt { $$ = $1; }
                 ;
 
-printstmt       : tPRINT tLBRACE exps tRBRACE tSEMICOLON
+printstmt       : tPRINT tLBRACE exps tRBRACE tSEMICOLON { $$}
                 | tPRINTLN tLBRACE exps tRBRACE tSEMICOLON 
 				| tPRINT tLPAREN tRBRACE tSEMICOLON 
 				| tPRINTLN tLPAREN tRBRACE
@@ -298,7 +296,7 @@ literalexp      : tINTLITERAL {$$ = new NExpLiteral($1);}
                 | tSTRINGLITERAL {$$ = new NExpLiteral($1);}
                 ;
 
-/* ======== EXPRESSIONS =========
+/* ================ EXPRESSIONS ================ */
 
 exp             : tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
                 | literalexp {$$ = $1;}
@@ -306,8 +304,7 @@ exp             : tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
                 | binaryexp {$$ = $1;}
                 | builtinexp { $$ = $1;}
                 | tIDENTIFIER tLBRACKET exp tRBRACKET { $$ = new NExpIndexer(string($1), $3); }
-                | tIDENTIFIER tLBRACE exps tRBRACE { $$ = new NExpFuncCall(string($1), *$3); delete $3; }  
-                | tIDENTIFIER tLBRACE tRBRACE { $$ = new NExpFuncCall(string($1)); }  
+                | tIDENTIFIER tLBRACE optexps tRBRACE { $$ = new NExpFuncCall(string($1), *$3); delete $3; }  
                 ;
 
 unaryexp        : tPLUS exp %prec UNARY {$$ = new NExpUnary(*$2, posExp);}
@@ -352,16 +349,32 @@ type            : tIDENTIFIER { $$ = new NTypeIdentifier($1); }
                 | tLBRACE type tRBRACE { $$ = $2; }
                 ;
 
-/* ========= VECTOR OF AST NODES ========= */
-// helper non-terminals; used as parameters for constructors
+/* ================ HELPERS ================= */
+// === vector of ast nodes; used as parameters for constructors ===
 
-/* vector of parameters of function declaration signatures */
-parameters      : parameter { $$ = new NDecVarList(); $$.push_back($1)}
-                | parameters tCOMMA parameter { $1.push_back($3); }
+params          : param { $$ = new NDecVarList(); $$.push_back($1)}
+                | params tCOMMA param { $1.push_back($3); }
                 ;
+
+
 
 /* TODO weed for no exp for case, assign(stmt and decl), vardec to ensure rhs has lvalue only*/
 exps            : exp { $$ = new NExpressionList(); $$.push_back($1); }
                 | exps tCOMMA exp { $1.push_back($3); }
                 ; 
+
+// === optionals; used to reduce the size of ast non-terminals ===
+
+optparams       : %empty { $$ = NDecVarList(); }  
+                | params { $$ = $1; }
+                ;
+
+optexps         : %empty  { $$ = new NExpression();}
+                | exp { $$ = $1; }
+                ;
+
+optexps         : %empty { $$ = new NExpressionList(); }
+                | exps { $$ = $1; }
+                ;
+
 %%

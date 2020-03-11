@@ -13,11 +13,7 @@ class NExpFuncCall : NExpression {
     public:
         string id;
         NExpressionList &exps;
-        NExpFuncCall(string id) : id{id} {
-            NExpressionList *list = new NExpressionList();
-            exps = *list;
-            delete list;
-        }
+        
         NExpFuncCall(string id, const vector<Expression*> &exps) : id{id}, exps{exps} {}
 };
 
