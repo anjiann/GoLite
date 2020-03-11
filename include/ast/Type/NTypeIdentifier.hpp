@@ -2,10 +2,11 @@
 #define NTYPEIDENTIFIER_H
 
 #include <string>
-
 #include "NType.hpp"
 
 using std::string;
+
+typedef vector<NIdentifier*> NIdentifierList;
 
 class NTypeIdentifier : NType {    
     public:

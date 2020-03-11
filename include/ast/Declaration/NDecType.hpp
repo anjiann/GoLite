@@ -3,17 +3,20 @@
 
 #include <string>
 
-#include "typedefs.hpp"
+#include "NDeclaration.hpp"
+#include "NExpression.hpp"
+
+#include "NExpIdentifier.hpp"
 
 using std::string;
 
 class NDecType : NDeclaration {
     public:
-        const NExpIdentifier &id;
+        string &id;
         const NExpressionList &exps;
         
-        NDecFunc(const NExpIdentifier &id, NExpressionList &exps) : id{id}, exps{exps} {}
-        NDecFunc(const NExpIdentifier &id) : NDecFunc(id, NExpressionList(1, NULL));
+        NDecFunc(string id, NExpressionList &exps) : id{id}, exps{exps} {}
+        NDecFunc(string id) : NDecFunc(id, NExpressionList(1, NULL));
 }
 
 #endif /* !NDECTYPE_HPP */

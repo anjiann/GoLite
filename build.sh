@@ -4,5 +4,10 @@
 #
 # You MUST replace the following commands with the commands for building your compiler
 
-make clean -C ./build
-make -C ./build
+#generate the makefile
+rm -rf ./build
+mkdir ./build
+cd ./build
+cmake ..
+
+make

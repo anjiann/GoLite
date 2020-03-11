@@ -5,9 +5,9 @@
 
 class NStmtDec : NStatement {
     public:
-        const NDeclaration &dec;
+        NDeclaration *dec;
 
-        NStmtDec(const NDeclaration &dec) : dec{dec} {}
+        NStmtDec(NDeclaration *dec) : dec{dec} {}
 }
 
 #endif /* !NSTMTDEC_H */

@@ -3,8 +3,11 @@
 
 #include <string>
 
-#include "NStatements"
-#include "typedefs.hpp"
+#include "NDeclaration.hpp"
+#include "NStatements.hpp"
+#include "NType.hpp"
+
+#include "NDecVar.hpp"
 
 using std::string;
 

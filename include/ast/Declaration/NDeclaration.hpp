@@ -4,7 +4,8 @@
 class NDeclaration {
     public:
         int lineno;
-
+        
+        NDeclaration() {}
         NDeclaration(int lineno) : lineno{lineno} {}
 }
 

@@ -1,6 +1,8 @@
 #ifndef NSTATEMENT_H
 #define NSTATEMENT_H
 
+typedef vector<NStatement*> NStatementList;
+
 class NStatement {
     public:
         int lineno;
