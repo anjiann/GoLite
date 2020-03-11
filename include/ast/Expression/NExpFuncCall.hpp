@@ -11,10 +11,10 @@ using std::string;
 
 class NExpFuncCall : NExpression {    
     public:
-        string id;
+        const Nexpression &expId;
         NExpressionList &exps;
         
-        NExpFuncCall(string id, const vector<Expression*> &exps) : id{id}, exps{exps} {}
+        NExpFuncCall(const Nexpression &expId, const vector<Expression*> &exps) : expId{expId}, exps{exps} {}
 };
 
 #endif /* !NEXPFUNCCALL_H */

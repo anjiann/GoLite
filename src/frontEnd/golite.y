@@ -194,7 +194,6 @@ void yyerror(const char *s) {
 %left tAND tANDNOT
 %left tEQUAL tNOTEQ 
 %left tGREATEREQ tLESSEQ tGREATER tLESS
-// %left tINCREMENT tDECREMENT
 %left tPLUS tMINUS tBWOR tBWXOR
 %left tMULT tDIV tMOD tLEFTSHIFT tRIGHTSHIFT tBWAND tBWANDNOT
 %left UNARY
@@ -269,13 +268,18 @@ ifstmt          : tIF exp tLPAREN stmts tRPAREN { $$ = new NStmtIf(*$2, $4); }
                 | tIF exp tLPAREN stmts tRPAREN tELSE tLPAREN stmts tRPAREN { $$ = new NStmtIfElse(*$2, $4, $8); }
                 ;
 
-simplestmt      : %empty { $$ = new NStatement(); }
-                | tIDENTIFIER tINCREMENT { $$ = new NStmtIncDec(string($1), true); }
+simplestmt      : tIDENTIFIER tINCREMENT { $$ = new NStmtIncDec(string($1), true); }
                 | tIDENTIFIER tDECREMENT { $$ = new NStmtIncDec(string($1), false); }
                 | explist tASSIGN explist { $$ = new NStmtAssign(*$1, *$3); delete $1; delete $3; }
                 ;
 
 forstmt         : tFOR optexp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtFor(*$2, *$4); }
+                | tFOR tSEMICOLON optexp tSEMICOLON tLPAREN stmts tRPAREN tSEMICOLON 
+                    { $$ = new NStmtFor(*(new NStatement()), *$3, *(new NStatement()), *$6); }
+                | tFOR simplestmt tSEMICOLON optexp tSEMICOLON tLPAREN stmts tRPAREN tSEMICOLON 
+                    { $$ = new NStmtFor(*$2, *$4, *(new NStatement()), *$7); }
+                | tFOR tSEMICOLON optexp tSEMICOLON simplestmt tLPAREN stmts tRPAREN tSEMICOLON 
+                    { $$ = new NStmtFor(*(new NStatement()), *$3, *$5, *$7); }
                 | tFOR simplestmt tSEMICOLON optexp tSEMICOLON simplestmt tLPAREN stmts tRPAREN tSEMICOLON 
                     { $$ = new NStmtFor(*$2, *$4, *$6, *$8); }
                 ;
@@ -287,8 +291,8 @@ exp             : tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
                 | unaryexp {$$ = $1;}
                 | binaryexp {$$ = $1;}
                 | builtinexp { $$ = $1;}
-                | tIDENTIFIER tLBRACKET exp tRBRACKET { $$ = new NExpIndexer(string($1), $3); }
-                | tIDENTIFIER tLBRACE optexplist tRBRACE { $$ = new NExpFuncCall(string($1), *$3); delete $3; }  
+                | exp tLBRACKET exp tRBRACKET { $$ = new NExpIndexer(*$1, $3); }
+                | exp tLBRACE optexplist tRBRACE { $$ = new NExpFuncCall(*$1, *$3); delete $3; }  
                 | tLBRACE exp tRBRACE {$$ = $2;}
                 ;
 
@@ -352,7 +356,7 @@ params          : tIDENTIFIER type { $$ = new NDecVarList(); $$.push_back(new ND
 
 /* TODO weed for no exp for case, assign(stmt and decl), vardec to ensure rhs has lvalue only*/
 explist         : exp { $$ = new NExpressionList(); $$.push_back($1); }
-                | explist tCOMMA exp { $1.push_back($3); }
+                | exp tCOMMA explist { $3.push_back($1); }
                 ; 
 
 caseclauselist  : %empty { $$ = new NExpCaseClauseList(); }
