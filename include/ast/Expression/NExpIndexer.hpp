@@ -9,10 +9,10 @@ using std::string;
 
 class NExpIndexer : NExpression {    
     public:
-        string identifier;
+        string id;
         const Nexpression &exp;
-        
-        NExpIndexer(string identifier, const NExpression &exp) : identifier{identifier}, exp{exp} {}
+
+        NExpIndexer(string id, const NExpression &exp) : id{id}, exp{exp} {}
 };
 
 #endif /* !NEXPINDEXER_H */

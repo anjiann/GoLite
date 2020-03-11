@@ -2,14 +2,15 @@
 #define NEXPIDENTIFIER_H
 
 #include <string>
-#include "NExpression.h"
+
+#include "NExpression.hpp"
 
 using std::string;
 
-class NExpIdentifier: NExpression {    
+class NExpIdentifier : NExpression {    
     public:
-        int name;
-        NExpIdentifier(string name) name{name} {}
+        string name;
+        NExpIdentifier(string name) : name{name} {}
 };
 
 #endif /* !NEXPIDENTIFIER_H */

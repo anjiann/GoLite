@@ -3,13 +3,27 @@
 
 #include <string>
 
-using std::string;
-using std::vector;
+#include "NStatements"
+#include "typedefs.hpp"
 
-typedef vector<NExpression*> NExpressionList;
+using std::string;
+
 class NDecFunc : NDeclaration {
     public:
-        string identifier;
+        string id;
+        const NDecVarList &args;
+        const NType &type;
+        const NStatements &block;
+
+        NDecFunc(string id, const NType &type, const NStatements &stmts) 
+            : id{id}, exps{exps}, block{block} {
+                NDecVarList *list = new NDecVarList();
+                args = *list;
+                delete list;
+        }
+
+        NDecFunc(string id, const NDecVarList &args, const NType &type, const NStatements &stmts) 
+            : id{id}, args{args}, exps{exps}, block{block} {}
 
 }
 

@@ -15,25 +15,25 @@ class NExpBinary : NExpression {
 };
 
 enum NExpBinaryOp {
-    plusExp, //    +
-	minusExp, //   -
-	multExp, //    *
-	divExp, //     /
-	modExp, //     %
-	eqExp, //      ==
-	neqExp, //     !=
-	geqExp, //     >=
-	leqExp, //     <= 
-	gtExp, //      >
-	ltExp,//       <
-	orExp,//       ||
-	andExp, //     &&
-	andnotExp, //  &^
-	bitAndExp, //  & 
-	bitOrExp, //   |
-	xorExp, //     ^
-	lshiftExp, //  <<
-	rshiftExp, //  >>
+    plusExp, //   	 +
+	minusExp, //  	 -
+	multExp, //   	 *
+	divExp, //    	 /
+	modExp, //       %
+	equalExp, //     ==
+	noteqExp, //     !=
+	greatereqExp, // >=
+	lesseqExp, //    <= 
+	greaterExp, //   >
+	lessExp,//       <
+	orExp,//         ||
+	andExp, //       &&
+	andnotExp, //    &^
+	bitAndExp, //    & 
+	bitOrExp, //     |
+	xorExp, //       ^
+	lshiftExp, //    <<
+	rshiftExp, //    >>
 };
 
 #endif /* !NEXPBINARY_H */
