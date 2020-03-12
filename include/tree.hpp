@@ -1,4 +1,4 @@
-//contain all the constructors for the ast used by the parser
+//contain all the ast constructors and enums used by the parser
 #ifndef TREE_H
 #define TREE_H
 
@@ -29,6 +29,7 @@
 #include "ast/Expression/NExpression.hpp"
 #include "ast/Expression/NExpBinary.hpp"
 #include "ast/Expression/NExpBuiltin.hpp"
+#include "ast/Expression/NExpFuncCall.hpp"
 #include "ast/Expression/NExpIdentifier.hpp"
 #include "ast/Expression/NExpIndexer.hpp"
 #include "ast/Expression/NExpLiteral.hpp"
@@ -42,5 +43,7 @@
 #include "ast/Type/NTypeArray.hpp"
 #include "ast/Type/NTypeIdentifier.hpp"
 
+//enums
+#include "ast/Expression/enums.hpp"
 
 #endif

@@ -5,16 +5,21 @@
 
 #include "NDeclaration.hpp"
 #include "../Expression/NExpression.hpp"
+#include "../Expression/NExpIdentifier.hpp"
 #include "../Type/NType.hpp"
 
 
 class NDecVar : public NDeclaration {
     public:
-        const NExpressionList &lhs;
+        NExpressionList &lhs;
         const NType &type;
         const NExpressionList &rhs;
+        NDecVar(string id, const NType &type) : NDecVar(*(new NExpressionList()), type, *(new NExpressionList())) {
+            NExpression *tempId = new NExpIdentifier(id);
+            lhs.push_back(tempId);
+        }
 
-        NDecVar(const NExpressionList &lhs, const NType &type, const NExpressionList &rhs) 
+        NDecVar(NExpressionList &lhs, const NType &type, const NExpressionList &rhs) 
             : lhs{lhs}, type{type}, rhs{rhs} {}
 };
 

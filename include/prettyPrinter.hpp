@@ -1,7 +1,7 @@
 #ifndef PRETTYPRINTER_H
 #define PRETTYPRINTER_H
 
-#include "ast/NProgram.hpp"
+class NProgram;
 
 class PrettyPrinter {
     public:

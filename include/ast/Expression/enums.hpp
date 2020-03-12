@@ -1,10 +1,10 @@
 #ifndef ENUMS_HPP
 #define ENUMS_HPP
 
-enum NExpOp {
+enum class NExpOp {
     notExp, //       ! 
-    posExp, //       +
-	negExp, //       -
+    plusExp, //      +
+	minusExp, //     -
     xorExp, //       ^
     parenExp, //    (e)
 	multExp, //   	 *
