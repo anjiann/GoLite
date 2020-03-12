@@ -5,7 +5,6 @@
 
 #include "NExpression.hpp"
 #include "NExpIdentifier.hpp"
-#include "typedefs.h"
 
 using std::string;
 
@@ -14,7 +13,7 @@ class NExpFuncCall : NExpression {
         const Nexpression &expId;
         NExpressionList &exps;
         
-        NExpFuncCall(const Nexpression &expId, const vector<Expression*> &exps) : expId{expId}, exps{exps} {}
+        NExpFuncCall(const Nexpression &expId, const NExpressionList &exps) : expId{expId}, exps{exps} {}
 };
 
 #endif /* !NEXPFUNCCALL_H */

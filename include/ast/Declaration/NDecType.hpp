@@ -4,19 +4,16 @@
 #include <string>
 
 #include "NDeclaration.hpp"
-#include "NExpression.hpp"
-
-#include "NExpIdentifier.hpp"
+#include "../Type/NType.hpp"
 
 using std::string;
 
 class NDecType : NDeclaration {
     public:
-        string &id;
-        const NExpressionList &exps;
+        string id;
+        const NType &type;
         
-        NDecFunc(string id, NExpressionList &exps) : id{id}, exps{exps} {}
-        NDecFunc(string id) : NDecFunc(id, NExpressionList(1, NULL));
-}
+        NDecType(string id, const NType &type) : id{id}, type{type} {}
+};
 
 #endif /* !NDECTYPE_HPP */

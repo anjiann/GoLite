@@ -1,7 +1,9 @@
 #ifndef NSTMTINCDEC_H
 #define NSTMTINCDEC_H
 
-class NStmtIncDec {
+#include "NStatement.hpp"
+
+class NStmtIncDec : NStatement {
     public:
         string id;
         bool isIncrement;

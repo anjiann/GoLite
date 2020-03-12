@@ -3,15 +3,16 @@
 
 #include "NStatement.hpp"
 
-class NStmtBreakContinue : NStatement {
-    public:
-        NStmtBreakContinueEnum stmtEnum;
-        NStmtBreakContinue(NStmtBreakContinueEnum stmtEnum) : stmtEnum{stmtEnum} {}
-};
-
-enum NStmtBreakContinueEnum {
+enum NStmtBreakContinueKind{
     breakStmt,
     continueStmt
-}
+};
+
+class NStmtBreakContinue : NStatement {
+    public:
+        NStmtBreakContinueKind kind;
+        NStmtBreakContinue(NStmtBreakContinueKind kind) : kind{kind} {}
+};
+
 
 #endif /* !NSTMTBREAKCONTINUE_H */

@@ -196,9 +196,9 @@ void yyerror(const char *s) {
 %left tGREATEREQ tLESSEQ tGREATER tLESS
 %left tPLUS tMINUS tBWOR tBWXOR
 %left tMULT tDIV tMOD tLEFTSHIFT tRIGHTSHIFT tBWAND tBWANDNOT
-%left UNARY
 %left tLBRACKET
 %left tLBRACE
+%left UNARY
 
 /* Unused tokens, only for precedence directives */
 %token UNARY 
@@ -234,7 +234,7 @@ dec             : tVAR vardec { $$ = $2; }
                 | tTYPE tIDENTIFIER type tSEMICOLON { $$ = new NDecType(string($2), *$3); }
                 ;
 
-vardec          : explist type tSEMICOLON { $$ = new NDecVar(*$1, *$2); delete $1; }
+vardec          : explist type tSEMICOLON { $$ = new NDecVar(*$1, *$2, *(new NExpressionList())); delete $1; }
                 | explist opttype tASSIGN explist tSEMICOLON { $$ = new NDecVar(*$1, *$2, *$4); delete $1; delete $4; }
                 ;
 
@@ -246,7 +246,7 @@ funcdec         : tFUNC tIDENTIFIER tLBRACE optparams tRBRACE opttype tLPAREN st
 /* ================== STATEMENTS ================== */
 
 /* TODO weeder for break, continue, return*/
-stmt            : dec { $$ = new NStmtDec($1); }
+stmt            : dec { $$ = new NStmtDec(*$1); }
                 | printstmt { $$ = $1; }
                 | ifstmt { $$ = $1; }
                 | forstmt {$$ = $1;}
@@ -263,9 +263,9 @@ printstmt       : tPRINT tLBRACE optexplist tRBRACE tSEMICOLON { $$ = new NStmtP
                 | tPRINTLN tLBRACE optexplist tRBRACE tSEMICOLON { $$ = new NStmtPrint(*$3, true); }
                 ;
 
-ifstmt          : tIF exp tLPAREN stmts tRPAREN { $$ = new NStmtIf(*$2, $4); }
-                | tIF exp tLPAREN stmts tRPAREN tELSE ifstmt { $$ = new NStmtIfElse(*$2, $4, $7); }
-                | tIF exp tLPAREN stmts tRPAREN tELSE tLPAREN stmts tRPAREN { $$ = new NStmtIfElse(*$2, $4, $8); }
+ifstmt          : tIF exp tLPAREN stmts tRPAREN { $$ = new NStmtIf(*$2, *$4); }
+                | tIF exp tLPAREN stmts tRPAREN tELSE ifstmt { $$ = new NStmtIfElse(*$2, *$4, *$7); }
+                | tIF exp tLPAREN stmts tRPAREN tELSE tLPAREN stmts tRPAREN { $$ = new NStmtIfElse(*$2, *$4, *$8); }
                 ;
 
 simplestmt      : tIDENTIFIER tINCREMENT { $$ = new NStmtIncDec(string($1), true); }
@@ -273,7 +273,7 @@ simplestmt      : tIDENTIFIER tINCREMENT { $$ = new NStmtIncDec(string($1), true
                 | explist tASSIGN explist { $$ = new NStmtAssign(*$1, *$3); delete $1; delete $3; }
                 ;
 
-forstmt         : tFOR optexp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtFor(*$2, *$4); }
+forstmt         : tFOR optexp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtFor(*$2, *(new NStatement()), *(new NStatement()), *$4); }
                 | tFOR tSEMICOLON optexp tSEMICOLON tLPAREN stmts tRPAREN tSEMICOLON 
                     { $$ = new NStmtFor(*(new NStatement()), *$3, *(new NStatement()), *$6); }
                 | tFOR simplestmt tSEMICOLON optexp tSEMICOLON tLPAREN stmts tRPAREN tSEMICOLON 
@@ -291,7 +291,7 @@ exp             : tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
                 | unaryexp {$$ = $1;}
                 | binaryexp {$$ = $1;}
                 | builtinexp { $$ = $1;}
-                | exp tLBRACKET exp tRBRACKET { $$ = new NExpIndexer(*$1, $3); }
+                | exp tLBRACKET exp tRBRACKET { $$ = new NExpIndexer(*$1, *$3); }
                 | exp tLBRACE optexplist tRBRACE { $$ = new NExpFuncCall(*$1, *$3); delete $3; }  
                 | tLBRACE exp tRBRACE {$$ = $2;}
                 ;
@@ -352,8 +352,6 @@ params          : tIDENTIFIER type { $$ = new NDecVarList(); $$.push_back(new ND
                 | params tCOMMA tIDENTIFIER type { $1.push_back(new NDecVar(string($3), $4)); }
                 ;
 
-
-
 /* TODO weed for no exp for case, assign(stmt and decl), vardec to ensure rhs has lvalue only*/
 explist         : exp { $$ = new NExpressionList(); $$.push_back($1); }
                 | exp tCOMMA explist { $3.push_back($1); }
@@ -364,7 +362,7 @@ caseclauselist  : %empty { $$ = new NExpCaseClauseList(); }
                     { $1.push_back(new NExpCaseClause(*$2, *$4)); delete $2; }
 
 switchcase      : tCASE explist { $$ = new NExpSwitchCase(*$2); }
-                | tDEFAULT { $$ = new NExpSwitchCase(); }
+                | tDEFAULT { $$ = new NExpSwitchCase(*(new NExpressionList())); }
 
 // === optionals; used to reduce the size of ast non-terminals ===
 

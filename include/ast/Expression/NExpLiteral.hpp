@@ -8,7 +8,7 @@ class NExpLiteral : NExpression {
     public:
         T literal;
 
-        void NExpLiteral(T literal) : literal{literal} {}
+        NExpLiteral(T literal) : literal{literal} {}
 };
 
 #endif /* !NEXPLITERAL_H */

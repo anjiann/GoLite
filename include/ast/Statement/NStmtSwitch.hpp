@@ -2,8 +2,8 @@
 #define NSTMTSWITCH_H
 
 #include "NStatement.hpp"
-#include "NStatements.hpp"
-#include "typedefs.hpp"
+#include "../NStatements.hpp"
+#include "../Expression/Switch/NExpCaseClause.hpp"
 
 class NStmtSwitch : NStatement{
     public:

@@ -19,6 +19,6 @@ class NStmtIfElse : NStatement{
 
         NStmtIfElse(const NExpression &condition, NStatements *body, NStatements *elsebody) 
             : condition{condition}, body{body}, elsebody{elsebody} {}
-}
+};
 
 #endif /* !NSTMTIFELSE_H */

@@ -6,6 +6,6 @@
 class NStmtEmpty : NStatement {
     public:
         NStmtEmpty() {}
-}
+};
 
 #endif /* !NSTMTEMPTY_H */

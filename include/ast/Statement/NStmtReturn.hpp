@@ -1,7 +1,8 @@
 #ifndef NSTMTRETURN_H
 #define NSTMTRETURN_H
 
-#include "NExpression.hpp"
+#include "NStatement.hpp"
+#include "../Expression/NExpression.hpp"
 
 class NStmtReturn : NStatement {
     public:

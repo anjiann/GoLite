@@ -4,9 +4,8 @@
 #include <string>
 
 #include "NDeclaration.hpp"
-#include "NStatements.hpp"
-#include "NType.hpp"
-
+#include "../NStatements.hpp"
+#include "../Type/NType.hpp"
 #include "NDecVar.hpp"
 
 using std::string;
@@ -16,11 +15,11 @@ class NDecFunc : NDeclaration {
         string id;
         const NDecVarList &args;
         const NType &type;
-        const NStatements &block;
+        const NStatements &stmts;
 
         NDecFunc(string id, const NDecVarList &args, const NType &type, const NStatements &stmts) 
-            : id{id}, args{args}, exps{exps}, block{block} {}
+            : id{id}, args{args}, type{type}, stmts{stmts} {}
 
-}
+};
 
 #endif /* !NDECFUNC_HPP */

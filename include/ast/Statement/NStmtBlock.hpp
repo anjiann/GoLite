@@ -2,13 +2,13 @@
 #define NSTMTBLOCK_H
 
 #include "NStatement.hpp"
-#include "NExpression.hpp"
-#include "NStatements.hpp"
+#include "../Expression/NExpression.hpp"
+#include "../NStatements.hpp"
 
 class NStmtBlock {
     public:
-        NStatements *stmts;
-        NStmtBlock(NStatements *stmts) : stmts{stmts} {}
-}
+        const NStatements &stmts;
+        NStmtBlock(const NStatements &stmts) : stmts{stmts} {}
+};
 
 #endif /* !NSTMTBLOCK_H */

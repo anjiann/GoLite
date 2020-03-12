@@ -1,7 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include "tree.h"
+#include "tree.hpp"
 // #include "pretty.h"
 // #include "symbolTable.h"
 // #include "typecheck.h"
@@ -10,8 +10,7 @@
 // INS *rootIns;
 int lineno;
 int g_tokens;
-// int isToken;
-PROGRAM *my_prog;
+NProgram *program;
 
 // int symbol_mode;
 

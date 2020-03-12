@@ -30,6 +30,11 @@ int main(int argc, char* argv[]) {
         printf("OK\n");
         return 0;
     }
+    else if(!strcmp(argv[1], "pretty")) {
+        // PrettyPrinter *prettyPrinter = new PrettyPrinter();
+        // e.accept(prettyPrinter);
+        return 0;
+    }
 }
 
 // cat programs/1-scan+parse/valid/7-1-basic.go | build/bin/golite

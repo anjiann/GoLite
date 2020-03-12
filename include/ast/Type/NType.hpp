@@ -4,5 +4,6 @@
 class NType {
     public:
         NType();
-}
+};
+
 #endif /* !NTYPE_HPP */

@@ -1,7 +1,10 @@
 #ifndef NPROGRAM_HPP
 #define NPROGRAM_HPP
 
-#include "NDeclaration.hpp"
+#include <string>
+#include "Declaration/NDeclaration.hpp"
+
+using std::string;
 
 class NProgram {
     public:

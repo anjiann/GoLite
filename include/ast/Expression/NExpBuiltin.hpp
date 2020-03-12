@@ -7,18 +7,20 @@
 
 using std::string;
 
-class NExpBuiltin : NExpression {    
-    public:
-        NExpBuiltin name;
-        const NExpression &exp;
-        NExpBuiltin(const NExpression &exp, NExpBuiltin name) : exp{exp}, name{name} {}
-};
-
-enum NExpBuiltin {
+enum NExpBuiltinKind {
     lenExp,
     capExp,
     funcExp
     // append, //not required in golite_mini
-}
+};
+
+class NExpBuiltin : NExpression {    
+    public:
+        NExpBuiltinKind name;
+        const NExpression &exp;
+        NExpBuiltin(const NExpression &exp, NExpBuiltinKind name) : exp{exp}, name{name} {}
+};
+
+
 
 #endif /* !NEXPBUILTIN_H */

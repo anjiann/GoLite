@@ -9,8 +9,8 @@ using std::string;
 
 class NExpIndexer : NExpression {    
     public:
-        const Nexpression &exp;
-        const Nexpression &index;
+        const NExpression &exp;
+        const NExpression &index;
 
         NExpIndexer(const NExpression &exp, const NExpression &index) : exp{exp}, index{index} {}
 };

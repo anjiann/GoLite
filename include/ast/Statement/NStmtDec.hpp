@@ -2,12 +2,13 @@
 #define NSTMTDEC_H
 
 #include "NStatement.hpp"
+#include "../Declaration/NDeclaration.hpp"
 
 class NStmtDec : NStatement {
     public:
-        NDeclaration *dec;
+        const NDeclaration &dec;
 
-        NStmtDec(NDeclaration *dec) : dec{dec} {}
-}
+        NStmtDec(const NDeclaration &dec) : dec{dec} {}
+};
 
 #endif /* !NSTMTDEC_H */

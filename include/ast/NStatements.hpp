@@ -1,13 +1,12 @@
-#ifndef NBLOCK_H
-#define NBLOCK_H
+#ifndef NSTATEMENTS_H
+#define NSTATEMENTS_H
 
-#include "typedefs.hpp"
-
-class NBlock {
+#include "Statement/NStatement.hpp"
+class NStatements {
     public:
-        StatementList stmts;
+        NStatementList stmts;
 
-        Block() {}
-}
+        NStatements() {}
+};
 
-#endif /* !NBLOCK_H */
+#endif /* !NSTATEMENTS_H */

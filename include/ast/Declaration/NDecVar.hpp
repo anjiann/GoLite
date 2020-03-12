@@ -1,10 +1,12 @@
 #ifndef NDECVAR_HPP
 #define NDECVAR_HPP
 
-#include "NDeclaration.hpp"
-#include "NExpression.hpp"
+#include <vector>
 
-typedef vector<NDecVar*> NDecVarList;
+#include "NDeclaration.hpp"
+#include "../Expression/NExpression.hpp"
+#include "../Type/NType.hpp"
+
 
 class NDecVar : NDeclaration {
     public:
@@ -14,12 +16,9 @@ class NDecVar : NDeclaration {
 
         NDecVar(const NExpressionList &lhs, const NType &type, const NExpressionList &rhs) 
             : lhs{lhs}, type{type}, rhs{rhs} {}
+};
 
-        NDecVar(string id, const NType &type) {
-            NExpression *expId = new NExpIdentifier(id);
-            lhs = {expId};
-            rhs = *(new NExpressionList());
-        }
-}
+typedef std::vector<NDecVar*> NDecVarList;
+
 
 #endif /* !NDECVAR_HPP */

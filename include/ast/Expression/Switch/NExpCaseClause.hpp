@@ -1,9 +1,9 @@
 #ifndef NEXPCASECLAUSE_H
 #define NEXPCASECLAUSE_H
 
-#include "NExpression.hpp"
-
-typedef std::vector<NExpCaseClause*> NExpCaseClauseList;
+#include "../../NStatements.hpp"
+#include "../NExpression.hpp"
+#include "NExpSwitchCase.hpp"
 
 class NExpCaseClause : NExpression {
     public:
@@ -12,5 +12,8 @@ class NExpCaseClause : NExpression {
         NExpCaseClause(const NExpSwitchCase &switchCase, const NStatements &stmts) 
             : switchCase{switchCase}, stmts{stmts} {}
 };
+
+typedef std::vector<NExpCaseClause*> NExpCaseClauseList;
+
 
 #endif /* !NEXPCASECLAUSE_H */
