@@ -1,10 +1,10 @@
 #ifndef NASTNODE_HPP
 #define NASTNODE_HPP
 
+#include "../prettyPrinter.hpp"
+
 class NAstNode {
-    virtual void accept(const PrettyPrinter &prettyPrinter) {
-        prettyPrinter.visit(*this);
-    }
-}
+    virtual void accept(const PrettyPrinter &prettyPrinter);
+};
 
 #endif

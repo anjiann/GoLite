@@ -4,7 +4,7 @@
 #include "NStatement.hpp"
 #include "../Declaration/NDeclaration.hpp"
 
-class NStmtDec : NStatement {
+class NStmtDec : public NStatement {
     public:
         const NDeclaration &dec;
 

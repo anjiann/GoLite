@@ -4,17 +4,11 @@
 #include <string>
 
 #include "NExpression.hpp"
+#include "enums.hpp"
 
 using std::string;
 
-enum NExpBuiltinKind {
-    lenExp,
-    capExp,
-    funcExp
-    // append, //not required in golite_mini
-};
-
-class NExpBuiltin : NExpression {    
+class NExpBuiltin : public NExpression {    
     public:
         NExpBuiltinKind name;
         const NExpression &exp;

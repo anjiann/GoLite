@@ -8,7 +8,7 @@
 #include "../Type/NType.hpp"
 
 
-class NDecVar : NDeclaration {
+class NDecVar : public NDeclaration {
     public:
         const NExpressionList &lhs;
         const NType &type;

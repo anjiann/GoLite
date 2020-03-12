@@ -3,7 +3,7 @@
 
 #include "NStatement.hpp"
 
-class NStmtIncDec : NStatement {
+class NStmtIncDec : public NStatement {
     public:
         string id;
         bool isIncrement;

@@ -6,7 +6,7 @@
 
 using std::string;
 
-class NTypeIdentifier : NType {    
+class NTypeIdentifier : public NType {    
     public:
         string name;
         NTypeIdentifier(string name) : name{name} {}

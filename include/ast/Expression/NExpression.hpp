@@ -3,7 +3,7 @@
 
 #include <vector>
 
-class NExpression {
+class NExpression : public NAstNode {
     public:
         NExpression();
 };

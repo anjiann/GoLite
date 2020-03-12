@@ -7,7 +7,7 @@
 
 using std::string;
 
-class NExpUnary : NExpression {    
+class NExpUnary : public NExpression {    
     public:
         const NExpression &exp;
         NExpOp op;

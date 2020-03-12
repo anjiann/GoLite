@@ -10,7 +10,7 @@
 
 using std::string;
 
-class NDecFunc : NDeclaration {
+class NDecFunc : public NDeclaration {
     public:
         string id;
         const NDecVarList &args;

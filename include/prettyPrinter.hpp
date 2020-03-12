@@ -5,7 +5,7 @@
 
 class PrettyPrinter {
     public:
-        void print(const NProgram &program);
+        void visit(const NProgram &program);
 
 };
 

@@ -4,7 +4,7 @@
 #include "NStatement.hpp"
 #include "../Expression/Switch/NExpCaseClause.hpp"
 
-class NStmtSwitch : NStatement{
+class NStmtSwitch : public NStatement {
     public:
         const NExpression &condition;
         const NExpCaseClauseList &caseClauses;

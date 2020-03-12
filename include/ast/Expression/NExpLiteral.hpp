@@ -4,7 +4,7 @@
 #include "NExpression.hpp"
 
 template<typename T>
-class NExpLiteral : NExpression {    
+class NExpLiteral : public NExpression {    
     public:
         T literal;
 

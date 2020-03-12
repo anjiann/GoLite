@@ -8,7 +8,7 @@
 
 using std::string;
 
-class NExpFuncCall : NExpression {    
+class NExpFuncCall : public NExpression {    
     public:
         const Nexpression &expId;
         NExpressionList &exps;

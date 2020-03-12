@@ -4,7 +4,7 @@
 #include "NStatement.hpp"
 #include "../Expression/NExpression.hpp"
 
-class NStmtAssign : NStatement {
+class NStmtAssign : public NStatement {
     public:
         const NExpressionList &lhs;
         const NExpressionList &rhs;

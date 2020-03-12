@@ -4,7 +4,7 @@
 #include "NStatement.hpp"
 #include "../Expression/NExpression.hpp"
 
-class NStmtPrint : NStatement {
+class NStmtPrint : public NStatement {
     public:
         const NExpressionList &exps; 
         bool newLine;

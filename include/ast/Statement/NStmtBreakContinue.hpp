@@ -8,7 +8,7 @@ enum NStmtBreakContinueKind{
     continueStmt
 };
 
-class NStmtBreakContinue : NStatement {
+class NStmtBreakContinue : public NStatement {
     public:
         NStmtBreakContinueKind kind;
         NStmtBreakContinue(NStmtBreakContinueKind kind) : kind{kind} {}

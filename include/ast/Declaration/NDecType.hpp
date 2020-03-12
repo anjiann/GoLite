@@ -8,7 +8,7 @@
 
 using std::string;
 
-class NDecType : NDeclaration {
+class NDecType : public NDeclaration {
     public:
         string id;
         const NType &type;

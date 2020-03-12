@@ -2,8 +2,9 @@
 #define NDECLARATION_H
 
 #include <vector>
+#include "../NAstNode.hpp"
 
-class NDeclaration {
+class NDeclaration : public NAstNode {
     public:
         int lineno;
 

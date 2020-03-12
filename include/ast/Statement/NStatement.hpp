@@ -2,8 +2,9 @@
 #define NSTATEMENT_H
 
 #include <vector>
+#include "../NAstNode.hpp"
 
-class NStatement {
+class NStatement : public NAstNode {
     public:
         int lineno;
 

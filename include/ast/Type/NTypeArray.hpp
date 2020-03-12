@@ -3,7 +3,7 @@
 
 #include "NType.hpp"
 
-class NTypeArray : NType {
+class NTypeArray : public NType {
     public:
         int size;
         const NType &type;

@@ -4,7 +4,7 @@
 #include "NStatement.hpp"
 #include "../Expression/NExpression.hpp"
 
-class NStmtBlock {
+class NStmtBlock : public NStatement {
     public:
         const NStatementList &stmts;
         NStmtBlock(const NStatementList &stmts) : stmts{stmts} {}

@@ -4,7 +4,7 @@
 #include "NStatement.hpp"
 #include "../Expression/NExpression.hpp"
 
-class NStmtReturn : NStatement {
+class NStmtReturn : public NStatement {
     public:
         const NExpression &exp;
         NStmtReturn(const NExpression &exp) : exp{exp} {}

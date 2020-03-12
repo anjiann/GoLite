@@ -7,7 +7,7 @@
 
 using std::string;
 
-class NExpBinary : NExpression {    
+class NExpBinary : public NExpression {    
     public:
         const NExpression &lhs;
         const NExpression &rhs;

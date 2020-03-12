@@ -3,7 +3,7 @@
 
 #include "NStatement.hpp"
 
-class NStmtEmpty : NStatement {
+class NStmtEmpty : public NStatement {
     public:
         NStmtEmpty() {}
 };

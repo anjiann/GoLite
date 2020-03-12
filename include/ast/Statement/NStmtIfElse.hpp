@@ -4,7 +4,7 @@
 #include "NStatement.hpp"
 #include "../Expression/NExpression.hpp"
 
-class NStmtIfElse : NStatement{
+class NStmtIfElse : public NStatement{
     public:
         const NExpression &condition;
         const NStatementList &body;

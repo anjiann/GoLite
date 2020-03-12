@@ -1,7 +1,9 @@
 #ifndef NTYPE_HPP
 #define NTYPE_HPP
 
-class NType {
+#include "../NAstNode.hpp"
+
+class NType : public NAstNode {
     public:
         NType();
 };

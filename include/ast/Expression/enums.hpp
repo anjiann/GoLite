@@ -25,4 +25,11 @@ enum NExpOp {
 	rshiftExp, //    >>
 };
 
+enum NExpBuiltinKind {
+    lenExp,
+    capExp,
+    funcExp
+    // append, //not required in golite_mini
+};
+
 #endif

@@ -7,7 +7,7 @@
 
 using std::string;
 
-class NExpIndexer : NExpression {    
+class NExpIndexer : public NExpression {    
     public:
         const NExpression &exp;
         const NExpression &index;
