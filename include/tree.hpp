@@ -1,17 +1,9 @@
 //contain all the constructors for the ast used by the parser
 #ifndef TREE_H
 #define TREE_H
-//expressions
-#include "ast/Expression/NExpression.hpp"
-#include "ast/Expression/NExpBinary.hpp"
-#include "ast/Expression/NExpBuiltin.hpp"
-#include "ast/Expression/NExpIdentifier.hpp"
-#include "ast/Expression/NExpIndexer.hpp"
-#include "ast/Expression/NExpLiteral.hpp"
-#include "ast/Expression/NExpUnary.hpp"
 
-#include "ast/Expression/Switch/NExpCaseClause.hpp"
-#include "ast/Expression/Switch/NExpSwitchCase.hpp"
+//program
+#include "ast/NProgram.hpp"
 
 //declarations
 #include "ast/Declaration/NDecFunc.hpp"
@@ -27,12 +19,28 @@
 #include "ast/Statement/NStmtDec.hpp"
 #include "ast/Statement/NStmtEmpty.hpp"
 #include "ast/Statement/NStmtFor.hpp"
-#include "ast/Statement/NStmtIf.hpp"
 #include "ast/Statement/NStmtIfElse.hpp"
-#include "ast/Statement/NStmtIfElseIf.hpp"
 #include "ast/Statement/NStmtIncDec.hpp"
 #include "ast/Statement/NStmtPrint.hpp"
 #include "ast/Statement/NStmtReturn.hpp"
 #include "ast/Statement/NStmtSwitch.hpp"
+
+//expressions
+#include "ast/Expression/NExpression.hpp"
+#include "ast/Expression/NExpBinary.hpp"
+#include "ast/Expression/NExpBuiltin.hpp"
+#include "ast/Expression/NExpIdentifier.hpp"
+#include "ast/Expression/NExpIndexer.hpp"
+#include "ast/Expression/NExpLiteral.hpp"
+#include "ast/Expression/NExpUnary.hpp"
+
+#include "ast/Expression/Switch/NExpCaseClause.hpp"
+#include "ast/Expression/Switch/NExpSwitchCase.hpp"
+
+//types
+#include "ast/Type/NType.hpp"
+#include "ast/Type/NTypeArray.hpp"
+#include "ast/Type/NTypeIdentifier.hpp"
+
 
 #endif

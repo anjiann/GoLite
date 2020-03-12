@@ -6,8 +6,6 @@
 
 using std::string;
 
-typedef vector<NIdentifier*> NIdentifierList;
-
 class NTypeIdentifier : NType {    
     public:
         string name;

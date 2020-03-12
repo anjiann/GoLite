@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include <iostream>
-#include "main.h"
+#include "main.hpp"
 
 void yyparse();
 int yylex();

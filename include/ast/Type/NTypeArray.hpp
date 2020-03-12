@@ -8,5 +8,6 @@ class NTypeArray : NType {
         int size;
         const NType &type;
         NTypeArray(int size, const NType &type) : size{size}, type{type} {}
-}
+};
+
 #endif /* !NARRAY_HPP */

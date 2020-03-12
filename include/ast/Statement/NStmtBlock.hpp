@@ -3,12 +3,11 @@
 
 #include "NStatement.hpp"
 #include "../Expression/NExpression.hpp"
-#include "../NStatements.hpp"
 
 class NStmtBlock {
     public:
-        const NStatements &stmts;
-        NStmtBlock(const NStatements &stmts) : stmts{stmts} {}
+        const NStatementList &stmts;
+        NStmtBlock(const NStatementList &stmts) : stmts{stmts} {}
 };
 
 #endif /* !NSTMTBLOCK_H */

@@ -2,22 +2,15 @@
 #define NSTMTIFELSE_H
 
 #include "NStatement.hpp"
+#include "../Expression/NExpression.hpp"
 
 class NStmtIfElse : NStatement{
     public:
         const NExpression &condition;
-        NStatements *body;
-        NStatements *elsebody;
+        const NStatementList &body;
+        const NStatementList &elsebody;
 
-        //else if constructor
-        NStmtIfElse(const NExpression &condition, NStatements *body, NStatement *elseifstmt)
-            :  condition{condition}, body{body} {
-            NStatements stmts = new NStatements();
-            stmts.push_back(elseifstmt);
-            elsebody = stmts;
-        }
-
-        NStmtIfElse(const NExpression &condition, NStatements *body, NStatements *elsebody) 
+        NStmtIfElse(const NExpression &condition, const NStatementList &body, const NStatementList &elsebody) 
             : condition{condition}, body{body}, elsebody{elsebody} {}
 };
 

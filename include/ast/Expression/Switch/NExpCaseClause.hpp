@@ -1,15 +1,15 @@
 #ifndef NEXPCASECLAUSE_H
 #define NEXPCASECLAUSE_H
 
-#include "../../NStatements.hpp"
+#include "../../Statement/NStatement.hpp"
 #include "../NExpression.hpp"
 #include "NExpSwitchCase.hpp"
 
 class NExpCaseClause : NExpression {
     public:
         const NExpSwitchCase &switchCase;
-        const NStatements &stmts;
-        NExpCaseClause(const NExpSwitchCase &switchCase, const NStatements &stmts) 
+        const NStatementList &stmts;
+        NExpCaseClause(const NExpSwitchCase &switchCase, const NStatementList &stmts) 
             : switchCase{switchCase}, stmts{stmts} {}
 };
 

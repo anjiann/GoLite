@@ -1,7 +1,6 @@
 #ifndef NSTMTFOR_H
 #define NSTMTFOR_H
 
-#include "../NStatements.hpp"
 #include "NStatement.hpp"
 #include "../Expression/NExpression.hpp"
 
@@ -10,9 +9,9 @@ class NStmtFor : NStatement {
         const NStatement &initStmt;
         const NExpression &exp;
         const NStatement &updateStmt;
-        const NStatements &stmts;
+        const NStatementList &stmts;
 
-        NStmtFor(const NStatement &initStmt, const NExpression &exp, const NStatement &updateStmt, const NStatements &stmts)
+        NStmtFor(const NStatement &initStmt, const NExpression &exp, const NStatement &updateStmt, const NStatementList &stmts)
             : initStmt{initStmt}, exp{exp}, updateStmt{updateStmt}, stmts{stmts} {}
 };
 

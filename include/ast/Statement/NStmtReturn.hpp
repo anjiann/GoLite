@@ -8,6 +8,6 @@ class NStmtReturn : NStatement {
     public:
         const NExpression &exp;
         NStmtReturn(const NExpression &exp) : exp{exp} {}
-}
+};
 
 #endif /* !NSTMTRETURN_H */

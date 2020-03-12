@@ -9,6 +9,6 @@ class NStmtIncDec : NStatement {
         bool isIncrement;
 
         NStmtIncDec(string id, bool isIncrement) : id{id}, isIncrement{isIncrement} {}
-}
+};
 
 #endif /* !NSTMTINCDEC_H */

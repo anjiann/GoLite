@@ -2,7 +2,6 @@
 #define NSTMTSWITCH_H
 
 #include "NStatement.hpp"
-#include "../NStatements.hpp"
 #include "../Expression/Switch/NExpCaseClause.hpp"
 
 class NStmtSwitch : NStatement{
@@ -12,6 +11,6 @@ class NStmtSwitch : NStatement{
 
         NStmtSwitch(const NExpression &condition, const NExpCaseClauseList &caseClauses)
             : condition{condition}, caseClauses{caseClauses} {}
-}
+};
 
 #endif /* !NSTMTSWITCH_H */
