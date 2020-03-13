@@ -13,7 +13,7 @@ class NTypeIdentifier : public NType {
         string name;
         NTypeIdentifier(string name) : name{name} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

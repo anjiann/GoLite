@@ -13,7 +13,7 @@ class NExpIdentifier : public NExpression {
         string name;
         NExpIdentifier(string name) : name{name} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

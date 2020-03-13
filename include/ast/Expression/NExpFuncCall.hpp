@@ -16,7 +16,7 @@ class NExpFuncCall : public NExpression {
         
         NExpFuncCall(string id, const NExpressionList &exps) : id{id}, exps{exps} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

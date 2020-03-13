@@ -15,7 +15,7 @@ class NExpIndexer : public NExpression {
 
         NExpIndexer(const NExpression &exp, const NExpression &index) : exp{exp}, index{index} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

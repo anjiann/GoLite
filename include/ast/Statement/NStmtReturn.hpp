@@ -11,7 +11,7 @@ class NStmtReturn : public NStatement {
         const NExpression &exp;
         NStmtReturn(const NExpression &exp) : exp{exp} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

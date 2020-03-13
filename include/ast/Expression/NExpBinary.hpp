@@ -13,10 +13,10 @@ class NExpBinary : public NExpression {
     public:
         const NExpression &lhs;
         const NExpression &rhs;
-        NExpOp op;
-        NExpBinary(const NExpression &lhs, const NExpression &rhs, NExpOp op) : lhs{lhs}, rhs{rhs}, op{op} {}
+        NExpOpKind op;
+        NExpBinary(const NExpression &lhs, const NExpression &rhs, NExpOpKind op) : lhs{lhs}, rhs{rhs}, op{op} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

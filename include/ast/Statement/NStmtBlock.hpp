@@ -11,7 +11,7 @@ class NStmtBlock : public NStatement {
         const NStatementList &stmts;
         NStmtBlock(const NStatementList &stmts) : stmts{stmts} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

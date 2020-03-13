@@ -7,11 +7,11 @@
 
 class NTypeArray : public NType {
     public:
-        int size;
+        const NExpLiteral &intLiteral;
         const NType &type;
-        NTypeArray(int size, const NType &type) : size{size}, type{type} {}
+        NTypeArray(const NExpLiteral &intLiteral, const NType &type) : intLiteral{intLiteral}, type{type} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

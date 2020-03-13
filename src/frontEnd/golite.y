@@ -37,12 +37,7 @@ void yyerror(const char *s) {
  * optionally (b) non-terminals (variables in productions) with AST information if any.
  */
 %union {
-	int intval;
 	char *identifier;
-    float floatval;
-    char *stringval;
-    int boolval;
-    char runeval;
 
     NProgram *prog;
     std::vector<NDeclaration*> *declist;
@@ -79,12 +74,7 @@ void yyerror(const char *s) {
 %type <explist> explist optexplist
 %type <decvarlist> params optparams
 
-%token <identifier> tIDENTIFIER
-%token <intval> tINTLITERAL
-%token <floatval> tFLOATLITERAL
-%token <boolval> tBOOLLITERAL
-%token <runeval> tRUNELITERAL
-%token <stringval> tSTRINGLITERAL
+%token <identifier> tIDENTIFIER tINTLITERAL tFLOATLITERAL tBOOLLITERAL tRUNELITERAL tSTRINGLITERAL
 
 %token tBREAK
 %token tCASE
@@ -113,7 +103,7 @@ void yyerror(const char *s) {
 %token tVAR
 %token tPRINT
 %token tPRINTLN
-%token tAPPEND //not supported in golite_mini
+%token tAPPEND //not supported in golite_mini%token <intval>
 %token tLEN
 %token tCAP
 %token tPLUS
@@ -295,37 +285,37 @@ exp             : tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
                 | tLBRACE exp tRBRACE { $$ = $2; }
                 ;
 
-literalexp      : tINTLITERAL {$$ = new NExpLiteral<int>($1);}
-                | tFLOATLITERAL {$$ = new NExpLiteral<float>($1);}
-                | tBOOLLITERAL {$$ = new NExpLiteral<bool>($1);}
-                | tRUNELITERAL {$$ = new NExpLiteral<char>($1);}
-                | tSTRINGLITERAL {$$ = new NExpLiteral<string>($1);}
+literalexp      : tINTLITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::intLiteral);}
+                | tFLOATLITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::floatLiteral);}
+                | tBOOLLITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::boolLiteral);}
+                | tRUNELITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::charLiteral);}
+                | tSTRINGLITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::stringLiteral);}
                 ;
 
-unaryexp        : tPLUS exp %prec UNARY {$$ = new NExpUnary(*$2, NExpOp::plusExp);}
-                | tMINUS exp %prec UNARY {$$ = new NExpUnary(*$2, NExpOp::minusExp);}
-                | tNOT exp %prec UNARY {$$ = new NExpUnary(*$2, NExpOp::notExp);}
-                | tBWXOR exp %prec UNARY {$$ = new NExpUnary(*$2, NExpOp::xorExp);}
+unaryexp        : tPLUS exp %prec UNARY {$$ = new NExpUnary(*$2, NExpOpKind::plusExp);}
+                | tMINUS exp %prec UNARY {$$ = new NExpUnary(*$2, NExpOpKind::minusExp);}
+                | tNOT exp %prec UNARY {$$ = new NExpUnary(*$2, NExpOpKind::notExp);}
+                | tBWXOR exp %prec UNARY {$$ = new NExpUnary(*$2, NExpOpKind::xorExp);}
                 ;
 
-binaryexp       : exp tPLUS exp  {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
-                | exp tMINUS exp  {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
-                | exp tMULT exp {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
-                | exp tDIV exp {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
-                | exp tMOD exp {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
-                | exp tEQUAL exp {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
-                | exp tNOTEQ exp {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
-                | exp tGREATEREQ exp {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
-                | exp tLESSEQ exp {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
-                | exp tGREATER exp {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
-                | exp tBWOR exp  {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
-                | exp tBWXOR exp  {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
-                | exp tLEFTSHIFT exp {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
-                | exp tRIGHTSHIFT exp {$$ = new NExpBinary(*$1, *$3, NExpOp::plusExp);}
+binaryexp       : exp tPLUS exp  {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tMINUS exp  {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tMULT exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tDIV exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tMOD exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tEQUAL exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tNOTEQ exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tGREATEREQ exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tLESSEQ exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tGREATER exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tBWOR exp  {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tBWXOR exp  {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tLEFTSHIFT exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tRIGHTSHIFT exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
                 ;
 
-builtinexp      : tLEN tLBRACE exp tRBRACE {$$ = new NExpBuiltin(*$3, lenExp);}
-                | tCAP tLBRACE exp tRBRACE {$$ = new NExpBuiltin(*$3, capExp);}
+builtinexp      : tLEN tLBRACE exp tRBRACE {$$ = new NExpBuiltin(*$3, NExpBuiltinKind::lenExp);}
+                | tCAP tLBRACE exp tRBRACE {$$ = new NExpBuiltin(*$3, NExpBuiltinKind::capExp);}
                 ;  
 
 /* ======= TYPE ======= */
@@ -334,7 +324,7 @@ opttype         : %empty { $$ = new NType(); }
                 ;
 
 type            : tIDENTIFIER { $$ = new NTypeIdentifier($1); }
-                | tLBRACKET tINTLITERAL tRBRACKET type { $$ = new NTypeArray($2, *$4); }
+                | tLBRACKET tINTLITERAL tRBRACKET type { $$ = new NTypeArray(*(new NExpLiteral(string($2), NExpLiteralKind::intLiteral)), *$4); }
                 | tLBRACE type tRBRACE { $$ = $2; }
                 ;
 

@@ -12,7 +12,7 @@ class NStmtPrint : public NStatement {
         bool newLine;
         NStmtPrint(const NExpressionList &exps, bool newLine) : exps{exps}, newLine{newLine} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

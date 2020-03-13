@@ -1,8 +1,11 @@
 #ifndef NSTMTINCDEC_H
 #define NSTMTINCDEC_H
 
+#include <string>
 #include "NStatement.hpp"
 #include "../../abstractDispatcher.hpp"
+
+using std::string;
 
 class NStmtIncDec : public NStatement {
     public:
@@ -11,7 +14,7 @@ class NStmtIncDec : public NStatement {
 
         NStmtIncDec(string id, bool isIncrement) : id{id}, isIncrement{isIncrement} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

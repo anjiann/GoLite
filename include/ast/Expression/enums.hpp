@@ -1,7 +1,7 @@
 #ifndef ENUMS_HPP
 #define ENUMS_HPP
 
-enum class NExpOp {
+enum class NExpOpKind {
     notExp, //       ! 
     plusExp, //      +
 	minusExp, //     -
@@ -33,11 +33,11 @@ enum class NExpBuiltinKind {
 };
 
 enum class NExpLiteralKind {
-	int,
-	float,
-	bool,
-	char,
-	string
-}
+	intLiteral,
+	floatLiteral,
+	boolLiteral,
+	charLiteral,
+	stringLiteral
+};
 
 #endif

@@ -12,7 +12,7 @@ class NStmtDec : public NStatement {
 
         NStmtDec(const NDeclaration &dec) : dec{dec} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

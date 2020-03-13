@@ -2,7 +2,7 @@
 #define NPROGRAM_HPP
 
 #include <string>
-#include "../../abstractDispatcher.hpp"
+#include "../abstractDispatcher.hpp"
 
 #include "Declaration/NDeclaration.hpp"
 
@@ -15,7 +15,7 @@ class NProgram {
 
         NProgram(string package, const NDeclarationList &topdecs) : package{package}, topdecs{topdecs} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

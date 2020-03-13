@@ -13,7 +13,7 @@ class NExpSwitchCase : NExpression {
         
         NExpSwitchCase(const NExpressionList &explist) : explist{explist} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

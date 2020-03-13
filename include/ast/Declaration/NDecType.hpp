@@ -16,7 +16,7 @@ class NDecType : public NDeclaration {
         
         NDecType(string id, const NType &type) : id{id}, type{type} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

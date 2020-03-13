@@ -12,11 +12,11 @@ using std::string;
 class NExpUnary : public NExpression {    
     public:
         const NExpression &exp;
-        NExpOp op;
+        NExpOpKind op;
 
-        NExpUnary(const NExpression &exp, NExpOp op) : exp{exp}, op{op} {}
+        NExpUnary(const NExpression &exp, NExpOpKind op) : exp{exp}, op{op} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

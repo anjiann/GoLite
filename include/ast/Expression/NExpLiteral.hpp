@@ -1,17 +1,18 @@
 #ifndef NEXPLITERAL_H
 #define NEXPLITERAL_H
+#include "../../abstractDispatcher.hpp"
 
 #include "NExpression.hpp"
-#include "../../abstractDispatcher.hpp"
+#include "enums.hpp"
 
 class NExpLiteral : public NExpression {    
     public:
-        strin literal; //TODO have literal values be returned as string from lexer
+        string literal; //TODO have literal values be returned as string from lexer
+        NExpLiteralKind kind;
 
+        NExpLiteral(string literal, NExpLiteralKind kind) : literal{literal}, kind{kind} {}
 
-        NExpLiteral(string literal, ExpLiteralKind kind) : literal{literal} {}
-
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

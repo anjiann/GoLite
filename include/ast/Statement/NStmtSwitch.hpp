@@ -14,7 +14,7 @@ class NStmtSwitch : public NStatement {
         NStmtSwitch(const NExpression &condition, const NExpCaseClauseList &caseClauses)
             : condition{condition}, caseClauses{caseClauses} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

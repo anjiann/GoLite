@@ -9,7 +9,7 @@ class NStmtEmpty : public NStatement {
     public:
         NStmtEmpty() {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

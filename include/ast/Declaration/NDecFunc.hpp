@@ -21,7 +21,7 @@ class NDecFunc : public NDeclaration {
         NDecFunc(string id, const NDecVarList &args, const NType &type, const NStatementList &stmts) 
             : id{id}, args{args}, type{type}, stmts{stmts} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

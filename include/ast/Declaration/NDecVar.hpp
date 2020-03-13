@@ -23,7 +23,7 @@ class NDecVar : public NDeclaration {
         NDecVar(NExpressionList &lhs, const NType &type, const NExpressionList &rhs) 
             : lhs{lhs}, type{type}, rhs{rhs} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

@@ -189,32 +189,37 @@ PUNCTUATION [?<>+-=,^$|&]
 		}
 
 0|([1-9][0-9]*) { // INT
-	yylval.intval = atoi(yytext);
+	// yylval.intval = atoi(yytext);
+	yylval.identifier = strdup(yytext);
     if (g_tokens) cout << "tINTLITERAL(" << yytext << ")" << endl;
     RETURN(tINTLITERAL);
 }
 
 ([0-9][0-9]*"."[0-9]*) { // FLOAT
-    yylval.floatval = atof(yytext);
+    // yylval.floatval = atof(yytext);
+	yylval.identifier = strdup(yytext);
     if (g_tokens) cout << "tFLOATLITERAL(" << yytext << ")" << endl;
     RETURN(tFLOATLITERAL);
 }
 ([1-9][0-9]*)*"."[0-9][0-9]* {//RIGHT of period
-    yylval.floatval = atof(yytext);
+    // yylval.floatval = atof(yytext);
+	yylval.identifier = strdup(yytext);
     if (g_tokens) cout << "tFLOATLITERAL(" << yytext << ")" << endl;
     RETURN(tFLOATLITERAL);
 }
 
 
 '((\\[abfnrtv\\\'])|[^\\'])\' {//RUNE (CHAR)
-    yylval.runeval = strdup(yytext)[1];
+    // yylval.runeval = strdup(yytext)[1];
+	yylval.identifier = strdup(yytext);
 	if (g_tokens) cout << "tRUNELITERAL(" << yytext << ")" << endl;
 	RETURN(tRUNELITERAL);
 }
 
 
 \"((\")|[^"])*\" {//STRING
-    yylval.stringval = strdup(yytext);
+    // yylval.stringval = strdup(yytext);
+	yylval.identifier = strdup(yytext);
     if (g_tokens) cout << "tSTRINGLITERAL(" << yytext << ")" << endl;
     RETURN(tSTRINGLITERAL);
 }

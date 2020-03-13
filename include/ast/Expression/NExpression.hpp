@@ -4,11 +4,13 @@
 #include <vector>
 #include "../../abstractDispatcher.hpp"
 
-class NExpression : public NAstNode {
+#include "../NAbstractAstNode.hpp"
+
+class NExpression : public NAbstractAstNode {
     public:
         NExpression();
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

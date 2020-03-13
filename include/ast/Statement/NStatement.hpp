@@ -4,16 +4,16 @@
 #include <vector>
 #include "../../abstractDispatcher.hpp"
 
-#include "../NAstNode.hpp"
+#include "../NAbstractAstNode.hpp"
 
-class NStatement : public NAstNode {
+class NStatement : public NAbstractAstNode {
     public:
         int lineno;
 
         NStatement() {}
         NStatement(int lineno) : lineno{lineno} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

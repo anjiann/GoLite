@@ -14,7 +14,7 @@ class NExpCaseClause : NExpression {
         NExpCaseClause(const NExpSwitchCase &switchCase, const NStatementList &stmts) 
             : switchCase{switchCase}, stmts{stmts} {}
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };

@@ -3,13 +3,13 @@
 
 #include "../../abstractDispatcher.hpp"
 
-#include "../NAstNode.hpp"
+#include "../NAbstractAstNode.hpp"
 
-class NType : public NAstNode {
+class NType : public NAbstractAstNode {
     public:
         NType();
 
-        void dispatch(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };
