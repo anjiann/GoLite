@@ -53,6 +53,7 @@ void yyerror(const char *s) {
     std::vector<NExpCaseClause*> *caseclauselist;
     std::vector<NExpression*> *explist;
     std::vector<NDecVar*> *decvarlist;
+    std::vector<NExpIdentifier*> *idlist;
 }
 
 /* Token directives define the token types to be returned by the scanner (excluding character
@@ -73,6 +74,7 @@ void yyerror(const char *s) {
 %type <caseclauselist> caseclauselist
 %type <explist> explist optexplist
 %type <decvarlist> params optparams
+%type <idlist> idlist
 
 %token <identifier> tIDENTIFIER tINTLITERAL tFLOATLITERAL tBOOLLITERAL tRUNELITERAL tSTRINGLITERAL
 
@@ -223,8 +225,8 @@ dec             : tVAR vardec { $$ = $2; }
                 | tTYPE tIDENTIFIER type tSEMICOLON { $$ = new NDecType(string($2), *$3); }
                 ;
 
-vardec          : explist type tSEMICOLON { $$ = new NDecVar(*$1, *$2, *(new NExpressionList())); delete $1; }
-                | explist opttype tASSIGN explist tSEMICOLON { $$ = new NDecVar(*$1, *$2, *$4); delete $1; delete $4; }
+vardec          : idlist type tSEMICOLON { $$ = new NDecVar(*$1, *$2, *(new NExpressionList())); delete $1; }
+                | idlist opttype tASSIGN explist tSEMICOLON { $$ = new NDecVar(*$1, *$2, *$4); delete $1; delete $4; }
                 ;
 
 /* function definitions */
@@ -239,7 +241,7 @@ stmt            : dec { $$ = new NStmtDec(*$1); }
                 | printstmt { $$ = $1; }
                 | ifstmt { $$ = $1; }
                 | forstmt {$$ = $1;}
-                | simplestmt { $$ = $1; }
+                | simplestmt tSEMICOLON { $$ = $1; }
                 | tBREAK tSEMICOLON { $$ = new NStmtBreakContinue(breakStmt);}
                 | tCONTINUE tSEMICOLON { $$ = new NStmtBreakContinue(continueStmt);}
                 | tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtBlock(*$2); }
@@ -281,7 +283,7 @@ exp             : tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
                 | binaryexp {$$ = $1;}
                 | builtinexp { $$ = $1; }
                 | exp tLBRACKET exp tRBRACKET { $$ = new NExpIndexer(*$1, *$3); }
-                | tIDENTIFIER tLBRACE optexplist tRBRACE { $$ = new NExpFuncCall(string($1), *$3); delete $3; }  
+                | exp tLBRACE optexplist tRBRACE { $$ = new NExpFuncCall(string($1), *$3); delete $3; }  
                 | tLBRACE exp tRBRACE { $$ = $2; }
                 ;
 
@@ -336,6 +338,9 @@ param : tIDENTIFIER type { $$ = new NDecVar(string($1), *$2); }
 params          : param { $$ = new NDecVarList(); $$->push_back($1); }
                 | params tCOMMA param { $1->push_back($3); }
                 ;
+
+idlist          : tIDENTIFIER {  $$ = new NExpIdentifierList(); $$->push_back($1); }
+                | idlist tCOMMA tIDENTIFIER { $1->push_back($3); }
 
 /* TODO weed for no exp for case, assign(stmt and decl), vardec to ensure rhs has lvalue only*/
 explist         : exp { $$ = new NExpressionList(); $$->push_back($1); }

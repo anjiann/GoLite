@@ -2,6 +2,7 @@
 #define NEXPIDENTIFIER_H
 
 #include <string>
+#include <vector>
 #include "../../abstractDispatcher.hpp"
 
 #include "NExpression.hpp"
@@ -17,5 +18,7 @@ class NExpIdentifier : public NExpression {
             dispatcher.dispatch(*this);
         }
 };
+
+typedef std::vector<NExpIdentifier*> NExpIdentifierList;
 
 #endif /* !NEXPIDENTIFIER_H */
