@@ -1,6 +1,8 @@
 #ifndef NEXPCASECLAUSE_H
 #define NEXPCASECLAUSE_H
 
+#include "../../../abstractDispatcher.hpp"
+
 #include "../../Statement/NStatement.hpp"
 #include "../NExpression.hpp"
 #include "NExpSwitchCase.hpp"
@@ -11,6 +13,10 @@ class NExpCaseClause : NExpression {
         const NStatementList &stmts;
         NExpCaseClause(const NExpSwitchCase &switchCase, const NStatementList &stmts) 
             : switchCase{switchCase}, stmts{stmts} {}
+
+        void dispatch(const AbstractDispatcher &dispatcher) {
+            dispatcher.dispatch(*this);
+        }
 };
 
 typedef std::vector<NExpCaseClause*> NExpCaseClauseList;

@@ -2,6 +2,7 @@
 #define NDECFUNC_HPP
 
 #include <string>
+#include "../../abstractDispatcher.hpp"
 
 #include "../Statement/NStatement.hpp"
 #include "NDeclaration.hpp"
@@ -20,6 +21,9 @@ class NDecFunc : public NDeclaration {
         NDecFunc(string id, const NDecVarList &args, const NType &type, const NStatementList &stmts) 
             : id{id}, args{args}, type{type}, stmts{stmts} {}
 
+        void dispatch(const AbstractDispatcher &dispatcher) {
+            dispatcher.dispatch(*this);
+        }
 };
 
 #endif /* !NDECFUNC_HPP */

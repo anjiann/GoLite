@@ -2,6 +2,8 @@
 #define NSTMTIFELSE_H
 
 #include "NStatement.hpp"
+#include "../../abstractDispatcher.hpp"
+
 #include "../Expression/NExpression.hpp"
 
 class NStmtIfElse : public NStatement{
@@ -12,6 +14,10 @@ class NStmtIfElse : public NStatement{
 
         NStmtIfElse(const NExpression &condition, const NStatementList &body, const NStatementList &elsebody) 
             : condition{condition}, body{body}, elsebody{elsebody} {}
+
+        void dispatch(const AbstractDispatcher &dispatcher) {
+            dispatcher.dispatch(*this);
+        }
 };
 
 #endif /* !NSTMTIFELSE_H */

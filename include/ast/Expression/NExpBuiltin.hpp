@@ -2,6 +2,7 @@
 #define NEXPBUILTIN_H
 
 #include <string>
+#include "../../abstractDispatcher.hpp"
 
 #include "NExpression.hpp"
 #include "enums.hpp"
@@ -13,6 +14,10 @@ class NExpBuiltin : public NExpression {
         NExpBuiltinKind name;
         const NExpression &exp;
         NExpBuiltin(const NExpression &exp, NExpBuiltinKind name) : exp{exp}, name{name} {}
+
+        void dispatch(const AbstractDispatcher &dispatcher) {
+            dispatcher.dispatch(*this);
+        }
 };
 
 

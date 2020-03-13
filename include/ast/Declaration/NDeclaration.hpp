@@ -2,6 +2,7 @@
 #define NDECLARATION_H
 
 #include <vector>
+#include "../../abstractDispatcher.hpp"
 #include "../NAstNode.hpp"
 
 class NDeclaration : public NAstNode {
@@ -10,6 +11,10 @@ class NDeclaration : public NAstNode {
 
         NDeclaration() {}
         NDeclaration(int lineno) : lineno{lineno} {}
+
+        void dispatch(const AbstractDispatcher &dispatcher) {
+            dispatcher.dispatch(*this);
+        }
 };
 
 typedef std::vector<NDeclaration*> NDeclarationList;

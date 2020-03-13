@@ -2,6 +2,7 @@
 #define NEXPINDEXER_H
 
 #include <string>
+#include "../../abstractDispatcher.hpp"
 
 #include "NExpression.hpp"
 
@@ -13,6 +14,10 @@ class NExpIndexer : public NExpression {
         const NExpression &index;
 
         NExpIndexer(const NExpression &exp, const NExpression &index) : exp{exp}, index{index} {}
+
+        void dispatch(const AbstractDispatcher &dispatcher) {
+            dispatcher.dispatch(*this);
+        }
 };
 
 #endif /* !NEXPINDEXER_H */

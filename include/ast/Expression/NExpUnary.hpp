@@ -2,6 +2,8 @@
 #define NEXPUNARY_H
 
 #include <string>
+#include "../../abstractDispatcher.hpp"
+
 #include "NExpression.hpp"
 #include "enums.hpp"
 
@@ -13,6 +15,10 @@ class NExpUnary : public NExpression {
         NExpOp op;
 
         NExpUnary(const NExpression &exp, NExpOp op) : exp{exp}, op{op} {}
+
+        void dispatch(const AbstractDispatcher &dispatcher) {
+            dispatcher.dispatch(*this);
+        }
 };
 
 

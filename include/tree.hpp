@@ -6,8 +6,8 @@
 #include "ast/NProgram.hpp"
 
 //declarations
-#include "ast/Declaration/NDecFunc.hpp"
 #include "ast/Declaration/NDeclaration.hpp"
+#include "ast/Declaration/NDecFunc.hpp"
 #include "ast/Declaration/NDecType.hpp"
 #include "ast/Declaration/NDecVar.hpp"
 
@@ -34,7 +34,6 @@
 #include "ast/Expression/NExpIndexer.hpp"
 #include "ast/Expression/NExpLiteral.hpp"
 #include "ast/Expression/NExpUnary.hpp"
-
 #include "ast/Expression/Switch/NExpCaseClause.hpp"
 #include "ast/Expression/Switch/NExpSwitchCase.hpp"
 

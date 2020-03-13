@@ -2,6 +2,7 @@
 #define NDECTYPE_HPP
 
 #include <string>
+#include "../../abstractDispatcher.hpp"
 
 #include "NDeclaration.hpp"
 #include "../Type/NType.hpp"
@@ -14,6 +15,10 @@ class NDecType : public NDeclaration {
         const NType &type;
         
         NDecType(string id, const NType &type) : id{id}, type{type} {}
+
+        void dispatch(const AbstractDispatcher &dispatcher) {
+            dispatcher.dispatch(*this);
+        }
 };
 
 #endif /* !NDECTYPE_HPP */

@@ -2,6 +2,8 @@
 #define NSTMTFOR_H
 
 #include "NStatement.hpp"
+#include "../../abstractDispatcher.hpp"
+
 #include "../Expression/NExpression.hpp"
 
 class NStmtFor : public NStatement {
@@ -13,6 +15,10 @@ class NStmtFor : public NStatement {
 
         NStmtFor(const NStatement &initStmt, const NExpression &exp, const NStatement &updateStmt, const NStatementList &stmts)
             : initStmt{initStmt}, exp{exp}, updateStmt{updateStmt}, stmts{stmts} {}
+
+        void dispatch(const AbstractDispatcher &dispatcher) {
+            dispatcher.dispatch(*this);
+        }
 };
 
 #endif /* !NSTMTFOR_H */

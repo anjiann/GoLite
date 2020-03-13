@@ -2,6 +2,7 @@
 #define NEXPFUNCCALL_H
 
 #include <string>
+#include "../../abstractDispatcher.hpp"
 
 #include "NExpression.hpp"
 #include "NExpIdentifier.hpp"
@@ -14,6 +15,10 @@ class NExpFuncCall : public NExpression {
         const NExpressionList &exps;
         
         NExpFuncCall(string id, const NExpressionList &exps) : id{id}, exps{exps} {}
+
+        void dispatch(const AbstractDispatcher &dispatcher) {
+            dispatcher.dispatch(*this);
+        }
 };
 
 #endif /* !NEXPFUNCCALL_H */

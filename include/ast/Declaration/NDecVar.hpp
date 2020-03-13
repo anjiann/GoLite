@@ -2,6 +2,7 @@
 #define NDECVAR_HPP
 
 #include <vector>
+#include "../../abstractDispatcher.hpp"
 
 #include "NDeclaration.hpp"
 #include "../Expression/NExpression.hpp"
@@ -21,6 +22,10 @@ class NDecVar : public NDeclaration {
 
         NDecVar(NExpressionList &lhs, const NType &type, const NExpressionList &rhs) 
             : lhs{lhs}, type{type}, rhs{rhs} {}
+
+        void dispatch(const AbstractDispatcher &dispatcher) {
+            dispatcher.dispatch(*this);
+        }
 };
 
 typedef std::vector<NDecVar*> NDecVarList;

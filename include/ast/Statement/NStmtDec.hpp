@@ -2,6 +2,8 @@
 #define NSTMTDEC_H
 
 #include "NStatement.hpp"
+#include "../../abstractDispatcher.hpp"
+
 #include "../Declaration/NDeclaration.hpp"
 
 class NStmtDec : public NStatement {
@@ -9,6 +11,10 @@ class NStmtDec : public NStatement {
         const NDeclaration &dec;
 
         NStmtDec(const NDeclaration &dec) : dec{dec} {}
+
+        void dispatch(const AbstractDispatcher &dispatcher) {
+            dispatcher.dispatch(*this);
+        }
 };
 
 #endif /* !NSTMTDEC_H */
