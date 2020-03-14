@@ -7,6 +7,6 @@ var a3 = 0.0
 
 // multiple variable declarations
 var a4, a5 string
-var a6, a7 string = "a", `b`
-var a8, a9 = 'a', 0
+var a6, a7 string = "a", "b"
+var a8, a9 = "a", 0
 

@@ -181,6 +181,8 @@ void yyerror(const char *s) {
 // %left tLBRACKET
 // %left tLBRACE
 
+%left EXPSTMT
+%left EXPLIST
 %left tOR
 %left tAND tANDNOT
 %left tEQUAL tNOTEQ 
@@ -193,6 +195,8 @@ void yyerror(const char *s) {
 
 /* Unused tokens, only for precedence directives */
 %token UNARY 
+%token EXPLIST
+%token EXPSTMT
 
 /* Start token (by default if this is missing it takes the first production */
 %start program
@@ -225,19 +229,20 @@ dec             : tVAR vardec { $$ = $2; }
                 | tTYPE tIDENTIFIER type tSEMICOLON { $$ = new NDecType(string($2), *$3); }
                 ;
 
-vardec          : idlist type tSEMICOLON { $$ = new NDecVar(*$1, *$2, *(new NExpressionList())); delete $1; }
-                | idlist opttype tASSIGN explist tSEMICOLON { $$ = new NDecVar(*$1, *$2, *$4); delete $1; delete $4; }
+vardec          : idlist type tSEMICOLON { $$ = new NDecVar(*$1, *$2, *(new NExpressionList())); }
+                | idlist opttype tASSIGN explist tSEMICOLON { $$ = new NDecVar(*$1, *$2, *$4); }
                 ;
 
 /* function definitions */
 funcdec         : tFUNC tIDENTIFIER tLBRACE optparams tRBRACE opttype tLPAREN stmts tRPAREN tSEMICOLON
-                    { $$ = new NDecFunc(string($2), *$4, *$6, *$8); delete $4; }
+                    { $$ = new NDecFunc(string($2), *$4, *$6, *$8); }
                 ;
 
 /* ================== STATEMENTS ================== */
 
 /* TODO weeder for break, continue, return*/
 stmt            : dec { $$ = new NStmtDec(*$1); }
+                | exp %prec EXPSTMT { $$ = new NStmtExp(*$1); }
                 | printstmt { $$ = $1; }
                 | ifstmt { $$ = $1; }
                 | forstmt {$$ = $1;}
@@ -245,7 +250,7 @@ stmt            : dec { $$ = new NStmtDec(*$1); }
                 | tBREAK tSEMICOLON { $$ = new NStmtBreakContinue(breakStmt);}
                 | tCONTINUE tSEMICOLON { $$ = new NStmtBreakContinue(continueStmt);}
                 | tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtBlock(*$2); }
-                | tSWITCH optexp tLPAREN caseclauselist tRPAREN tSEMICOLON { $$ = new NStmtSwitch(*$2, *$4); delete $4; }
+                | tSWITCH optexp tLPAREN caseclauselist tRPAREN tSEMICOLON { $$ = new NStmtSwitch(*$2, *$4); }
                 | tRETURN optexp tSEMICOLON { $$ = new NStmtReturn(*$2); }
                 | tSEMICOLON { $$ = new NStmtEmpty(); }
                 ;
@@ -254,14 +259,14 @@ printstmt       : tPRINT tLBRACE optexplist tRBRACE tSEMICOLON { $$ = new NStmtP
                 | tPRINTLN tLBRACE optexplist tRBRACE tSEMICOLON { $$ = new NStmtPrint(*$3, true); }
                 ;
 
-ifstmt          : tIF exp tLPAREN stmts tRPAREN { $$ = new NStmtIfElse(*$2, *$4, *(new NStatementList())); }
+ifstmt          : tIF exp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtIfElse(*$2, *$4, *(new NStatementList())); }
                 | tIF exp tLPAREN stmts tRPAREN tELSE ifstmt { $$ = new NStmtIfElse(*$2, *$4, {$7}); }
                 | tIF exp tLPAREN stmts tRPAREN tELSE tLPAREN stmts tRPAREN { $$ = new NStmtIfElse(*$2, *$4, *$8); }
                 ;
 
 simplestmt      : tIDENTIFIER tINCREMENT { $$ = new NStmtIncDec(string($1), true); }
                 | tIDENTIFIER tDECREMENT { $$ = new NStmtIncDec(string($1), false); }
-                | explist tASSIGN explist { $$ = new NStmtAssign(*$1, *$3); delete $1; delete $3; }
+                | explist tASSIGN explist { $$ = new NStmtAssign(*$1, *$3); }
                 ;
 
 forstmt         : tFOR optexp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtFor(*(new NStatement()), *$2, *(new NStatement()), *$4); }
@@ -277,14 +282,14 @@ forstmt         : tFOR optexp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtF
 
 /* ================ EXPRESSIONS ================ */
 
-exp             : tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
-                | literalexp {$$ = $1;}
+exp             :literalexp {$$ = $1;}
                 | unaryexp {$$ = $1;}
                 | binaryexp {$$ = $1;}
                 | builtinexp { $$ = $1; }
                 | exp tLBRACKET exp tRBRACKET { $$ = new NExpIndexer(*$1, *$3); }
-                | exp tLBRACE optexplist tRBRACE { $$ = new NExpFuncCall(string($1), *$3); delete $3; }  
+                | exp tLBRACE optexplist tRBRACE { $$ = new NExpFuncCall(*$1, *$3); }  
                 | tLBRACE exp tRBRACE { $$ = $2; }
+                | tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
                 ;
 
 literalexp      : tINTLITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::intLiteral);}
@@ -306,10 +311,12 @@ binaryexp       : exp tPLUS exp  {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plus
                 | exp tDIV exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
                 | exp tMOD exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
                 | exp tEQUAL exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tLESS exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
                 | exp tNOTEQ exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
                 | exp tGREATEREQ exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
                 | exp tLESSEQ exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
                 | exp tGREATER exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
+                | exp tBWAND exp  {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
                 | exp tBWOR exp  {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
                 | exp tBWXOR exp  {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
                 | exp tLEFTSHIFT exp {$$ = new NExpBinary(*$1, *$3, NExpOpKind::plusExp);}
@@ -339,17 +346,18 @@ params          : param { $$ = new NDecVarList(); $$->push_back($1); }
                 | params tCOMMA param { $1->push_back($3); }
                 ;
 
-idlist          : tIDENTIFIER {  $$ = new NExpIdentifierList(); $$->push_back($1); }
-                | idlist tCOMMA tIDENTIFIER { $1->push_back($3); }
-
+idlist          : tIDENTIFIER {  $$ = new NExpIdentifierList(); $$->push_back(new NExpIdentifier(string($1))); }
+                | idlist tCOMMA tIDENTIFIER { $1->push_back(new NExpIdentifier(string($3))); }
+                ;
+                
 /* TODO weed for no exp for case, assign(stmt and decl), vardec to ensure rhs has lvalue only*/
-explist         : exp { $$ = new NExpressionList(); $$->push_back($1); }
+explist         : exp %prec EXPLIST { $$ = new NExpressionList(); $$->push_back($1); }
                 | exp tCOMMA explist { $3->push_back($1); }
                 ; 
 
 caseclauselist  : %empty { $$ = new NExpCaseClauseList(); }
                 | caseclauselist switchcase tCOLON stmts 
-                    { $1->push_back(new NExpCaseClause(*$2, *$4)); delete $2; }
+                    { $1->push_back(new NExpCaseClause(*$2, *$4)); }
 
 switchcase      : tCASE explist { $$ = new NExpSwitchCase(*$2); }
                 | tDEFAULT { $$ = new NExpSwitchCase(*(new NExpressionList())); }

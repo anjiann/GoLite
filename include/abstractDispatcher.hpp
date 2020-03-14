@@ -17,6 +17,7 @@ class NStmtBlock;
 class NStmtBreakContinue;
 class NStmtDec;
 class NStmtEmpty;
+class NStmtExp;
 class NStmtFor;
 class NStmtIfElse;
 class NStmtIncDec;
@@ -59,6 +60,7 @@ class AbstractDispatcher {
         virtual void dispatch(const NStmtBreakContinue &breakContinueStmt) const;
         virtual void dispatch(const NStmtDec &decStmt) const;
         virtual void dispatch(const NStmtEmpty &emptyStmt) const;
+        virtual void dispatch(const NStmtExp &expstmt) const;
         virtual void dispatch(const NStmtFor &forStmt) const;
         virtual void dispatch(const NStmtIfElse &ifElseStmt) const;
         virtual void dispatch(const NStmtIncDec &incDecStmt) const;

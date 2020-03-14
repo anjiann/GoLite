@@ -5,16 +5,17 @@
 #include "../../abstractDispatcher.hpp"
 
 #include "NExpression.hpp"
-#include "NExpIdentifier.hpp"
 
 using std::string;
 
 class NExpFuncCall : public NExpression {    
     public:
-        string id;
+        // string id;
+        const NExpression &expId;
         const NExpressionList &exps;
         
-        NExpFuncCall(string id, const NExpressionList &exps) : id{id}, exps{exps} {}
+        // NExpFuncCall(string id, const NExpressionList &exps) : id{id}, exps{exps} {}
+        NExpFuncCall(const NExpression &expId, const NExpressionList &exps) : expId{expId}, exps{exps} {}
 
         void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);

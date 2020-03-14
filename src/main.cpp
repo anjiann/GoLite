@@ -39,4 +39,4 @@ int main(int argc, char* argv[]) {
 
 // cat programs/1-scan+parse/valid/7-1-basic.go | build/bin/golite
 // cat programs/1-scan+parse/valid/8-2-blockstmts.go | build/bin/golite
-// cat programs/1-scan+parse/valid/1-scanner/interstringlit.go | build/bin/golite tokens
+// cat programs/1-scan+parse/invalid/5-type_declaration/typedec10.go | build/bin/golite tokens

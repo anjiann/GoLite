@@ -8,7 +8,7 @@
 
 class NExpression : public NAbstractAstNode {
     public:
-        NExpression();
+        NExpression() {}
 
         void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);

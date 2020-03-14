@@ -1,4 +1,5 @@
 %{
+#include "tree.hpp"
 #include "GoLite_Parser.hpp" // Token definitions from the parser
 #include <string.h>
 #include <stdlib.h>
@@ -30,7 +31,9 @@ int insertSemicolon() {
 			lastToken == tDECREMENT ||
 			lastToken == tRBRACE ||
 			lastToken == tRBRACKET ||
-			lastToken == tRPAREN
+			lastToken == tRPAREN ||
+			lastToken == tTYPE ||
+			lastToken == tVAR
 			;
 }
 %}
@@ -217,7 +220,7 @@ PUNCTUATION [?<>+-=,^$|&]
 }
 
 
-\"((\")|[^"])*\" {//STRING
+\"((\\\")|(\\[{ESCAPE}]))*\" {//STRING 
     // yylval.stringval = strdup(yytext);
 	yylval.identifier = strdup(yytext);
     if (g_tokens) cout << "tSTRINGLITERAL(" << yytext << ")" << endl;

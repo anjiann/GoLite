@@ -6,8 +6,7 @@
 #include "../prettyPrinter.hpp"
 
 class NAbstractAstNode {
-    // virtual void accept(const PrettyPrinter &prettyPrinter);
-    virtual void accept(const AbstractDispatcher &dispatcher);
+    virtual void accept(const AbstractDispatcher &dispatcher) {}
 };
 
 #endif

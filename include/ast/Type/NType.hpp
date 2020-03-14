@@ -7,7 +7,7 @@
 
 class NType : public NAbstractAstNode {
     public:
-        NType();
+        NType() {}
 
         void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);

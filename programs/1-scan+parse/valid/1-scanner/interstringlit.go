@@ -5,4 +5,4 @@ func scan_interstring() {
 	s = ""
 	s = "compilers!"
 	s = "\a \b \f \n \r \t \v \\ \""
-}
+} 
