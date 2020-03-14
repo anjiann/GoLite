@@ -9,7 +9,7 @@ class NType : public NAbstractAstNode {
     public:
         NType() {}
 
-        void accept(const AbstractDispatcher &dispatcher) const override {
+        virtual void accept(const AbstractDispatcher &dispatcher) const {
             dispatcher.dispatch(*this);
         }
 };

@@ -13,7 +13,7 @@ class NStatement : public NAbstractAstNode {
         NStatement() {}
         NStatement(int lineno) : lineno{lineno} {}
 
-        void accept(const AbstractDispatcher &dispatcher) const override {
+        virtual void accept(const AbstractDispatcher &dispatcher) const {
             dispatcher.dispatch(*this);
         }
 };
