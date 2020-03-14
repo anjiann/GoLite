@@ -16,7 +16,7 @@ class NExpUnary : public NExpression {
 
         NExpUnary(const NExpression &exp, NExpOpKind op) : exp{exp}, op{op} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
         }
 };

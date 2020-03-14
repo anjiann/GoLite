@@ -16,7 +16,7 @@ class NExpBinary : public NExpression {
         NExpOpKind op;
         NExpBinary(const NExpression &lhs, const NExpression &rhs, NExpOpKind op) : lhs{lhs}, rhs{rhs}, op{op} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
         }
 };

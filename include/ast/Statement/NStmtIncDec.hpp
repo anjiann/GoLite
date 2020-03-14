@@ -14,7 +14,7 @@ class NStmtIncDec : public NStatement {
 
         NStmtIncDec(string id, bool isIncrement) : id{id}, isIncrement{isIncrement} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
         }
 };

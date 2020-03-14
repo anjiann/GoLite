@@ -15,7 +15,7 @@ class NStmtBreakContinue : public NStatement {
         NStmtBreakContinueKind kind;
         NStmtBreakContinue(NStmtBreakContinueKind kind) : kind{kind} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
         }
 };

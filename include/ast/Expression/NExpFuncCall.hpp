@@ -17,7 +17,7 @@ class NExpFuncCall : public NExpression {
         // NExpFuncCall(string id, const NExpressionList &exps) : id{id}, exps{exps} {}
         NExpFuncCall(const NExpression &expId, const NExpressionList &exps) : expId{expId}, exps{exps} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
         }
 };

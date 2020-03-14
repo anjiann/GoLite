@@ -15,7 +15,7 @@ class NStmtIfElse : public NStatement{
         NStmtIfElse(const NExpression &condition, const NStatementList &body, const NStatementList &elsebody) 
             : condition{condition}, body{body}, elsebody{elsebody} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
         }
 };

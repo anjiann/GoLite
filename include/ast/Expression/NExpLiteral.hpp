@@ -12,7 +12,7 @@ class NExpLiteral : public NExpression {
 
         NExpLiteral(string literal, NExpLiteralKind kind) : literal{literal}, kind{kind} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
         }
 };

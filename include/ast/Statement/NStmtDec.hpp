@@ -12,7 +12,7 @@ class NStmtDec : public NStatement {
 
         NStmtDec(const NDeclaration &dec) : dec{dec} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
         }
 };

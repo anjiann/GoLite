@@ -31,8 +31,16 @@ int main(int argc, char* argv[]) {
         return 0;
     }
     else if(!strcmp(argv[1], "pretty")) {
-        // PrettyPrinter *prettyPrinter = new PrettyPrinter();
-        // e.accept(prettyPrinter);
+        // AbstractDispatcher *prettyPrinter = new PrettyPrinter();
+        // program.accept(*prettyPrinter);
+        return 0;
+    }
+    else if(!strcmp(argv[1], "symbol")) {
+        // AbstractDispatcher *symbolPhase = new SymbolPhase();
+        // program.accept(*symbolphase);
+        return 0;
+    }
+    else if(!strcmp(argv[1], "typecheck")) {
         return 0;
     }
 }

@@ -12,7 +12,7 @@ class NStmtAssign : public NStatement {
         const NExpressionList &rhs;
         NStmtAssign(const NExpressionList &lhs, const NExpressionList &rhs) : lhs{lhs}, rhs{rhs} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
         }
 };

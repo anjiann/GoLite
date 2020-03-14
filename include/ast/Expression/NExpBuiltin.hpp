@@ -15,7 +15,7 @@ class NExpBuiltin : public NExpression {
         const NExpression &exp;
         NExpBuiltin(const NExpression &exp, NExpBuiltinKind name) : exp{exp}, name{name} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
         }
 };

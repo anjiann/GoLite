@@ -11,7 +11,7 @@ class NTypeArray : public NType {
         const NType &type;
         NTypeArray(const NExpLiteral &intLiteral, const NType &type) : intLiteral{intLiteral}, type{type} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) const override{
             dispatcher.dispatch(*this);
         }
 };

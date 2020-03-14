@@ -3,10 +3,10 @@
 
 #include "../abstractDispatcher.hpp"
 
-#include "../prettyPrinter.hpp"
+#include "../prettyPrintPhase.hpp"
 
 class NAbstractAstNode {
-    virtual void accept(const AbstractDispatcher &dispatcher) {}
+    virtual void accept(const AbstractDispatcher &dispatcher) const {}
 };
 
 #endif

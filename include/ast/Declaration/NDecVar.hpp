@@ -23,7 +23,7 @@ class NDecVar : public NDeclaration {
         NDecVar(NExpIdentifierList &lhs, const NType &type, const NExpressionList &rhs) 
             : lhs{lhs}, type{type}, rhs{rhs} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
         }
 };

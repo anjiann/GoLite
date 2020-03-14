@@ -16,7 +16,7 @@ class NStmtFor : public NStatement {
         NStmtFor(const NStatement &initStmt, const NExpression &exp, const NStatement &updateStmt, const NStatementList &stmts)
             : initStmt{initStmt}, exp{exp}, updateStmt{updateStmt}, stmts{stmts} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
         }
 };
