@@ -41,9 +41,10 @@ int insertSemicolon() {
 
 /*Helper definitions */
 DIGIT [0-9]
-ESCAPE [abfnrtv\\'"]
+ESCAPE \\[abfnrtv\\(\")]
 
-PUNCTUATION [?<>+-=,^$|&]
+VALIDSTRINGCHARS [a-zA-Z]|[ ?!<>+-=,^$|&]
+RUNELIT \\[abfnrtv\\\']
 %x COMMENT
 
 /* Scanner options, line number generation */
@@ -212,7 +213,7 @@ PUNCTUATION [?<>+-=,^$|&]
 }
 
 
-'((\\[abfnrtv\\\'])|[^\\'])\' {//RUNE (CHAR)
+'({RUNELIT}|[^\\'])\' {//RUNE (CHAR)
     // yylval.runeval = strdup(yytext)[1];
 	yylval.identifier = strdup(yytext);
 	if (g_tokens) cout << "tRUNELITERAL(" << yytext << ")" << endl;
@@ -220,7 +221,7 @@ PUNCTUATION [?<>+-=,^$|&]
 }
 
 
-\"((\\\")|(\\[{ESCAPE}]))*\" {//STRING 
+\"({VALIDSTRINGCHARS}|{ESCAPE})*\" {//STRING 
     // yylval.stringval = strdup(yytext);
 	yylval.identifier = strdup(yytext);
     if (g_tokens) cout << "tSTRINGLITERAL(" << yytext << ")" << endl;
