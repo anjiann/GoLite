@@ -212,7 +212,7 @@ void yyerror(const char *s) {
 %% 
 
 /* Represents the entire program. Makes sure there is only one package dec */
-program         : tPACKAGE tIDENTIFIER tSEMICOLON topdec { $$ = new NProgram(string($2), *$4); }
+program         : tPACKAGE tIDENTIFIER tSEMICOLON topdec { program = new NProgram(string($2), *$4); }
                 ;
 
 topdec          : %empty { $$ = new NDeclarationList(); }
@@ -353,7 +353,7 @@ idlist          : tIDENTIFIER {  $$ = new NExpIdentifierList(); $$->push_back(ne
                 | idlist tCOMMA tIDENTIFIER { $1->push_back(new NExpIdentifier(string($3))); }
                 ;
                 
-/* TODO weed for no exp for case, assign(stmt and decl), vardec to ensure rhs has lvalue only*/
+/* TODO weed for no exp for case, assign(stmt and decl) */
 explist         : exp %prec EXPLIST { $$ = new NExpressionList(); $$->push_back($1); }
                 | exp tCOMMA explist { $3->push_back($1); }
                 ; 

@@ -18,10 +18,7 @@ class PrettyPrintPhase : public AbstractDispatcher {
                 dec->accept(*this);
             }
         }
-
-        virtual void dispatch(const NDeclarationList &topDecs) const {}
-        virtual void dispatch(const NStatementList &stmts) const {}
-
+        
         virtual void dispatch(const NDeclaration &dec) const;
         virtual void dispatch(const NDecFunc &funcDec) const;
         virtual void dispatch(const NDecType &typeDec) const;

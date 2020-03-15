@@ -46,8 +46,6 @@ typedef std::vector<NStatement*> NStatementList;
 class AbstractDispatcher {
     public:
         virtual void dispatch(const NProgram &program) const = 0;
-        virtual void dispatch(const NDeclarationList &topDecs) const = 0;
-        virtual void dispatch(const NStatementList &stmts) const = 0;
 
         virtual void dispatch(const NDeclaration &dec) const = 0;
         virtual void dispatch(const NDecFunc &funcDec) const = 0;

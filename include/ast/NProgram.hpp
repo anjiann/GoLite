@@ -9,14 +9,14 @@
 
 using std::string;
 
-class NProgram : NAbstractAstNode{
+class NProgram : public NAbstractAstNode {
     public:
         string package;
         const NDeclarationList &topdecs;
 
         NProgram(string package, const NDeclarationList &topdecs) : package{package}, topdecs{topdecs} {}
 
-        virtual void accept(const AbstractDispatcher &dispatcher) {
+        virtual void accept(const AbstractDispatcher &dispatcher) const {
             dispatcher.dispatch(*this);
         }
 };

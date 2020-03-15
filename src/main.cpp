@@ -31,13 +31,17 @@ int main(int argc, char* argv[]) {
         return 0;
     }
     else if(!strcmp(argv[1], "pretty")) {
-        // AbstractDispatcher *prettyPrinter = new PrettyPrinter();
-        // program.accept(*prettyPrinter);
+        yyparse();
+        
+        AbstractDispatcher *prettyPrintPhase = new PrettyPrintPhase();
+        program->accept(*prettyPrintPhase);
         return 0;
     }
     else if(!strcmp(argv[1], "symbol")) {
-        // AbstractDispatcher *symbolPhase = new SymbolPhase();
-        // program.accept(*symbolphase);
+        yyparse();
+
+        AbstractDispatcher *symbolPhase = new SymbolPhase();
+        program->accept(*symbolPhase);
         return 0;
     }
     else if(!strcmp(argv[1], "typecheck")) {
@@ -45,4 +49,4 @@ int main(int argc, char* argv[]) {
     }
 }
 
-// cat programs/1-scan+parse/valid/7-1-basic.go | build/bin/golite
+// cat programs/1-scan+parse/valid/4-vardecs.go | build/bin/golite pretty
