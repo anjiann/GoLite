@@ -4,18 +4,19 @@
 #include <string>
 #include "../abstractDispatcher.hpp"
 
+#include "NAbstractAstNode.hpp"
 #include "Declaration/NDeclaration.hpp"
 
 using std::string;
 
-class NProgram {
+class NProgram : NAbstractAstNode{
     public:
         string package;
         const NDeclarationList &topdecs;
 
         NProgram(string package, const NDeclarationList &topdecs) : package{package}, topdecs{topdecs} {}
 
-        void accept(const AbstractDispatcher &dispatcher) {
+        virtual void accept(const AbstractDispatcher &dispatcher) {
             dispatcher.dispatch(*this);
         }
 };
