@@ -19,7 +19,7 @@ enum class NExpOpKind {
 	orExp,//         ||
 	andExp, //       &&
 	andnotExp, //    &^
-	bitAndExp, //    & 
+	bitAndExp, //    &
 	bitOrExp, //     |
 	lshiftExp, //    <<
 	rshiftExp, //    >>

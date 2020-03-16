@@ -12,10 +12,10 @@ using std::string;
 class SymbolTable {
     public:
         const SymbolTable *parent = NULL;
-        map<string, std::pair<SymbolKind, NAbstractAstNode*>> hashMap {};
+        map<string, std::pair<SymbolKind, const NAbstractAstNode*>> hashMap {};
 
         SymbolTable() {}
-        SymbolTable(const SymbolTable *parent) : parent{parent} {}
+        SymbolTable(const SymbolTable *parent, const SymbolTable *child) : parent{parent} {}
 
         ~SymbolTable() {
             delete parent;

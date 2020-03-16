@@ -12,10 +12,9 @@ class NExpFuncCall : public NExpression {
     public:
         // string id;
         const NExpression &expId;
-        const NExpressionList &exps;
+        const NExpressionList &params;
         
-        // NExpFuncCall(string id, const NExpressionList &exps) : id{id}, exps{exps} {}
-        NExpFuncCall(const NExpression &expId, const NExpressionList &exps) : expId{expId}, exps{exps} {}
+        NExpFuncCall(const NExpression &expId, const NExpressionList &params) : expId{expId}, params{params} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
