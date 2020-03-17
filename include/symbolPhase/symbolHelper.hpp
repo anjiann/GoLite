@@ -15,19 +15,18 @@ using std::endl;
 
 class SymbolHelper {
     private:
-        const AbstractDispatcher *symbolDispatcher;
+        const AbstractDispatcher *const symbolDispatcher;
 
         SymbolTable *currSymTable = new SymbolTable();
         int numTabs = 0;
         std::vector<const NDecFunc*> funcDecs;
 
-        string getTabs() {
-            string s;
-            for(int i = 0; i < numTabs; i++) {
-                s += "\t";
-            }
-            return s;
-        }
+        // helpers
+        string getTabs();
+        string getIdSymKindStr(string id);
+        string getSymKind(SymbolKind symbolKind);
+        string getType(const NDecVarList &params);
+        string getType(const NType &params);
 
         void initSymbolTable();
 
@@ -58,7 +57,7 @@ class SymbolHelper {
         void dispatch(const NExpression &exp);
         void dispatch(const NExpBinary &binaryExp);
         void dispatch(const NExpBuiltin &unaryExp);
-        void dispatch(const NExpFuncCall &funcCallExp);
+        void dispatch(const NExpFunc &funcExp);
         void dispatch(const NExpIdentifier &idExp);
         void dispatch(const NExpIndexer &indexerExp);
         void dispatch(const NExpLiteral &literalExp);

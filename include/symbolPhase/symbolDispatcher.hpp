@@ -1,14 +1,13 @@
 #ifndef SYMBOLPHASE_HPP
 #define SYMBOLPHASE_HPP
 
-#include <iostream>
-#include <vector>
 #include "symbolHelper.hpp"
 
 
 class SymbolDispatcher : public AbstractDispatcher {
     private:
-        mutable SymbolHelper *symbolHelper = new SymbolHelper(this);
+        SymbolHelper *const symbolHelper = new SymbolHelper(this);
+
     public:
         SymbolDispatcher() {}
 
@@ -36,7 +35,7 @@ class SymbolDispatcher : public AbstractDispatcher {
         virtual void dispatch(const NExpression &exp) const { symbolHelper->dispatch(exp); }
         virtual void dispatch(const NExpBinary &binaryExp) const { symbolHelper->dispatch(binaryExp); }
         virtual void dispatch(const NExpBuiltin &unaryExp) const { symbolHelper->dispatch(unaryExp); }
-        virtual void dispatch(const NExpFuncCall &funcCallExp) const { symbolHelper->dispatch(funcCallExp); }
+        virtual void dispatch(const NExpFunc &funcExp) const { symbolHelper->dispatch(funcExp); }
         virtual void dispatch(const NExpIdentifier &idExp) const { symbolHelper->dispatch(idExp); }
         virtual void dispatch(const NExpIndexer &indexerExp) const { symbolHelper->dispatch(indexerExp); }
         virtual void dispatch(const NExpLiteral &literalExp) const { symbolHelper->dispatch(literalExp); }

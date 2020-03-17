@@ -5,12 +5,13 @@ using std::cout;
 using std::endl;
 
 void SymbolHelper::dispatch(const NDeclaration &dec) {
-    // dec.accept(*this);
+    dec.accept(*symbolDispatcher);
 }
 
 void SymbolHelper::dispatch(const NDecFunc &funcDec) {
-    // funcDecs.push_back(&funcDec);
-    // currSymTable->hashMap.insert({funcDec.id, });
+    funcDecs.push_back(&funcDec);
+    currSymTable->hashMap.insert({funcDec.id, {SymbolKind::SFunction, &funcDec}});
+    cout << getTabs() << getIdSymKindStr(funcDec.id) << "=" << getType(funcDec.params);
 }
 
 void SymbolHelper::dispatch(const NDecType &typeDec) {
@@ -18,7 +19,7 @@ void SymbolHelper::dispatch(const NDecType &typeDec) {
     // const NAbstractAstNode *node = &typeDec.type;
     // currSymTable->hashMap[typeDec.id] = std::make_pair(SymbolKind::SType, node);
     // cout << " ";
-    // typeDec.type.accept(*this);
+    // typeDec.type.accept(*symbolDispatcher);
     // cout << endl;
 }
 

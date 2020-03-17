@@ -30,7 +30,7 @@
 #include "ast/Expression/NExpression.hpp"
 #include "ast/Expression/NExpBinary.hpp"
 #include "ast/Expression/NExpBuiltin.hpp"
-#include "ast/Expression/NExpFuncCall.hpp"
+#include "ast/Expression/NExpFunc.hpp"
 #include "ast/Expression/NExpIdentifier.hpp"
 #include "ast/Expression/NExpIndexer.hpp"
 #include "ast/Expression/NExpLiteral.hpp"

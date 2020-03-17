@@ -8,13 +8,13 @@
 
 using std::string;
 
-class NExpFuncCall : public NExpression {    
+class NExpFunc : public NExpression {    
     public:
         // string id;
         const NExpression &expId;
-        const NExpressionList &params;
+        const NExpressionList &args;
         
-        NExpFuncCall(const NExpression &expId, const NExpressionList &params) : expId{expId}, params{params} {}
+        NExpFunc(const NExpression &expId, const NExpressionList &args) : expId{expId}, args{args} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);

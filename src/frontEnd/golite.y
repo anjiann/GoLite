@@ -287,7 +287,7 @@ exp             :literalexp {$$ = $1;}
                 | binaryexp {$$ = $1;}
                 | builtinexp { $$ = $1; }
                 | exp tLBRACKET exp tRBRACKET { $$ = new NExpIndexer(*$1, *$3); }
-                | exp tLBRACE optexplist tRBRACE { $$ = new NExpFuncCall(*$1, *$3); }  
+                | exp tLBRACE optexplist tRBRACE { $$ = new NExpFunc(*$1, *$3); }  
                 | tLBRACE exp tRBRACE { $$ = $2; }
                 | tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
                 ;

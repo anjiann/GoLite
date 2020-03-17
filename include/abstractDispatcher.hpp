@@ -28,7 +28,7 @@ class NStmtSwitch;
 class NExpression;
 class NExpBinary;
 class NExpBuiltin;
-class NExpFuncCall;
+class NExpFunc;
 class NExpIdentifier;
 class NExpIndexer;
 class NExpLiteral;
@@ -69,7 +69,7 @@ class AbstractDispatcher {
         virtual void dispatch(const NExpression &exp) const = 0;
         virtual void dispatch(const NExpBinary &binaryExp) const = 0;
         virtual void dispatch(const NExpBuiltin &unaryExp) const = 0;
-        virtual void dispatch(const NExpFuncCall &funcCallExp) const = 0;
+        virtual void dispatch(const NExpFunc &funcExp) const = 0;
         virtual void dispatch(const NExpIdentifier &idExp) const = 0;
         virtual void dispatch(const NExpIndexer &indexerExp) const = 0;
         virtual void dispatch(const NExpLiteral &literalExp) const = 0;

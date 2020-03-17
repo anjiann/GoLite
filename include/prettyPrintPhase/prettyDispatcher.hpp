@@ -41,7 +41,7 @@ class PrettyDispatcher : public AbstractDispatcher {
         virtual void dispatch(const NExpression &exp) const;
         virtual void dispatch(const NExpBinary &binaryExp) const;
         virtual void dispatch(const NExpBuiltin &unaryExp) const;
-        virtual void dispatch(const NExpFuncCall &funcCallExp) const;
+        virtual void dispatch(const NExpFunc &funcExp) const;
         virtual void dispatch(const NExpIdentifier &idExp) const;
         virtual void dispatch(const NExpIndexer &indexerExp) const;
         virtual void dispatch(const NExpLiteral &literalExp) const;

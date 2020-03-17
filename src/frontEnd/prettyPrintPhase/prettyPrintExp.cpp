@@ -20,13 +20,13 @@ void PrettyDispatcher::dispatch(const NExpBinary &binaryExp) const {
 
 void PrettyDispatcher::dispatch(const NExpBuiltin &unaryExp) const {
 }
-void PrettyDispatcher::dispatch(const NExpFuncCall &funcCallExp) const {
-    funcCallExp.expId.accept(*this);
+void PrettyDispatcher::dispatch(const NExpFunc &funcExp) const {
+    funcExp.expId.accept(*this);
     cout << "(";
     string separator;
-    for(const auto &param : funcCallExp.params) {
+    for(const auto &arg : funcExp.args) {
         cout << separator;
-        param->accept(*this);
+        arg->accept(*this);
         separator = " ,";
     }
 
