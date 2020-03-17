@@ -1,8 +1,8 @@
 #include <iostream>
-#include "symbolPhase/symbolPhaseHelper.hpp"
+#include "symbolPhase/symbolHelper.hpp"
 
 using std::cout;
 
-void SymbolPhaseHelper::dispatch(const NType &type) {}
-void SymbolPhaseHelper::dispatch(const NTypeArray &arrayType) {}
-void SymbolPhaseHelper::dispatch(const NTypeIdentifier &idType) {}
+void SymbolHelper::dispatch(const NType &type) {}
+void SymbolHelper::dispatch(const NTypeArray &arrayType) {}
+void SymbolHelper::dispatch(const NTypeIdentifier &idType) {}

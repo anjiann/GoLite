@@ -33,15 +33,15 @@ int main(int argc, char* argv[]) {
     else if(!strcmp(argv[1], "pretty")) {
         yyparse();
         
-        AbstractDispatcher *prettyPrintPhase = new PrettyPrintPhase();
-        program->accept(*prettyPrintPhase);
+        AbstractDispatcher *prettyDispatcher = new PrettyDispatcher();
+        program->accept(*prettyDispatcher);
         return 0;
     }
     else if(!strcmp(argv[1], "symbol")) {
         yyparse();
 
-        AbstractDispatcher *symbolPhase = new SymbolPhase();
-        program->accept(*symbolPhase);
+        AbstractDispatcher *symbolDispatcher = new SymbolDispatcher();
+        program->accept(*symbolDispatcher);
         return 0;
     }
     else if(!strcmp(argv[1], "typecheck")) {

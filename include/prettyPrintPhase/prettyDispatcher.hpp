@@ -8,9 +8,9 @@
 using std::cout;
 using std::endl;
 
-class PrettyPrintPhase : public AbstractDispatcher {
+class PrettyDispatcher : public AbstractDispatcher {
     public:
-        PrettyPrintPhase() {}
+        PrettyDispatcher() {}
 
         virtual void dispatch(const NProgram &program) const {
             cout << "package " << program.package << endl;

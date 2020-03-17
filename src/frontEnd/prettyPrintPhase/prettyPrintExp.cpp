@@ -1,16 +1,16 @@
 #include <iostream>
 #include <string>
-#include "prettyPrintPhase/prettyPrintPhase.hpp"
+#include "prettyPrintPhase/prettyDispatcher.hpp"
 
 using std::cout;
 using std::endl;
 using std::string;
 
-void PrettyPrintPhase::dispatch(const NExpression &exp) const {
+void PrettyDispatcher::dispatch(const NExpression &exp) const {
     exp.accept(*this);
 }
 
-void PrettyPrintPhase::dispatch(const NExpBinary &binaryExp) const {
+void PrettyDispatcher::dispatch(const NExpBinary &binaryExp) const {
     cout << "(";
     binaryExp.lhs.accept(*this);
     cout << " ";
@@ -18,9 +18,9 @@ void PrettyPrintPhase::dispatch(const NExpBinary &binaryExp) const {
     cout << ")" << endl;
 }
 
-void PrettyPrintPhase::dispatch(const NExpBuiltin &unaryExp) const {
+void PrettyDispatcher::dispatch(const NExpBuiltin &unaryExp) const {
 }
-void PrettyPrintPhase::dispatch(const NExpFuncCall &funcCallExp) const {
+void PrettyDispatcher::dispatch(const NExpFuncCall &funcCallExp) const {
     funcCallExp.expId.accept(*this);
     cout << "(";
     string separator;
@@ -32,9 +32,9 @@ void PrettyPrintPhase::dispatch(const NExpFuncCall &funcCallExp) const {
 
     cout << ")" << endl;
 }
-void PrettyPrintPhase::dispatch(const NExpIdentifier &idExp) const {}
-void PrettyPrintPhase::dispatch(const NExpIndexer &indexerExp) const {}
-void PrettyPrintPhase::dispatch(const NExpLiteral &literalExp) const {}
-void PrettyPrintPhase::dispatch(const NExpUnary &unaryExp) const {}
-void PrettyPrintPhase::dispatch(const NExpCaseClause &caseClauseExp) const {}
-void PrettyPrintPhase::dispatch(const NExpSwitchCase &switchCaseExp) const {}
+void PrettyDispatcher::dispatch(const NExpIdentifier &idExp) const {}
+void PrettyDispatcher::dispatch(const NExpIndexer &indexerExp) const {}
+void PrettyDispatcher::dispatch(const NExpLiteral &literalExp) const {}
+void PrettyDispatcher::dispatch(const NExpUnary &unaryExp) const {}
+void PrettyDispatcher::dispatch(const NExpCaseClause &caseClauseExp) const {}
+void PrettyDispatcher::dispatch(const NExpSwitchCase &switchCaseExp) const {}

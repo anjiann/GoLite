@@ -1,19 +1,19 @@
 #include <iostream>
-#include "symbolPhase/symbolPhaseHelper.hpp"
+#include "symbolPhase/symbolHelper.hpp"
 
 using std::cout;
 using std::endl;
 
-void SymbolPhaseHelper::dispatch(const NDeclaration &dec) {
+void SymbolHelper::dispatch(const NDeclaration &dec) {
     // dec.accept(*this);
 }
 
-void SymbolPhaseHelper::dispatch(const NDecFunc &funcDec) {
+void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     // funcDecs.push_back(&funcDec);
     // currSymTable->hashMap.insert({funcDec.id, });
 }
 
-void SymbolPhaseHelper::dispatch(const NDecType &typeDec) {
+void SymbolHelper::dispatch(const NDecType &typeDec) {
     // cout << "type " << typeDec.id;
     // const NAbstractAstNode *node = &typeDec.type;
     // currSymTable->hashMap[typeDec.id] = std::make_pair(SymbolKind::SType, node);
@@ -22,5 +22,5 @@ void SymbolPhaseHelper::dispatch(const NDecType &typeDec) {
     // cout << endl;
 }
 
-void SymbolPhaseHelper::dispatch(const NDecVar &varDec) {
+void SymbolHelper::dispatch(const NDecVar &varDec) {
 }

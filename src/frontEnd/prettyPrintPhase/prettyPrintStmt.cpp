@@ -1,18 +1,18 @@
 #include <iostream>
-#include "prettyPrintPhase/prettyPrintPhase.hpp"
+#include "prettyPrintPhase/prettyDispatcher.hpp"
 
 using std::cout;
 
-void PrettyPrintPhase::dispatch(const NStatement &stmt) const {}
-void PrettyPrintPhase::dispatch(const NStmtAssign &assignStmt) const {}
-void PrettyPrintPhase::dispatch(const NStmtBlock &blockStmt) const {}
-void PrettyPrintPhase::dispatch(const NStmtBreakContinue &breakContinueStmt) const {}
-void PrettyPrintPhase::dispatch(const NStmtDec &decStmt) const {}
-void PrettyPrintPhase::dispatch(const NStmtEmpty &emptyStmt) const {}
-void PrettyPrintPhase::dispatch(const NStmtExp &expStmt) const {}
-void PrettyPrintPhase::dispatch(const NStmtFor &forStmt) const {}
-void PrettyPrintPhase::dispatch(const NStmtIfElse &ifElseStmt) const {}
-void PrettyPrintPhase::dispatch(const NStmtIncDec &incDecStmt) const {}
-void PrettyPrintPhase::dispatch(const NStmtPrint &printStmt) const {}
-void PrettyPrintPhase::dispatch(const NStmtReturn &returnStmt) const {}
-void PrettyPrintPhase::dispatch(const NStmtSwitch &switchStmt) const {}
+void PrettyDispatcher::dispatch(const NStatement &stmt) const {}
+void PrettyDispatcher::dispatch(const NStmtAssign &assignStmt) const {}
+void PrettyDispatcher::dispatch(const NStmtBlock &blockStmt) const {}
+void PrettyDispatcher::dispatch(const NStmtBreakContinue &breakContinueStmt) const {}
+void PrettyDispatcher::dispatch(const NStmtDec &decStmt) const {}
+void PrettyDispatcher::dispatch(const NStmtEmpty &emptyStmt) const {}
+void PrettyDispatcher::dispatch(const NStmtExp &expStmt) const {}
+void PrettyDispatcher::dispatch(const NStmtFor &forStmt) const {}
+void PrettyDispatcher::dispatch(const NStmtIfElse &ifElseStmt) const {}
+void PrettyDispatcher::dispatch(const NStmtIncDec &incDecStmt) const {}
+void PrettyDispatcher::dispatch(const NStmtPrint &printStmt) const {}
+void PrettyDispatcher::dispatch(const NStmtReturn &returnStmt) const {}
+void PrettyDispatcher::dispatch(const NStmtSwitch &switchStmt) const {}

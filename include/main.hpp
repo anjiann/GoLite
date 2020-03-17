@@ -2,8 +2,8 @@
 #define MAIN_H
 
 #include "abstractDispatcher.hpp"
-#include "prettyPrintPhase/prettyPrintPhase.hpp"
-#include "symbolPhase/symbolPhase.hpp"
+#include "prettyPrintPhase/prettyDispatcher.hpp"
+#include "symbolPhase/symbolDispatcher.hpp"
 #include "tree.hpp"
 
 int lineno;

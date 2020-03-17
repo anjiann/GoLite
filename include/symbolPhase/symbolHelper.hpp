@@ -1,5 +1,5 @@
-#ifndef SYMBOLPHASEHELPER_HPP
-#define SYMBOLPHASEHELPER_HPP
+#ifndef SYMBOLHelper_HPP
+#define SYMBOLHelper_HPP
 
 #include "../abstractDispatcher.hpp"
 #include "symbolTable.hpp"
@@ -7,11 +7,16 @@
 #include "../tree.hpp"
 #include "../ast/NAbstractAstNode.hpp"
 
+
+class SymbolPhase;
+
 using std::cout;
 using std::endl;
 
-class SymbolPhaseHelper {
+class SymbolHelper {
     private:
+        const AbstractDispatcher *symbolDispatcher;
+
         SymbolTable *currSymTable = new SymbolTable();
         int numTabs = 0;
         std::vector<const NDecFunc*> funcDecs;
@@ -27,7 +32,7 @@ class SymbolPhaseHelper {
         void initSymbolTable();
 
      public:
-        SymbolPhaseHelper() {}
+        SymbolHelper(AbstractDispatcher *symbolDispatcher) : symbolDispatcher{symbolDispatcher} {}
 
         void dispatch(const NProgram &program);
 
