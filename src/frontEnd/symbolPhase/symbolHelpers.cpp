@@ -34,20 +34,3 @@ string SymbolHelper::getSymKind(SymbolKind symbolKind) {
         case SymbolKind::SConstant: break;
     }
 }
-
-string SymbolHelper::getType(const NDecVarList &params) {
-    string s = "(";
-    string separator = "";
-    for(const auto &param : params) {
-        s += separator;
-        s += getType(param->type);
-        separator = " ,";
-    }
-
-    return s;
-}
-
-string SymbolHelper::getType(const NType &params) {
-
-}
-

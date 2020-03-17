@@ -51,4 +51,4 @@ int main(int argc, char* argv[]) {
 
 // cat programs/1-scan+parse/valid/4-vardecs.go | build/bin/golite pretty
 // ./golitec symbol < programs/2-typecheck/invalid/2-stmt/2-1-assign_stmt/assignstmt1.go 
-// ./build/bin/golite symbol < programs/2-typecheck/invalid/2-stmt/2-1-assign_stmt/assignstmt1.go 
+// ./build/bin/golite symbol < programs/2-typecheck/valid/func_dec.go

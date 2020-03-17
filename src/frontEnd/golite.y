@@ -234,7 +234,9 @@ vardec          : idlist type tSEMICOLON { $$ = new NDecVar(*$1, *$2, *(new NExp
                 ;
 
 /* function definitions */
-funcdec         : tFUNC tIDENTIFIER tLBRACE optparams tRBRACE opttype tLPAREN stmts tRPAREN tSEMICOLON
+funcdec         : tFUNC tIDENTIFIER tLBRACE optparams tRBRACE tLPAREN stmts tRPAREN tSEMICOLON
+                    { $$ = new NDecFunc(string($2), *$4, *(new NTypeIdentifier("void")), *$7); }
+                | tFUNC tIDENTIFIER tLBRACE optparams tRBRACE type tLPAREN stmts tRPAREN tSEMICOLON
                     { $$ = new NDecFunc(string($2), *$4, *$6, *$8); }
                 ;
 

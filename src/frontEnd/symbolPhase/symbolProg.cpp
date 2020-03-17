@@ -35,13 +35,15 @@ void SymbolHelper::initSymbolTable() {
 }
 
 void SymbolHelper::dispatch(const NProgram &program) {
-    cout << "{"; 
+    cout << "{" << endl; 
     numTabs++;
     initSymbolTable();
     cout << getTabs() << "{" << endl;
+    numTabs++;
     for(const auto &dec : program.topdecs) {
         dec->accept(*symbolDispatcher);
     }
+    numTabs--;
     cout << getTabs() << "}" << endl;
     numTabs--; 
     cout << "}" << endl;

@@ -11,7 +11,26 @@ void SymbolHelper::dispatch(const NDeclaration &dec) {
 void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     funcDecs.push_back(&funcDec);
     currSymTable->hashMap.insert({funcDec.id, {SymbolKind::SFunction, &funcDec}});
-    cout << getTabs() << getIdSymKindStr(funcDec.id) << "=" << getType(funcDec.params);
+
+    //print to console
+    cout << getTabs() << getIdSymKindStr(funcDec.id) << " = (";
+    string separator = "";
+    for(const auto &param : funcDec.params) {
+        cout << separator;
+
+        param->type.accept(*symbolDispatcher);
+        separator = ", ";
+    }
+    cout << ") -> ";
+    funcDec.type.accept(*symbolDispatcher);
+    cout << endl;
+
+    cout << getTabs() << "{" << endl;
+    for(const auto &stmt : funcDec.stmts) {
+        stmt->accept(*symbolDispatcher);
+        cout << endl;
+    }
+    cout << getTabs() << "}" << endl;
 }
 
 void SymbolHelper::dispatch(const NDecType &typeDec) {

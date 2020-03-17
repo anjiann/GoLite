@@ -25,8 +25,6 @@ class SymbolHelper {
         string getTabs();
         string getIdSymKindStr(string id);
         string getSymKind(SymbolKind symbolKind);
-        string getType(const NDecVarList &params);
-        string getType(const NType &params);
 
         void initSymbolTable();
 
