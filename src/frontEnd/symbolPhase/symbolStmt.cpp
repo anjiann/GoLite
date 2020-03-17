@@ -1,18 +1,18 @@
 #include <iostream>
-#include "symbolPhase/symbolPhase.hpp"
+#include "symbolPhase/symbolPhaseHelper.hpp"
 
 using std::cout;
 
-void SymbolPhase::dispatch(const NStatement &stmt) const {}
-void SymbolPhase::dispatch(const NStmtAssign &assignStmt) const {}
-void SymbolPhase::dispatch(const NStmtBlock &blockStmt) const {}
-void SymbolPhase::dispatch(const NStmtBreakContinue &breakContinueStmt) const {}
-void SymbolPhase::dispatch(const NStmtDec &decStmt) const {}
-void SymbolPhase::dispatch(const NStmtEmpty &emptyStmt) const {}
-void SymbolPhase::dispatch(const NStmtExp &expstmt) const {}
-void SymbolPhase::dispatch(const NStmtFor &forStmt) const {}
-void SymbolPhase::dispatch(const NStmtIfElse &ifElseStmt) const {}
-void SymbolPhase::dispatch(const NStmtIncDec &incDecStmt) const {}
-void SymbolPhase::dispatch(const NStmtPrint &printStmt) const {}
-void SymbolPhase::dispatch(const NStmtReturn &returnStmt) const {}
-void SymbolPhase::dispatch(const NStmtSwitch &switchStmt) const {}
+void SymbolPhaseHelper::dispatch(const NStatement &stmt) {}
+void SymbolPhaseHelper::dispatch(const NStmtAssign &assignStmt) {}
+void SymbolPhaseHelper::dispatch(const NStmtBlock &blockStmt) {}
+void SymbolPhaseHelper::dispatch(const NStmtBreakContinue &breakContinueStmt) {}
+void SymbolPhaseHelper::dispatch(const NStmtDec &decStmt) {}
+void SymbolPhaseHelper::dispatch(const NStmtEmpty &emptyStmt) {}
+void SymbolPhaseHelper::dispatch(const NStmtExp &expstmt) {}
+void SymbolPhaseHelper::dispatch(const NStmtFor &forStmt) {}
+void SymbolPhaseHelper::dispatch(const NStmtIfElse &ifElseStmt) {}
+void SymbolPhaseHelper::dispatch(const NStmtIncDec &incDecStmt) {}
+void SymbolPhaseHelper::dispatch(const NStmtPrint &printStmt) {}
+void SymbolPhaseHelper::dispatch(const NStmtReturn &returnStmt) {}
+void SymbolPhaseHelper::dispatch(const NStmtSwitch &switchStmt) {}

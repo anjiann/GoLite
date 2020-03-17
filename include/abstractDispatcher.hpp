@@ -58,7 +58,7 @@ class AbstractDispatcher {
         virtual void dispatch(const NStmtBreakContinue &breakContinueStmt) const = 0;
         virtual void dispatch(const NStmtDec &decStmt) const = 0;
         virtual void dispatch(const NStmtEmpty &emptyStmt) const = 0;
-        virtual void dispatch(const NStmtExp &expstmt) const = 0;
+        virtual void dispatch(const NStmtExp &expStmt) const = 0;
         virtual void dispatch(const NStmtFor &forStmt) const = 0;
         virtual void dispatch(const NStmtIfElse &ifElseStmt) const = 0;
         virtual void dispatch(const NStmtIncDec &incDecStmt) const = 0;

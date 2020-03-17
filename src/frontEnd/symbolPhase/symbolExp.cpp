@@ -1,16 +1,16 @@
 #include <iostream>
-#include "symbolPhase/symbolPhase.hpp"
+#include "symbolPhase/symbolPhaseHelper.hpp"
 
 using std::cout;
 using std::endl;
 
-void SymbolPhase::dispatch(const NExpression &exp) const {}
-void SymbolPhase::dispatch(const NExpBinary &binaryExp) const {}
-void SymbolPhase::dispatch(const NExpBuiltin &unaryExp) const {}
-void SymbolPhase::dispatch(const NExpFuncCall &funcCallExp) const {}
-void SymbolPhase::dispatch(const NExpIdentifier &idExp) const {}
-void SymbolPhase::dispatch(const NExpIndexer &indexerExp) const {}
-void SymbolPhase::dispatch(const NExpLiteral &literalExp) const {}
-void SymbolPhase::dispatch(const NExpUnary &unaryExp) const {}
-void SymbolPhase::dispatch(const NExpCaseClause &caseClauseExp) const {}
-void SymbolPhase::dispatch(const NExpSwitchCase &switchCaseExp) const {}
+void SymbolPhaseHelper::dispatch(const NExpression &exp) {}
+void SymbolPhaseHelper::dispatch(const NExpBinary &binaryExp) {}
+void SymbolPhaseHelper::dispatch(const NExpBuiltin &unaryExp) {}
+void SymbolPhaseHelper::dispatch(const NExpFuncCall &funcCallExp) {}
+void SymbolPhaseHelper::dispatch(const NExpIdentifier &idExp) {}
+void SymbolPhaseHelper::dispatch(const NExpIndexer &indexerExp) {}
+void SymbolPhaseHelper::dispatch(const NExpLiteral &literalExp) {}
+void SymbolPhaseHelper::dispatch(const NExpUnary &unaryExp) {}
+void SymbolPhaseHelper::dispatch(const NExpCaseClause &caseClauseExp) {}
+void SymbolPhaseHelper::dispatch(const NExpSwitchCase &switchCaseExp) {}

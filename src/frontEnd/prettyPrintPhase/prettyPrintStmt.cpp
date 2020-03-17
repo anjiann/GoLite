@@ -9,7 +9,7 @@ void PrettyPrintPhase::dispatch(const NStmtBlock &blockStmt) const {}
 void PrettyPrintPhase::dispatch(const NStmtBreakContinue &breakContinueStmt) const {}
 void PrettyPrintPhase::dispatch(const NStmtDec &decStmt) const {}
 void PrettyPrintPhase::dispatch(const NStmtEmpty &emptyStmt) const {}
-void PrettyPrintPhase::dispatch(const NStmtExp &expstmt) const {}
+void PrettyPrintPhase::dispatch(const NStmtExp &expStmt) const {}
 void PrettyPrintPhase::dispatch(const NStmtFor &forStmt) const {}
 void PrettyPrintPhase::dispatch(const NStmtIfElse &ifElseStmt) const {}
 void PrettyPrintPhase::dispatch(const NStmtIncDec &incDecStmt) const {}

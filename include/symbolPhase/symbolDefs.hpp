@@ -6,7 +6,8 @@ enum class SymbolKind {
     SFunction,
     SFormal,
     SLocal,
-    SType
+    SType,
+    SConstant
 };
 
 #endif
