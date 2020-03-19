@@ -10,7 +10,7 @@ void SymbolHelper::dispatch(const NDeclaration &dec) {
 
 void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     funcDecs.push_back(&funcDec);
-    currSymTable->hashMap.insert({funcDec.id, {SymbolKind::SFunction, &funcDec}});
+    currSymTable->insertSymbol(funcDec.id, SymbolKind::SFunction, &funcDec);
 
     //print to console
     cout << getTabs() << getIdSymKindStr(funcDec.id) << " = (";

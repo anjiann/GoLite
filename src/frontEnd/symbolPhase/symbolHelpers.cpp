@@ -14,23 +14,23 @@ string SymbolHelper::getTabs() {
 
 //if id exists in symTable return id[<SymbolKind>], else error and exit
 string SymbolHelper::getIdSymKindStr(string id) {
-    auto it = currSymTable->hashMap.find(id);
-    if(it == currSymTable->hashMap.end()) {
+    Symbol *symbol = currSymTable->getSymbol(id);
+    if(symbol == NULL) {
         std::cerr << "invalid argument: " << id << "was not found in symbol table" << endl;
         exit(EXIT_FAILURE);
     }
 
-    string s = id + "[" + getSymKind(it->second.first) + "]";
+    string s = id + "[" + getSymKindName(symbol->kind) + "]";
 
     return s;
 }
 
-string SymbolHelper::getSymKind(SymbolKind symbolKind) {
+string SymbolHelper::getSymKindName(SymbolKind symbolKind) {
     switch(symbolKind) {
         case SymbolKind::SFunction: return "function";
-        case SymbolKind::SFormal: return "formal";
+        case SymbolKind::SFormal: break;
         case SymbolKind::SLocal: break;
-        case SymbolKind::SType: break;
-        case SymbolKind::SConstant: break;
+        case SymbolKind::SType: return "type";
+        case SymbolKind::SConstant: return "constant";
     }
 }

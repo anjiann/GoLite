@@ -1,12 +1,13 @@
 #ifndef SYMBOLHelper_HPP
 #define SYMBOLHelper_HPP
 
+#include <stack>
+
 #include "../abstractDispatcher.hpp"
 #include "symbolTable.hpp"
 #include "symbolDefs.hpp"
 #include "../tree.hpp"
 #include "../ast/NAbstractAstNode.hpp"
-
 
 class SymbolPhase;
 
@@ -17,19 +18,23 @@ class SymbolHelper {
     private:
         const AbstractDispatcher *const symbolDispatcher;
 
-        SymbolTable *currSymTable = new SymbolTable();
+        SymbolTable *currSymTable;
         int numTabs = 0;
         std::vector<const NDecFunc*> funcDecs;
 
         // helpers
         string getTabs();
         string getIdSymKindStr(string id);
-        string getSymKind(SymbolKind symbolKind);
+        string getSymKindName(SymbolKind symbolKind);
 
-        void initSymbolTable();
+        void initPrimitives();
 
      public:
         SymbolHelper(AbstractDispatcher *symbolDispatcher) : symbolDispatcher{symbolDispatcher} {}
+        ~SymbolHelper() {
+            // delete symbolDispatcher;
+            // delete currSymTable;
+        }
 
         void dispatch(const NProgram &program);
 

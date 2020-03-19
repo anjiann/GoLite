@@ -10,6 +10,9 @@ class SymbolDispatcher : public AbstractDispatcher {
 
     public:
         SymbolDispatcher() {}
+        ~SymbolDispatcher() {
+            // delete symbolHelper;
+        }
 
         virtual void dispatch(const NProgram &program) const { symbolHelper->dispatch(program); }
 
