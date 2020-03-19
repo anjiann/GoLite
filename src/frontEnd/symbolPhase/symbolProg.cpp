@@ -7,7 +7,6 @@ using std::endl;
 void SymbolHelper::initPrimitives() {
     NAbstractAstNode *node = new NTypeIdentifier("int");
     currSymTable->insertSymbol("int", SymbolKind::SType, node);
-    cout << getTabs() << getIdSymKindStr("int") << " = " << endl;
 
     node = new NTypeIdentifier("float64");
     currSymTable->insertSymbol("float64", SymbolKind::SType, node);
@@ -27,27 +26,24 @@ void SymbolHelper::initPrimitives() {
     node = new NTypeIdentifier("false");
     currSymTable->insertSymbol("false", SymbolKind::SConstant, node);
 
-    cout << getTabs() << getIdSymKindStr("float64") << " = " << "float64" << endl;
-    cout << getTabs() << getIdSymKindStr("bool") << " = " << "bool" << endl;
-    cout << getTabs() << getIdSymKindStr("string") << " = " << "string" << endl;
-    cout << getTabs() << getIdSymKindStr("true") << " = " << "bool" << endl;
-    cout << getTabs() << getIdSymKindStr("false") << " = " << "bool" << endl;
+    cout << tabs << getIdSymKindStr("int") << " = " << endl;
+    cout << tabs << getIdSymKindStr("float64") << " = " << "float64" << endl;
+    cout << tabs << getIdSymKindStr("bool") << " = " << "bool" << endl;
+    cout << tabs << getIdSymKindStr("string") << " = " << "string" << endl;
+    cout << tabs << getIdSymKindStr("true") << " = " << "bool" << endl;
+    cout << tabs << getIdSymKindStr("false") << " = " << "bool" << endl;
 }
 
 void SymbolHelper::dispatch(const NProgram &program) {
-    cout << "{" << endl; 
-    numTabs++;
+    cout << tabs++ << "{" << endl; 
     initPrimitives();
     currSymTable = currSymTable->scopeSymbolTable();
 
-    cout << getTabs() << "{" << endl;
-    numTabs++;
+    cout << tabs++ << "{" << endl;
     for(const auto &dec : program.topdecs) {
         dec->accept(*symbolDispatcher);
     }
-    numTabs--;
-    cout << getTabs() << "}" << endl;
+    cout << --tabs << "}" << endl;
 
-    numTabs--; 
-    cout << "}" << endl;
+    cout << --tabs << "}" << endl;
 }

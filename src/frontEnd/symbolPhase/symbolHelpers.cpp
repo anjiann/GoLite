@@ -4,14 +4,6 @@
 using std::cout;
 using std::endl;
 
-string SymbolHelper::getTabs() {
-    string s;
-    for(int i = 0; i < numTabs; i++) {
-        s += "\t";
-    }
-    return s;
-}
-
 //if id exists in symTable return id[<SymbolKind>], else error and exit
 string SymbolHelper::getIdSymKindStr(string id) {
     Symbol *symbol = currSymTable->getSymbol(id);

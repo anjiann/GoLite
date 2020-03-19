@@ -8,8 +8,7 @@
 #include "symbolDefs.hpp"
 #include "../tree.hpp"
 #include "../ast/NAbstractAstNode.hpp"
-
-class SymbolPhase;
+#include "../tabs.hpp"
 
 using std::cout;
 using std::endl;
@@ -18,14 +17,13 @@ class SymbolHelper {
     private:
         const AbstractDispatcher *const symbolDispatcher;
 
-        SymbolTable *currSymTable;
-        int numTabs = 0;
+        SymbolTable *currSymTable = new SymbolTable();
+        Tabs tabs;
         std::vector<const NDecFunc*> funcDecs;
 
         // helpers
-        string getTabs();
         string getIdSymKindStr(string id);
-        string getSymKindName(SymbolKind symbolKind);
+        string getSymKindName(SymbolKind symbolKind); //TODO, replace method w/ overloaded <<
 
         void initPrimitives();
 

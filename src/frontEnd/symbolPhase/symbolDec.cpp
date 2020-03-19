@@ -13,7 +13,7 @@ void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     currSymTable->insertSymbol(funcDec.id, SymbolKind::SFunction, &funcDec);
 
     //print to console
-    cout << getTabs() << getIdSymKindStr(funcDec.id) << " = (";
+    cout << tabs << getIdSymKindStr(funcDec.id) << " = (";
     string separator = "";
     for(const auto &param : funcDec.params) {
         cout << separator;
@@ -25,12 +25,12 @@ void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     funcDec.type.accept(*symbolDispatcher);
     cout << endl;
 
-    cout << getTabs() << "{" << endl;
+    cout << tabs << "{" << endl;
     for(const auto &stmt : funcDec.stmts) {
         stmt->accept(*symbolDispatcher);
         cout << endl;
     }
-    cout << getTabs() << "}" << endl;
+    cout << tabs << "}" << endl;
 }
 
 void SymbolHelper::dispatch(const NDecType &typeDec) {
