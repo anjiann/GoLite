@@ -7,7 +7,7 @@
 
 class NExpLiteral : public NExpression {    
     public:
-        string literal; //TODO have literal values be returned as string from lexer
+        string literal; 
         NExpLiteralKind kind;
 
         NExpLiteral(string literal, NExpLiteralKind kind) : literal{literal}, kind{kind} {}

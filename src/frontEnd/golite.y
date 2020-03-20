@@ -67,7 +67,7 @@ void yyerror(const char *s) {
 %type <stmtlist> stmts
 %type <stmt> stmt printstmt ifstmt forstmt simplestmt
 %type <exp> exp optexp literalexp binaryexp unaryexp builtinexp
-%type <type> type opttype
+%type <type> type opttype arrtype
 
 %type <switchcase> switchcase
 %type <param> param
@@ -284,7 +284,7 @@ forstmt         : tFOR optexp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtF
 
 /* ================ EXPRESSIONS ================ */
 
-exp             :literalexp {$$ = $1;}
+exp             : literalexp {$$ = $1;}
                 | unaryexp {$$ = $1;}
                 | binaryexp {$$ = $1;}
                 | builtinexp { $$ = $1; }
@@ -338,8 +338,12 @@ opttype         : %empty { $$ = new NType(); }
                 ;
 
 type            : tIDENTIFIER { $$ = new NTypeIdentifier($1); }
-                | tLBRACKET tINTLITERAL tRBRACKET type { $$ = new NTypeArray(*(new NExpLiteral(string($2), NExpLiteralKind::intLiteral)), *$4); }
+                | arrtype { $$ = $1; }
                 | tLBRACE type tRBRACE { $$ = $2; }
+                ;
+
+arrtype         : tLBRACKET tINTLITERAL tRBRACKET tIDENTIFIER { $$ = new NTypeArray(atoi($2), *(new NType(string($4)))); }
+                | tLBRACKET tINTLITERAL tRBRACKET arrtype { $$ = new NTypeArray(atoi($2), *$4); }
                 ;
 
 /* ================ HELPERS ================= */

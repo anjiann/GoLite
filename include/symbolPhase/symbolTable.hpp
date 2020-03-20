@@ -18,6 +18,7 @@ struct Symbol {
         : name{id}, kind{symbolKind}, defNode{node} {}
 
     ~Symbol() {
+        std::cout << "Symbol destructor called" << std::endl;
         // delete defNode;
     }
 };
@@ -61,8 +62,8 @@ class SymbolTable {
             }
 
             //check for existence of a parent scope
-            if(parent == NULL) {
-                return NULL;
+            if(parent == nullptr) {
+                return nullptr;
             }
 
             //check the parent scope

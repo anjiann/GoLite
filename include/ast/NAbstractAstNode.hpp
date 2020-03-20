@@ -4,7 +4,8 @@
 #include "../abstractDispatcher.hpp"
 
 class NAbstractAstNode {
-    virtual void accept(const AbstractDispatcher &dispatcher) const = 0;
+    public:
+        virtual void accept(const AbstractDispatcher &dispatcher) const = 0;
 };
 
 #endif

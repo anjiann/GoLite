@@ -13,7 +13,8 @@ void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     currSymTable->insertSymbol(funcDec.id, SymbolKind::SFunction, &funcDec);
 
     //print to console
-    cout << tabs << getIdSymKindStr(funcDec.id) << " = (";
+    Symbol *sym = currSymTable->getSymbol(funcDec.id);
+    cout << tabs << sym->name << "[" << sym->kind << "]" << " = (";
     string separator = "";
     for(const auto &param : funcDec.params) {
         cout << separator;
@@ -25,21 +26,24 @@ void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     funcDec.type.accept(*symbolDispatcher);
     cout << endl;
 
-    cout << tabs << "{" << endl;
+    cout << tabs++ << "{" << endl;
     for(const auto &stmt : funcDec.stmts) {
         stmt->accept(*symbolDispatcher);
-        cout << endl;
     }
-    cout << tabs << "}" << endl;
+    cout << --tabs << "}" << endl;
 }
 
-void SymbolHelper::dispatch(const NDecType &typeDec) {
-    // cout << "type " << typeDec.id;
-    // const NAbstractAstNode *node = &typeDec.type;
-    // currSymTable->hashMap[typeDec.id] = std::make_pair(SymbolKind::SType, node);
-    // cout << " ";
-    // typeDec.type.accept(*symbolDispatcher);
-    // cout << endl;
+// type t1 t2
+void SymbolHelper::dispatch(const NDecType &typeDec) {    
+    currSymTable->insertSymbol(typeDec.id, SymbolKind::SType, &typeDec.type);
+
+    //print to console 
+    Symbol *sym = currSymTable->getSymbol(typeDec.id);
+    cout << tabs << sym->name << "[" << sym->kind << "]" << " = ";
+    cout << sym->name << " -> ";
+
+    sym->defNode->accept(*symbolDispatcher);
+    cout << endl;
 }
 
 void SymbolHelper::dispatch(const NDecVar &varDec) {

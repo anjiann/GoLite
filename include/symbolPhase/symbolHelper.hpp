@@ -1,7 +1,9 @@
 #ifndef SYMBOLHelper_HPP
 #define SYMBOLHelper_HPP
 
-#include <stack>
+#include <ostream>
+#include <string>
+#include <vector>
 
 #include "../abstractDispatcher.hpp"
 #include "symbolTable.hpp"
@@ -12,20 +14,23 @@
 
 using std::cout;
 using std::endl;
+using std::string;
+using std::vector;
 
 class SymbolHelper {
     private:
         const AbstractDispatcher *const symbolDispatcher;
 
         SymbolTable *currSymTable = new SymbolTable();
-        Tabs tabs;
         std::vector<const NDecFunc*> funcDecs;
+        Tabs tabs;
 
-        // helpers
-        string getIdSymKindStr(string id);
-        string getSymKindName(SymbolKind symbolKind); //TODO, replace method w/ overloaded <<
+        vector<string> baseTypes { "int", "float64", "bool", "rune", "string", };
+        vector<string> baseConstants { "true", "false" };
 
         void initPrimitives();
+        bool isBaseType(string id);
+        bool isBaseConstant(string id);
 
      public:
         SymbolHelper(AbstractDispatcher *symbolDispatcher) : symbolDispatcher{symbolDispatcher} {}

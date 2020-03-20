@@ -10,8 +10,7 @@ using std::string;
 
 class NTypeIdentifier : public NType {    
     public:
-        string name;
-        NTypeIdentifier(string name) : name{name} {}
+        NTypeIdentifier(string id) : NType(id) {}
 
         void accept(const AbstractDispatcher &dispatcher) const override{
             dispatcher.dispatch(*this);
