@@ -25,7 +25,7 @@ struct Symbol {
 
 class SymbolTable {
     public:
-        const SymbolTable *parent = nullptr;
+        SymbolTable *parent = nullptr;
         std::unordered_map<string, Symbol*> hashMap;
 
         SymbolTable() {

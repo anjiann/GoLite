@@ -3,7 +3,6 @@
 
 #include "symbolHelper.hpp"
 
-
 class SymbolDispatcher : public AbstractDispatcher {
     private:
         SymbolHelper *const symbolHelper = new SymbolHelper(this);

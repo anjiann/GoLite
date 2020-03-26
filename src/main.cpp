@@ -49,4 +49,4 @@ int main(int argc, char* argv[]) {
     }
 }
 
-// ./run.sh symbol programs/2-typecheck/valid/func_dec.go
+// ./run.sh symbol programs/2-symbol/valid/func_dec.go

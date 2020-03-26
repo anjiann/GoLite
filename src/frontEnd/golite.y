@@ -333,7 +333,7 @@ builtinexp      : tLEN tLBRACE exp tRBRACE {$$ = new NExpBuiltin(*$3, NExpBuilti
                 ;  
 
 /* ======= TYPE ======= */
-opttype         : %empty { $$ = new NType(); }
+opttype         : %empty { $$ = new NType("<infer>"); }
                 | type { $$ = $1; }
                 ;
 

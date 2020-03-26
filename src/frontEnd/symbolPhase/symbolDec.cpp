@@ -13,9 +13,10 @@ void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     funcDecs.push_back(&funcDec);
     currSymTable->insertSymbol(funcDec.id, SymbolKind::SFunction, &funcDec);
 
-    //print to console
     Symbol *sym = currSymTable->getSymbol(funcDec.id);
-    cout << tabs << sym->name << "[" << sym->kind << "]" << " = (";
+
+    //func definition
+    cout << tabs << sym->name << " [" << sym->kind << "]" << " = (";
     string separator = "";
     for(const auto &param : funcDec.params) {
         cout << separator;
@@ -27,11 +28,18 @@ void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     funcDec.type.accept(*symbolDispatcher);
     cout << endl;
 
+    //func body
     cout << tabs++ << "{" << endl;
+    currSymTable = currSymTable->scopeSymbolTable();
+    for(const auto &param : funcDec.params) {
+        param->accept(*symbolDispatcher);
+    }
     for(const auto &stmt : funcDec.stmts) {
         stmt->accept(*symbolDispatcher);
     }
     cout << --tabs << "}" << endl;
+
+    currSymTable = currSymTable->parent;
 }
 
 // type t1 t2
@@ -40,7 +48,7 @@ void SymbolHelper::dispatch(const NDecType &typeDec) {
 
     //print to console 
     Symbol *sym = currSymTable->getSymbol(typeDec.id);
-    cout << tabs << sym->name << "[" << sym->kind << "]" << " = ";
+    cout << tabs << sym->name << " [" << sym->kind << "]" << " = ";
     cout << sym->name << " -> ";
 
     sym->defNode->accept(*symbolDispatcher);
@@ -55,7 +63,7 @@ void SymbolHelper::dispatch(const NDecVar &varDec) {
     //print to console
     for(const auto &expId : varDec.lhs) {
         Symbol *sym = currSymTable->getSymbol(expId->name);
-        cout << tabs << sym->name << "[" << sym->kind << "]" << " = ";
+        cout << tabs << sym->name << " [" << sym->kind << "]" << " = ";
         sym->defNode->accept(*symbolDispatcher);
         cout << endl;
     }

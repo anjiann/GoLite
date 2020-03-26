@@ -29,8 +29,6 @@ class SymbolHelper {
         vector<string> baseConstants { "true", "false" };
 
         void initPrimitives();
-        bool isBaseType(string id);
-        bool isBaseConstant(string id);
 
      public:
         SymbolHelper(AbstractDispatcher *symbolDispatcher) : symbolDispatcher{symbolDispatcher} {}
@@ -39,37 +37,37 @@ class SymbolHelper {
             // delete currSymTable;
         }
 
-        void dispatch(const NProgram &program);
+        void dispatch(const NProgram &program) {}
 
         void dispatch(const NDeclaration &dec);
         void dispatch(const NDecFunc &funcDec);
         void dispatch(const NDecType &typeDec);
         void dispatch(const NDecVar &varDec);
 
-        void dispatch(const NStatement &stmt);
-        void dispatch(const NStmtAssign &assignStmt);
-        void dispatch(const NStmtBlock &blockStmt);
-        void dispatch(const NStmtBreakContinue &breakContinueStmt);
-        void dispatch(const NStmtDec &decStmt);
-        void dispatch(const NStmtEmpty &emptyStmt);
-        void dispatch(const NStmtExp &expstmt);
-        void dispatch(const NStmtFor &forStmt);
-        void dispatch(const NStmtIfElse &ifElseStmt);
-        void dispatch(const NStmtIncDec &incDecStmt);
-        void dispatch(const NStmtPrint &printStmt);
-        void dispatch(const NStmtReturn &returnStmt);
-        void dispatch(const NStmtSwitch &switchStmt);
+        void dispatch(const NStatement &stmt) {}
+        void dispatch(const NStmtAssign &assignStmt) {}
+        void dispatch(const NStmtBlock &blockStmt) {}
+        void dispatch(const NStmtBreakContinue &breakContinueStmt) {}
+        void dispatch(const NStmtDec &decStmt) { decStmt.dec.accept(*symbolDispatcher); }
+        void dispatch(const NStmtEmpty &emptyStmt) {}
+        void dispatch(const NStmtExp &expstmt) {}
+        void dispatch(const NStmtFor &forStmt) {}
+        void dispatch(const NStmtIfElse &ifElseStmt) {}
+        void dispatch(const NStmtIncDec &incDecStmt) {}
+        void dispatch(const NStmtPrint &printStmt) {}
+        void dispatch(const NStmtReturn &returnStmt) {}
+        void dispatch(const NStmtSwitch &switchStmt) {}
 
-        void dispatch(const NExpression &exp);
-        void dispatch(const NExpBinary &binaryExp);
-        void dispatch(const NExpBuiltin &unaryExp);
-        void dispatch(const NExpFunc &funcExp);
-        void dispatch(const NExpIdentifier &idExp);
-        void dispatch(const NExpIndexer &indexerExp);
-        void dispatch(const NExpLiteral &literalExp);
-        void dispatch(const NExpUnary &unaryExp);
-        void dispatch(const NExpCaseClause &caseClauseExp);
-        void dispatch(const NExpSwitchCase &switchCaseExp);
+        void dispatch(const NExpression &exp) {}
+        void dispatch(const NExpBinary &binaryExp) {}
+        void dispatch(const NExpBuiltin &unaryExp) {}
+        void dispatch(const NExpFunc &funcExp) {}
+        void dispatch(const NExpIdentifier &idExp) {}
+        void dispatch(const NExpIndexer &indexerExp) {}
+        void dispatch(const NExpLiteral &literalExp) {}
+        void dispatch(const NExpUnary &unaryExp) {}
+        void dispatch(const NExpCaseClause &caseClauseExp) {}
+        void dispatch(const NExpSwitchCase &switchCaseExp) {}
 
         void dispatch(const NType &type);
         void dispatch(const NTypeArray &arrayType);
