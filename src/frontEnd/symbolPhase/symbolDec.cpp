@@ -3,6 +3,7 @@
 
 using std::cout;
 using std::endl;
+using std::cerr;
 
 void SymbolHelper::dispatch(const NDeclaration &dec) {
     dec.accept(*symbolDispatcher);
@@ -47,4 +48,15 @@ void SymbolHelper::dispatch(const NDecType &typeDec) {
 }
 
 void SymbolHelper::dispatch(const NDecVar &varDec) {
+    for(const auto &expId : varDec.lhs) {
+        currSymTable->insertSymbol(expId->name, SymbolKind::SLocal, &varDec.type);
+    }
+
+    //print to console
+    for(const auto &expId : varDec.lhs) {
+        Symbol *sym = currSymTable->getSymbol(expId->name);
+        cout << tabs << sym->name << "[" << sym->kind << "]" << " = ";
+        sym->defNode->accept(*symbolDispatcher);
+        cout << endl;
+    }
 }

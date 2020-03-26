@@ -16,7 +16,7 @@ inline std::ostream &operator<<(std::ostream &os, const SymbolKind &kind) {
     switch(kind) {
         case SymbolKind::SFunction: s = "function"; break;
         case SymbolKind::SFormal: s = "formal"; break;
-        case SymbolKind::SLocal: s = "local"; break;
+        case SymbolKind::SLocal: s = "variable"; break;
         case SymbolKind::SType: s = "type"; break;
         case SymbolKind::SConstant: s = "constant"; break;
     }
