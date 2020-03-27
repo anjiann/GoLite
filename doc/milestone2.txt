@@ -1,0 +1,35 @@
+
+since our group split up, I redid milestone 1. See milestone1.txt
+
+milestone 2 notes:
+    - for the symbol table, I followed the scoping rule as in the reference compiler by using the valid programs I wrote.
+    - design decisions
+        - for the internal symbol table, I decided to use a map<string, Symbol> where symbol stores the declaration node and symbol kind. (see symbolTable.png for mappings).
+        - 
+
+    - issues/challenges/notes
+        - each concrete element accepts a concrete visitor as a constant reference so the visitor is read-only. This implies that the dispatch methods in each concrete visitor has to be const as well. This was resolved by using a helper for each concrete visitor
+        - to reduce print code clutter, SymbolKind overloads << operator and Tabs overloads <<, ++t, --t, t++, t--
+        - recursive type
+            -   //in func main
+                type x int
+                type num x
+                //symbol table
+                x [type] = int -> int
+                num [type] = num -> int -> int
+            - encountered issue where base type is printed twice since the mapping in symbol table is "int"->NTypeIdentifier("int")
+                - solution: all primitive type declarations do not point to the declaration node in the symbol table. Therefore "int"->nullptr in symbol table
+        - added <infer> to be initialized to the type of NDecVar in the parser to separate typecheck phase from symbol phase
+        - since the visitor pattern is used, I kept and manipulated the symbol table scope in the concrete visitor instead of passing symbol table scopes as arguments.
+
+    - typecheck
+        - to check the the type of rhs is assignable to lhs, I added a member type : NType to NExpression. Variables on the lhs already have a type : NType, so we can just overload comparison operators, and write an assignType function like on the slides.
+        - 
+
+    - invalid programs:
+        - 
+
+resources:
+    1) class slides
+    2) my minilang assignment
+    4) https://en.wikipedia.org/wiki/Visitor_pattern

@@ -1,0 +1,20 @@
+milestone 1 notes:
+    -  I wrote the grammar and ast with the visitor pattern in mind 
+        - NAbstractAstNode is the element interface and NDeclaration, NStatement, NExpression, NType being concrete elements
+        - NAbstractDispatcher is the visitor interface and each compiler phase PrettyDispatcher, SymbolDispatcher, etc. being concrete visitors
+    - ast details:
+        - (---> := inherits from)
+        - anything ast node class will be prefixed with a N which stands for Node (this is inspired by resource 3)
+        - relationships:
+            - NDecFunc, NDecVar, NDecType            ---> NDeclaration ---> NAbstractAstNode
+            - NStmtAssign, NStmtBlock, NStmtDec, ... ---> NStatement   ---> NAbstractAstNode
+            - NExpBinary, NExpUnary,NExpLiteral, ... ---> NExpression  ---> NAbstractAstNode
+            - NTypeArray, NTypeIdentifier            ---> NType        ---> NAbstractAstNode
+        - all ast nodes and its members are stored as const references since I decided that we cannot modify the ast after parsing phase
+        - all Expression literals are returned as string in yyval so we only need one NExpLiteral node
+
+resources:
+    1) class slides
+    2) my minilang assignment
+    3) https://gnuu.org/2009/09/18/writing-your-own-toy-compiler/
+    4) https://en.wikipedia.org/wiki/Visitor_pattern
