@@ -22,7 +22,7 @@ void TypecheckDispatcher::dispatch(const NDecVar &varDec) const {
     }
 
     for(const auto &expId : varDec.lhs) {
-        if(expId.type == NType.inferType) {
+        if(expId->type == NType::inferType) {
 
         }
     }

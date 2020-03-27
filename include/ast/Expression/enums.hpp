@@ -1,7 +1,7 @@
 #ifndef ENUMS_HPP
 #define ENUMS_HPP
 
-#include <ostream>
+#include <iostream>
 
 using std::cout;
 
@@ -15,8 +15,8 @@ enum class NExpOpKind {
 	lesseqExp, //    <= 
 	greaterExp, //   >
 	greatereqExp, // >=
-	plusExp, //      +
-	minusExp, //     -
+	plusExp, //      + (unary)
+	minusExp, //     - (unary)
 	multExp, //   	 *
 	divExp, //    	 /
 	modExp, //       %
@@ -24,12 +24,11 @@ enum class NExpOpKind {
 	bitAndExp, //    &
 	lshiftExp, //    <<
 	rshiftExp, //    >>
-	andnotExp, //    &^
-	xorExp, //       ^
+	andnotExp, //    &^ 
+	xorExp, //       ^ (unary)
 
 	//unary
     notExp, //       ! 
-    parenExp, //    (e)
 };
 
 enum class NExpBuiltinKind {
@@ -49,30 +48,26 @@ enum class NExpLiteralKind {
 
 inline std::ostream &operator<<(std::ostream &os, const NExpOpKind &op) {
 	switch(op) {
-		//binary
-		case orExp : cout << "||"; break;
-		case andExp : cout << "&&"; break;
-		case equalExp : cout << "=="; break;
-		case noteqExp : cout << "!="; break;
-		case lessExp : cout << "<"; break;
-		case lesseqExp : cout << "<="; break; 
-		case greaterExp : cout << ">"; break;
-		case greatereqExp : cout << ">="; break;
-		case plusExp : cout << "+"; break; 
-		case minusExp : cout << "-"; break;
-		case multExp : cout << "*"; break;
-		case divExp : cout << "/"; break; 
-		case modExp : cout << "%"; break;
-		case bitOrExp : cout << "|"; break;
-		case bitAndExp : cout << "&"; break
-		case lshiftExp : cout << "<<"; break;
-		case rshiftExp : cout << ">>"; break;
-		case andnotExp : cout << "&^"; break;
-		case xorExp : cout << "^"; break;
-
-		//unary
-		case notExp : cout << "!"; break;
-		case parenExp : cout << "(e)"; break;
+		case NExpOpKind::orExp : cout << "||"; break;
+		case NExpOpKind::andExp : cout << "&&"; break;
+		case NExpOpKind::equalExp : cout << "=="; break;
+		case NExpOpKind::noteqExp : cout << "!="; break;
+		case NExpOpKind::lessExp : cout << "<"; break;
+		case NExpOpKind::lesseqExp : cout << "<="; break; 
+		case NExpOpKind::greaterExp : cout << ">"; break;
+		case NExpOpKind::greatereqExp : cout << ">="; break;
+		case NExpOpKind::plusExp : cout << "+"; break; 
+		case NExpOpKind::minusExp : cout << "-"; break;
+		case NExpOpKind::multExp : cout << "*"; break;
+		case NExpOpKind::divExp : cout << "/"; break; 
+		case NExpOpKind::modExp : cout << "%"; break;
+		case NExpOpKind::bitOrExp : cout << "|"; break;
+		case NExpOpKind::bitAndExp : cout << "&"; break;
+		case NExpOpKind::lshiftExp : cout << "<<"; break;
+		case NExpOpKind::rshiftExp : cout << ">>"; break;
+		case NExpOpKind::andnotExp : cout << "&^"; break;
+		case NExpOpKind::xorExp : cout << "^"; break;
+		case NExpOpKind::notExp : cout << "!"; break;
 	}
 }
 

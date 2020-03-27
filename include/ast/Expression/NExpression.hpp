@@ -8,7 +8,7 @@
 
 class NExpression : public NAbstractAstNode {
     public:
-        const NType type = NType();
+        mutable NType type = NType();
 
         NExpression() {}
 

@@ -18,7 +18,7 @@ void PrettyDispatcher::dispatch(const NExpBinary &binaryExp) const {
     cout << ")" << endl;
 }
 
-void PrettyDispatcher::dispatch(const NExpBuiltin &unaryExp) const {
+void PrettyDispatcher::dispatch(const NExpBuiltin &builtinExp) const {
 }
 void PrettyDispatcher::dispatch(const NExpFunc &funcExp) const {
     funcExp.expId.accept(*this);
