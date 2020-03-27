@@ -8,8 +8,8 @@
 
 class NStmtAssign : public NStatement {
     public:
-        const NExpressionList &lhs;
-        const NExpressionList &rhs;
+        const NExpressionList lhs;
+        const NExpressionList rhs;
         NStmtAssign(const NExpressionList &lhs, const NExpressionList &rhs) : lhs{lhs}, rhs{rhs} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {

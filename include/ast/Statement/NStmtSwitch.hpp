@@ -9,7 +9,7 @@
 class NStmtSwitch : public NStatement {
     public:
         const NExpression &condition;
-        const NExpCaseClauseList &caseClauses;
+        const NExpCaseClauseList caseClauses;
 
         NStmtSwitch(const NExpression &condition, const NExpCaseClauseList &caseClauses)
             : condition{condition}, caseClauses{caseClauses} {}

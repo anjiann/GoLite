@@ -10,7 +10,7 @@
 class NExpCaseClause : NExpression {
     public:
         const NExpSwitchCase &switchCase;
-        const NStatementList &stmts;
+        const NStatementList stmts;
         NExpCaseClause(const NExpSwitchCase &switchCase, const NStatementList &stmts) 
             : switchCase{switchCase}, stmts{stmts} {}
 

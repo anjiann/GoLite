@@ -8,7 +8,7 @@
 
 class NStmtPrint : public NStatement {
     public:
-        const NExpressionList &exps; 
+        const NExpressionList exps; 
         bool newLine;
         NStmtPrint(const NExpressionList &exps, bool newLine) : exps{exps}, newLine{newLine} {}
 
