@@ -5,8 +5,11 @@
 #include "tree.hpp"
 
 class TypecheckDispatcher : public AbstractDispatcher {
+    private:
+        const AbstractDispatcher *const typecheckDispatcher;
+
     public:
-        TypecheckDispatcher() {}
+        TypecheckDispatcher(AbstractDispatcher *typecheckDispatcher) : typecheckDispatcher{typecheckDispatcher} {}
         ~TypecheckDispatcher() {
             // delete typecheckHelper;
         }

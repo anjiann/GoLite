@@ -8,6 +8,8 @@
 
 class NExpression : public NAbstractAstNode {
     public:
+        const NType type = NType();
+
         NExpression() {}
 
         virtual void accept(const AbstractDispatcher &dispatcher) const {

@@ -37,7 +37,7 @@ class SymbolHelper {
             // delete currSymTable;
         }
 
-        void dispatch(const NProgram &program) {}
+        void dispatch(const NProgram &program);
 
         void dispatch(const NDeclaration &dec);
         void dispatch(const NDecFunc &funcDec);
