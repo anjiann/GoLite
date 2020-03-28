@@ -45,6 +45,11 @@ int main(int argc, char* argv[]) {
         return 0;
     }
     else if(!strcmp(argv[1], "typecheck")) {
+        yyparse();
+
+        AbstractDispatcher *typecheckDispatcher = new TypecheckDispatcher();
+        program->accept(*typecheckDispatcher);
+        printf("OK\n");
         return 0;
     }
 }

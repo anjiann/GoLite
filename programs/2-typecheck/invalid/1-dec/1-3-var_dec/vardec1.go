@@ -1,6 +1,6 @@
 package main 
 
-//line 5: syntax error: unexpected newline, expecting type
+// Error: (line 5) string is not assignment compatible with int in variable declaration
 func main() {
-	var a
+	var a int = "c"
 }

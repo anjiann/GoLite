@@ -1,6 +1,6 @@
 package main
 
-// line 5: assignment mismatch: 2 variables but 1 values
+// Error: (line 5) string is not assignment compatible with int in variable declaration
 func main() {
-	var a, b = 0
+	var a, b int = 0, "hello"
 }

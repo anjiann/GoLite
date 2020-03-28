@@ -1,6 +1,7 @@
 #ifndef NTYPE_HPP
 #define NTYPE_HPP
 
+#include <iostream>
 #include <string>
 #include "../../abstractDispatcher.hpp"
 
@@ -44,14 +45,17 @@ inline bool operator==(NType &lhs, const NType &rhs) {
 }
 
 inline bool operator!=(const NType &lhs, const NType &rhs) {
+    std::cout << "lhs: " << lhs.id << ", rhs: " << rhs.id << std::endl;
     return lhs.id != rhs.id;
 }
 
 inline bool operator!=(const NType &lhs, NType &rhs) {
+    std::cout << "lhs: " << lhs.id << ", rhs: " << rhs.id << std::endl;
     return lhs.id != rhs.id;
 }
 
 inline bool operator!=(NType &lhs, const NType &rhs) {
+    std::cout << "lhs: " << lhs.id << ", rhs: " << rhs.id << std::endl;
     return lhs.id != rhs.id;
 }
 

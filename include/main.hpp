@@ -4,6 +4,7 @@
 #include "abstractDispatcher.hpp"
 #include "prettyPrintPhase/prettyDispatcher.hpp"
 #include "symbolPhase/symbolDispatcher.hpp"
+#include "typecheckPhase/typecheckDispatcher.hpp"
 #include "tree.hpp"
 
 int lineno;

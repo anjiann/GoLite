@@ -7,35 +7,34 @@ func main () {
 	var boolean bool = false
 	var str string = "hello world"
 
-	//binary
 	var orExp = boolean || boolean
 	var andExp = boolean && boolean
 
 	var equalExp = integer == integer
-	equalExp = float == float
-	equalExp = char == char
-	equalExp = boolean == boolean
-	equalExp = str == str
+	// equalExp = float == float
+	// equalExp = char == char
+	// equalExp = boolean == boolean
+	// equalExp = str == str
 
 	var notequalExp = integer != integer
-	notequalExp = float != float
-	notequalExp = char != char
-	notequalExp = boolean != boolean
-	notequalExp = str != str
+	// notequalExp = float != float
+	// notequalExp = char != char
+	// notequalExp = boolean != boolean
+	// notequalExp = str != str
 
-	lessExp,//       <
-	lesseqExp, //    <= 
-	greaterExp, //   >
-	greatereqExp, // >=
-	plusExp, //      +
-	minusExp, //     -
-	multExp, //   	 *
-	divExp, //    	 /
-	modExp, //       %
-	bitOrExp, //     |
-	bitAndExp, //    &
-	lshiftExp, //    <<
-	rshiftExp, //    >>
-	andnotExp, //    &^
-	xorExp, //       ^
+	// lessExp,//       <
+	// lesseqExp, //    <= 
+	// greaterExp, //   >
+	// greatereqExp, // >=
+	// plusExp, //      +
+	// minusExp, //     -
+	// multExp, //   	 *
+	// divExp, //    	 /
+	// modExp, //       %
+	// bitOrExp, //     |
+	// bitAndExp, //    &
+	// lshiftExp, //    <<
+	// rshiftExp, //    >>
+	// andnotExp, //    &^
+	// xorExp, //       ^
 }

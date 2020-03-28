@@ -5,14 +5,8 @@
 #include "tree.hpp"
 
 class TypecheckDispatcher : public AbstractDispatcher {
-    private:
-        const AbstractDispatcher *const typecheckDispatcher;
-
     public:
-        TypecheckDispatcher(AbstractDispatcher *typecheckDispatcher) : typecheckDispatcher{typecheckDispatcher} {}
-        ~TypecheckDispatcher() {
-            // delete typecheckHelper;
-        }
+        TypecheckDispatcher() {}
 
         virtual void dispatch(const NProgram &program) const;
 

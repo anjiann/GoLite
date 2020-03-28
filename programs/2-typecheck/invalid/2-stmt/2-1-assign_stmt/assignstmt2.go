@@ -1,6 +1,6 @@
 package main
 
-//line 7: cannot use a (type string) as type int in assignment
+// Error: (line 7) string is not assignment compatible with int in assign statement
 func main() {
 	var a string = "hello"
 	var b int

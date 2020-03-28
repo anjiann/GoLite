@@ -10,7 +10,6 @@ class NDeclaration : public NAbstractAstNode {
         int lineno;
 
         NDeclaration() {}
-        NDeclaration(int lineno) : lineno{lineno} {}
 
         virtual void accept(const AbstractDispatcher &dispatcher) const {
             dispatcher.dispatch(*this);

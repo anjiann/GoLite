@@ -1,6 +1,6 @@
 package main
 
-//line 9: cannot call non-function foo (type int)
+//Error: (line 10) foo is not a function type
 //declaration of foo() is shadowed by the symtable of foo int in main
 func foo(){
 }
