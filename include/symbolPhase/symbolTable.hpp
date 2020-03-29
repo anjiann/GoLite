@@ -4,24 +4,11 @@
 #include <unordered_map>
 #include <string>
 #include "symbolDefs.hpp"
+#include "symbol.hpp"
 #include "../ast/NAbstractAstNode.hpp"
 
 #include <iostream>
 using std::string;
-
-struct Symbol {
-    string name;
-    SymbolKind kind;
-    const NAbstractAstNode *defNode;
-
-    Symbol(string id, SymbolKind symbolKind, const NAbstractAstNode* node) 
-        : name{id}, kind{symbolKind}, defNode{node} {}
-
-    ~Symbol() {
-        std::cout << "Symbol destructor called" << std::endl;
-        // delete defNode;
-    }
-};
 
 class SymbolTable {
     public:

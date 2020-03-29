@@ -268,7 +268,7 @@ ifstmt          : tIF exp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtIfEls
 
 simplestmt      : tIDENTIFIER tINCREMENT { $$ = new NStmtIncDec(string($1), true); }
                 | tIDENTIFIER tDECREMENT { $$ = new NStmtIncDec(string($1), false); }
-                | explist tASSIGN explist { $$ = new NStmtAssign(*$1, *$3); delete $1; delete $3; }
+                | idlist tASSIGN explist { $$ = new NStmtAssign(*$1, *$3); delete $1; delete $3; }
                 ;
 
 forstmt         : tFOR optexp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtFor(NStatement(), *$2, NStatement(), *$4); }

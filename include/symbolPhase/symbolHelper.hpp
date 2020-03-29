@@ -44,19 +44,19 @@ class SymbolHelper {
         void dispatch(const NDecType &typeDec);
         void dispatch(const NDecVar &varDec);
 
-        void dispatch(const NStatement &stmt) {}
-        void dispatch(const NStmtAssign &assignStmt) {}
-        void dispatch(const NStmtBlock &blockStmt) {}
-        void dispatch(const NStmtBreakContinue &breakContinueStmt) {}
-        void dispatch(const NStmtDec &decStmt) { decStmt.dec.accept(*symbolDispatcher); }
-        void dispatch(const NStmtEmpty &emptyStmt) {}
-        void dispatch(const NStmtExp &expstmt) {}
-        void dispatch(const NStmtFor &forStmt) {}
-        void dispatch(const NStmtIfElse &ifElseStmt) {}
-        void dispatch(const NStmtIncDec &incDecStmt) {}
-        void dispatch(const NStmtPrint &printStmt) {}
-        void dispatch(const NStmtReturn &returnStmt) {}
-        void dispatch(const NStmtSwitch &switchStmt) {}
+        void dispatch(const NStatement &stmt);
+        void dispatch(const NStmtAssign &assignStmt);
+        void dispatch(const NStmtBlock &blockStmt);
+        void dispatch(const NStmtBreakContinue &breakContinueStmt);
+        void dispatch(const NStmtDec &decStmt);
+        void dispatch(const NStmtEmpty &emptyStmt);
+        void dispatch(const NStmtExp &expstmt);
+        void dispatch(const NStmtFor &forStmt);
+        void dispatch(const NStmtIfElse &ifElseStmt);
+        void dispatch(const NStmtIncDec &incDecStmt);
+        void dispatch(const NStmtPrint &printStmt);
+        void dispatch(const NStmtReturn &returnStmt);
+        void dispatch(const NStmtSwitch &switchStmt);
 
         void dispatch(const NExpression &exp) {}
         void dispatch(const NExpBinary &binaryExp) {}

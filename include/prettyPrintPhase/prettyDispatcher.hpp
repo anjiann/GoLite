@@ -12,12 +12,7 @@ class PrettyDispatcher : public AbstractDispatcher {
     public:
         PrettyDispatcher() {}
 
-        virtual void dispatch(const NProgram &program) const {
-            cout << "package " << program.package << endl;
-            for(const auto &dec : program.topdecs) {
-                dec->accept(*this);
-            }
-        }
+        virtual void dispatch(const NProgram &program) const;
         
         virtual void dispatch(const NDeclaration &dec) const;
         virtual void dispatch(const NDecFunc &funcDec) const;
