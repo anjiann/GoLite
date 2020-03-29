@@ -49,6 +49,7 @@ void yyerror(const char *s) {
 
     NExpSwitchCase *switchcase;
 
+    NExpArrIdentifier *arrid;
     NDecVar *param;
     std::vector<NExpCaseClause*> *caseclauselist;
     std::vector<NExpression*> *explist;
@@ -61,16 +62,19 @@ void yyerror(const char *s) {
  * yylval union] and an identifier. Multiple tokens can eb defined per directive by using a list
  * of identifiers separated by spaces.
  */
+ //ast nodes
 %type <prog> program
 %type <declist> topdec
 %type <dec> funcdec dec vardec 
 %type <stmtlist> stmts
 %type <stmt> stmt printstmt ifstmt forstmt simplestmt
-%type <exp> exp optexp literalexp binaryexp unaryexp builtinexp
+%type <exp> exp optexp literalexp binaryexp unaryexp builtinexp 
 %type <type> type opttype arrtype
 
 %type <switchcase> switchcase
 %type <param> param
+%type <arrid> arrayid
+
 %type <caseclauselist> caseclauselist
 %type <explist> explist optexplist
 %type <decvarlist> params optparams
@@ -268,7 +272,7 @@ ifstmt          : tIF exp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtIfEls
 
 simplestmt      : tIDENTIFIER tINCREMENT { $$ = new NStmtIncDec(string($1), true); }
                 | tIDENTIFIER tDECREMENT { $$ = new NStmtIncDec(string($1), false); }
-                | idlist tASSIGN explist { $$ = new NStmtAssign(*$1, *$3); delete $1; delete $3; }
+                | explist tASSIGN explist { $$ = new NStmtAssign(*$1, *$3); delete $1; delete $3; }
                 ;
 
 forstmt         : tFOR optexp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtFor(NStatement(), *$2, NStatement(), *$4); }
@@ -288,7 +292,7 @@ exp             : literalexp {$$ = $1;}
                 | unaryexp {$$ = $1;}
                 | binaryexp {$$ = $1;}
                 | builtinexp { $$ = $1; }
-                | exp tLBRACKET exp tRBRACKET { $$ = new NExpIndexer(*$1, *$3); }
+                | arrayid { $$ = $1; }
                 | exp tLBRACE optexplist tRBRACE { $$ = new NExpFunc(*$1, *$3); delete $3; }  
                 | tLBRACE exp tRBRACE { $$ = $2; }
                 | tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
@@ -355,8 +359,12 @@ params          : param { $$ = new NDecVarList(); $$->push_back($1); }
                 | params tCOMMA param { $1->push_back($3); }
                 ;
 
-idlist          : tIDENTIFIER {  $$ = new NExpIdentifierList(); $$->push_back(new NExpIdentifier(string($1))); }
+idlist          : tIDENTIFIER { $$ = new NExpIdentifierList(); $$->push_back(new NExpIdentifier(string($1))); }
                 | idlist tCOMMA tIDENTIFIER { $1->push_back(new NExpIdentifier(string($3))); }
+                ;
+
+arrayid         : tIDENTIFIER tLBRACKET exp tRBRACKET { $$ = new NExpArrIdentifier(string($1)); $$->sizes.push_back($3); }
+                | arrayid tLBRACKET exp tRBRACKET { $1->sizes.push_back($3); }
                 ;
                 
 /* TODO weed for no exp for case, assign(stmt and decl) */
