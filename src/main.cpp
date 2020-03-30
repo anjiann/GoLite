@@ -54,5 +54,5 @@ int main(int argc, char* argv[]) {
     }
 }
 
-// ./run.sh symbol programs/2-symbol/valid/func_dec.go
+// ./run.sh symbol programs/2-typecheck/valid/symbol/func_dec.go 
 // ./run.sh typecheck programs/2-typecheck/invalid/3-exp/3-1-binary_exp/binaryexp1.go

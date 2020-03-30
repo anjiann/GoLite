@@ -7,8 +7,6 @@
 
 class NDeclaration : public NAbstractAstNode {
     public:
-        int lineno;
-
         NDeclaration() {}
 
         virtual void accept(const AbstractDispatcher &dispatcher) const {

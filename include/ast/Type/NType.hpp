@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <regex>
 #include "../../abstractDispatcher.hpp"
 
 #include "../NAbstractAstNode.hpp"
@@ -81,5 +82,12 @@ inline bool isString(const NType &type) { return type == NType::stringType; }
 inline bool isNumeric(const NType &type) { return isInteger(type) || isRune(type)|| isFloat(type); }
 inline bool isOrdered(const NType &type) { return isNumeric(type) || isString(type); }
 inline bool isBaseType(const NType &type) { return isNumeric(type) || isString(type) || isBoolean(type); }
+inline bool isArray(const NType &type) { 
+    std::regex const e("[(.*)](.+)");
+    if(regex_match(type.id, e)) {
+        return true;
+    }
+    return false;
+}
 
 #endif /* !NTYPE_HPP */

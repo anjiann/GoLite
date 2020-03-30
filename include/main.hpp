@@ -7,7 +7,6 @@
 #include "typecheckPhase/typecheckDispatcher.hpp"
 #include "tree.hpp"
 
-int lineno;
 int g_tokens;
 NProgram *program;
 

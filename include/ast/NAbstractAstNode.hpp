@@ -3,11 +3,11 @@
 
 #include "../abstractDispatcher.hpp"
 
-extern int lineno;
+extern int yylineno;
 
 class NAbstractAstNode {
     public:
-        int lineno = lineno;
+        int lineno = yylineno;
 
         virtual void accept(const AbstractDispatcher &dispatcher) const = 0;
 };

@@ -1,9 +1,11 @@
 #include <iostream>
+#include <string>
 #include "symbolPhase/symbolHelper.hpp"
 
 using std::cout;
 using std::endl;
 using std::cerr;
+using std::string;
 
 void SymbolHelper::dispatch(const NDeclaration &dec) {
     dec.accept(*symbolDispatcher);
@@ -11,10 +13,10 @@ void SymbolHelper::dispatch(const NDeclaration &dec) {
 
 void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     funcDecs.push_back(&funcDec);
-    Symbol *sym = currSymTable->insertSymbol(funcDec.id, SymbolKind::SFunction, &funcDec);
+    const Symbol *funcSym = currSymTable->insertSymbol(funcDec.id, new FuncSymbol(funcDec.id, funcDec));
 
     //func definition
-    cout << tabs << sym->name << " [" << sym->kind << "]" << " = (";
+    cout << tabs << *funcSym << " = (";
     string separator = "";
     for(const auto &param : funcDec.params) {
         cout << separator;
@@ -23,7 +25,12 @@ void SymbolHelper::dispatch(const NDecFunc &funcDec) {
         separator = ", ";
     }
     cout << ") -> ";
-    funcDec.type.accept(*symbolDispatcher);
+    if(funcDec.type.id == NType::inferType) {
+        cout << "void";
+    }
+    else {
+        funcDec.type.accept(*symbolDispatcher);
+    }
     cout << endl;
 
     //func body
@@ -42,24 +49,24 @@ void SymbolHelper::dispatch(const NDecFunc &funcDec) {
 
 // type t1 t2
 void SymbolHelper::dispatch(const NDecType &typeDec) {    
-    Symbol *sym = currSymTable->insertSymbol(typeDec.id, SymbolKind::SType, &typeDec.type);
+    const Symbol *typeSym = currSymTable->insertSymbol(typeDec.id, new TypeSymbol(typeDec.id, typeDec.type));
 
     //print to console 
-    cout << tabs << sym->name << " [" << sym->kind << "]" << " = ";
-    cout << sym->name << " -> ";
+    cout << tabs << *typeSym << " = ";
+    cout << typeDec.id << " -> ";
 
-    sym->defNode->accept(*symbolDispatcher);
+    typeDec.type.accept(*symbolDispatcher);
     cout << endl;
 }
 
 void SymbolHelper::dispatch(const NDecVar &varDec) {
     for(const auto &expId : varDec.lhs) {
-        Symbol *sym = currSymTable->insertSymbol(expId->name, SymbolKind::SLocal, &varDec.type);
-        expId->symbol = sym;
+        const Symbol *localSym = currSymTable->insertSymbol(expId->name, new LocalSymbol(expId->name, *expId));
+        expId->symbol = localSym;
 
         //print to console
-        cout << tabs << sym->name << " [" << sym->kind << "]" << " = ";
-        sym->defNode->accept(*symbolDispatcher);
+        cout << tabs << *localSym << " = " << expId->type;
+        expId->accept(*symbolDispatcher);
         cout << endl;
     }
 }

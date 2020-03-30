@@ -11,10 +11,10 @@ using std::string;
 class NExpFunc : public NExpression {    
     public:
         // string id;
-        const NExpression &expId;
+        const NExpIdentifier &expId;
         const NExpressionList &args;
         
-        NExpFunc(const NExpression &expId, const NExpressionList &args) : expId{expId}, args{args} {}
+        NExpFunc(const NExpIdentifier &expId, const NExpressionList &args) : expId{expId}, args{args} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);

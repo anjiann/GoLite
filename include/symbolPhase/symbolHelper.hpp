@@ -1,5 +1,5 @@
-#ifndef SYMBOLHelper_HPP
-#define SYMBOLHelper_HPP
+#ifndef SYMBOLHELPER_HPP
+#define SYMBOLHELPER_HPP
 
 #include <ostream>
 #include <string>
@@ -7,6 +7,12 @@
 
 #include "../abstractDispatcher.hpp"
 #include "symbolTable.hpp"
+#include "symbols/constantSymbol.hpp"
+#include "symbols/funcSymbol.hpp"
+#include "symbols/localSymbol.hpp"
+#include "symbols/symbol.hpp"
+#include "symbols/typeSymbol.hpp"
+
 #include "symbolDefs.hpp"
 #include "../tree.hpp"
 #include "../ast/NAbstractAstNode.hpp"

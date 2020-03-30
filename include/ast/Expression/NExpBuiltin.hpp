@@ -11,9 +11,9 @@ using std::string;
 
 class NExpBuiltin : public NExpression {    
     public:
-        NExpBuiltinKind name;
+        NExpBuiltinKind kind;
         const NExpression &exp;
-        NExpBuiltin(const NExpression &exp, NExpBuiltinKind name) : exp{exp}, name{name} {}
+        NExpBuiltin(const NExpression &exp, NExpBuiltinKind kind) : exp{exp}, kind{kind} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);

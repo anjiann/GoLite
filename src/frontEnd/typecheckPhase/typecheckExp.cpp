@@ -53,6 +53,7 @@ void assertInteger(const NExpBinary &binaryExp) {
     if(!(isInteger(lhs.type) || isRune(rhs.type)) || !(isInteger(rhs.type) || isRune(lhs.type))) {
         cerr << "Error: (line " << binaryExp.lineno << ") incompatible type in arithmetic op " << binaryExp.op;
         cerr << " [received "<< lhs.type << ", expected integer (int, rune)]" << endl;
+        exit(EXIT_FAILURE);
     }
     assert(lhs, lhs.type, rhs, rhs.type);
 }
@@ -62,6 +63,7 @@ void assertBool(const NExpUnary &unaryExp) {
     if(!isBoolean(exp.type)) {
         cerr << "Error: (line " << unaryExp.lineno << ") incompatible type in unary op " << unaryExp.op;
         cerr << " [received" << exp.type << ", expected bool]" << endl;
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -70,6 +72,7 @@ void assertInteger(const NExpUnary &unaryExp) {
     if(!(isInteger(unaryExp.type) || isRune(unaryExp.type))) {
         cerr << "Error: (line " << unaryExp.lineno << ") incompatible type in unary op " << unaryExp.op;
         cerr << " [received" << exp.type << ", expected integer (int, rune)]" << endl;
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -177,8 +180,29 @@ void TypecheckDispatcher::dispatch(const NExpBinary &binaryExp) const {
             exit(EXIT_FAILURE);
     }
 }
-void TypecheckDispatcher::dispatch(const NExpBuiltin &builtinExp) const {}
-void TypecheckDispatcher::dispatch(const NExpFunc &funcExp) const {}
+void TypecheckDispatcher::dispatch(const NExpBuiltin &builtinExp) const {
+    const NExpression &exp = builtinExp.exp;
+    exp.accept(*this);
+    switch(builtinExp.kind) {
+        case NExpBuiltinKind::lenExp: 
+            if(!(isArray(exp.type) || isString(exp.type))) {
+                cerr << "Error: (line " << exp.lineno << ") length builtin expects slice, array or string type as argument [received " << exp.type << "]" << endl;
+                exit(EXIT_FAILURE);
+            }
+            break;
+        case NExpBuiltinKind::capExp: 
+            if(!isArray(exp.type)) {
+                cerr << "Error: (line " << exp.lineno << ") capacity builtin expects slice or array type as argument [received " << exp.type << "]" << endl;
+                exit(EXIT_FAILURE);
+            }
+            break;
+    }
+}
+
+void TypecheckDispatcher::dispatch(const NExpFunc &funcExp) const {
+
+}
+
 void TypecheckDispatcher::dispatch(const NExpIdentifier &idExp) const {
 }
 

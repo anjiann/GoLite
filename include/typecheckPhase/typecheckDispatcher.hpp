@@ -3,6 +3,11 @@
 
 #include "abstractDispatcher.hpp"
 #include "tree.hpp"
+#include "../symbolPhase/symbols/constantSymbol.hpp"
+#include "../symbolPhase/symbols/funcSymbol.hpp"
+#include "../symbolPhase/symbols/localSymbol.hpp"
+#include "../symbolPhase/symbols/symbol.hpp"
+#include "../symbolPhase/symbols/typeSymbol.hpp"
 
 class TypecheckDispatcher : public AbstractDispatcher {
     public:

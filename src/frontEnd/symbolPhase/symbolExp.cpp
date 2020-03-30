@@ -31,7 +31,7 @@ void SymbolHelper::dispatch(const NExpFunc &funcExp) {
 }
 
 void SymbolHelper::dispatch(const NExpIdentifier &idExp) {
-    Symbol *sym = currSymTable->getSymbol(idExp.name);
+    const Symbol *sym = currSymTable->getSymbol(idExp.name);
     if(sym == nullptr) {
         cerr << "Error: (line " << idExp.lineno << ") "<< idExp.name << "is not declared" << endl;
         exit(EXIT_FAILURE);

@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <string>
 #include "symbolDefs.hpp"
-#include "symbol.hpp"
+#include "symbols/symbol.hpp"
 #include "../ast/NAbstractAstNode.hpp"
 
 #include <iostream>
@@ -13,7 +13,7 @@ using std::string;
 class SymbolTable {
     public:
         SymbolTable *parent = nullptr;
-        std::unordered_map<string, Symbol*> hashMap;
+        std::unordered_map<string, const Symbol*> hashMap;
 
         SymbolTable() {
         }
@@ -28,19 +28,18 @@ class SymbolTable {
             return t;
         }
 
-        Symbol *insertSymbol(string id, SymbolKind symbolKind, const NAbstractAstNode* node) {
-            auto it = hashMap.find(id);
+        const Symbol *insertSymbol(const string &name, const Symbol *symbol) {
+            auto it = hashMap.find(name);
             if(it != hashMap.end()) {
-                std::cerr << id << " was already declared in the current scope" << std::endl;
+                std::cerr << name << " was already declared in the current scope" << std::endl;
                 exit(EXIT_FAILURE);
             }
 
-            Symbol *symbol = new Symbol(id, symbolKind, node);
-            hashMap.insert(std::make_pair(id, symbol));
-            return symbol;
+            hashMap.insert(std::make_pair(name, symbol));
+            return getSymbol(name);
         }
 
-        Symbol *getSymbol(string name) const {
+        const Symbol *getSymbol(const string &name) const {
             //check current scope
             for(auto it = hashMap.begin(); it != hashMap.end(); it++) {
                 if(it->first == name) {

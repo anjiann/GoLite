@@ -5,34 +5,21 @@ using std::cout;
 using std::endl;
 
 void SymbolHelper::initPrimitives() {
-    NAbstractAstNode *node = new NType("int");
-    currSymTable->insertSymbol("int", SymbolKind::SType, nullptr);
+    const Symbol *intSym = currSymTable->insertSymbol("int", new TypeSymbol("int", NType::intType));
+    const Symbol *floatSym = currSymTable->insertSymbol("float", new TypeSymbol("float", NType::floatType));
+    const Symbol *boolSym = currSymTable->insertSymbol("bool", new TypeSymbol("bool", NType::boolType));
+    const Symbol *runeSym = currSymTable->insertSymbol("rune", new TypeSymbol("rune", NType::runeType));
+    const Symbol *stringSym = currSymTable->insertSymbol("string", new TypeSymbol("string", NType::stringType));
+    const Symbol *trueSym = currSymTable->insertSymbol("true", new ConstantSymbol("true", NType::boolType));
+    const Symbol *falseSym = currSymTable->insertSymbol("false", new ConstantSymbol("false", NType::boolType));
 
-    node = new NType("float64");
-    currSymTable->insertSymbol("float64", SymbolKind::SType, nullptr);
-
-    node = new NType("bool");
-    currSymTable->insertSymbol("bool", SymbolKind::SType, nullptr);
-
-    node = new NType("rune");
-    currSymTable->insertSymbol("rune", SymbolKind::SType, nullptr);
-
-    node = new NType("string");
-    currSymTable->insertSymbol("string", SymbolKind::SType, nullptr);
-
-    node = new NType("true");
-    currSymTable->insertSymbol("true", SymbolKind::SConstant, nullptr);
-
-    node = new NType("false");
-    currSymTable->insertSymbol("false", SymbolKind::SConstant, nullptr);
-
-    cout << tabs << "int" << " [" << SymbolKind::SType << "]" << " = " << "int" << endl;
-    cout << tabs << "float64" << " [" << SymbolKind::SType << "]" << " = " << "float64" << endl;
-    cout << tabs << "bool" << " [" << SymbolKind::SType << "]" << " = " << "bool" << endl;
-    cout << tabs << "rune" << " [" << SymbolKind::SType << "]" << " = " << "rune" << endl;
-    cout << tabs << "string" << " [" << SymbolKind::SType << "]" << " = " << "string" << endl;
-    cout << tabs << "true" << " [" << SymbolKind::SConstant << "]" << " = " << "bool" << endl;
-    cout << tabs << "false" << " [" << SymbolKind::SConstant << "]" << " = " << "bool" << endl;
+    cout << tabs << *intSym << " = " << NType::intType << endl;
+    cout << tabs << *floatSym << " = " << NType::floatType << endl;;
+    cout << tabs << *boolSym << " = " << NType::boolType << endl;
+    cout << tabs << *runeSym << " = " << NType::runeType << endl;
+    cout << tabs << *stringSym << " = " << NType::stringType << endl;
+    cout << tabs << *trueSym << " = " << NType::boolType << endl;
+    cout << tabs << *falseSym << " = " << NType::boolType << endl;
 }
 
 void SymbolHelper::dispatch(const NProgram &program) {

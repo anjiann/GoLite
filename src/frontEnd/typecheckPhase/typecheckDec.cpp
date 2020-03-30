@@ -9,7 +9,7 @@ using std::cerr;
 
 void assert(const NType &lhs, const NType &rhs) {
     if(lhs != rhs) {
-        cerr << "Error: (line " << lhs.lineno << ")";
+        cerr << "Error: (line " << lhs.lineno << ") ";
         cerr << rhs << " is not assignment compatible with " << lhs << " in variable declaration" << endl;
         exit(EXIT_FAILURE);
     }

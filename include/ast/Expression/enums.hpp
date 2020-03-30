@@ -34,7 +34,6 @@ enum class NExpOpKind {
 enum class NExpBuiltinKind {
     lenExp,
     capExp,
-    funcExp
     // append, //not required in golite_mini
 };
 

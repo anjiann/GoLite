@@ -295,7 +295,7 @@ exp             : literalexp {$$ = $1;}
                 | binaryexp {$$ = $1;}
                 | builtinexp { $$ = $1; }
                 | arrayid { $$ = $1; }
-                | exp tLBRACE optexplist tRBRACE { $$ = new NExpFunc(*$1, *$3); delete $3; }  
+                | id tLBRACE optexplist tRBRACE { $$ = new NExpFunc(*$1, *$3); delete $3; }  
                 | tLBRACE exp tRBRACE { $$ = $2; }
                 | tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
                 ;
