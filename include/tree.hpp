@@ -28,6 +28,7 @@
 
 //expressions
 #include "ast/Expression/NExpression.hpp"
+#include "ast/Expression/NExpArrIdentifier.hpp"
 #include "ast/Expression/NExpBinary.hpp"
 #include "ast/Expression/NExpBuiltin.hpp"
 #include "ast/Expression/NExpFunc.hpp"

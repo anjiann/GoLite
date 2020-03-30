@@ -28,12 +28,6 @@ void TypecheckDispatcher::dispatch(const NDecFunc &funcDec) const {
 void TypecheckDispatcher::dispatch(const NDecType &typeDec) const {}
 
 void TypecheckDispatcher::dispatch(const NDecVar &varDec) const {
-    if(varDec.rhs.size() != 0 && varDec.lhs.size() != varDec.rhs.size()) {
-        cerr << "assignment mismatch: " << varDec.lhs.size() << " variables";
-        cerr << " but " << varDec.rhs.size() << " values" << endl;
-        exit(EXIT_FAILURE);
-    }
-
     if(varDec.rhs.size() == 0) {
         for(const auto &expId : varDec.lhs) {
             expId->type = varDec.type;

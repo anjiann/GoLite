@@ -32,6 +32,14 @@ class NType : public NAbstractAstNode {
         }
 };
 
+inline string operator+(const string &lhs, const NType &rhs) {
+    return lhs + rhs.id;
+}
+
+inline string operator+(const NType &lhs, const string &rhs) {
+    return lhs.id + rhs;
+}
+
 inline bool operator==(const NType &lhs, const NType &rhs) {
     return lhs.id == rhs.id;
 }
@@ -45,17 +53,17 @@ inline bool operator==(NType &lhs, const NType &rhs) {
 }
 
 inline bool operator!=(const NType &lhs, const NType &rhs) {
-    std::cout << "lhs: " << lhs.id << ", rhs: " << rhs.id << std::endl;
+    std::cout << "NType.hpp, lhs: " << lhs.id << ", rhs: " << rhs.id << std::endl;
     return lhs.id != rhs.id;
 }
 
 inline bool operator!=(const NType &lhs, NType &rhs) {
-    std::cout << "lhs: " << lhs.id << ", rhs: " << rhs.id << std::endl;
+    std::cout << "NType.hpp, lhs: " << lhs.id << ", rhs: " << rhs.id << std::endl;
     return lhs.id != rhs.id;
 }
 
 inline bool operator!=(NType &lhs, const NType &rhs) {
-    std::cout << "lhs: " << lhs.id << ", rhs: " << rhs.id << std::endl;
+    std::cout << "NType.hpp, lhs: " << lhs.id << ", rhs: " << rhs.id << std::endl;
     return lhs.id != rhs.id;
 }
 
@@ -63,5 +71,15 @@ inline std::ostream &operator<<(std::ostream &os, const NType &type) {
     os << type.id;
     return os;
 }
+
+inline bool isInteger(const NType &type) { return type == NType::intType; }
+inline bool isFloat(const NType &type) { return type == NType::floatType; }
+inline bool isRune(const NType &type) { return type == NType::runeType; }
+inline bool isBoolean(const NType &type) { return type == NType::boolType; }
+inline bool isString(const NType &type) { return type == NType::stringType; }
+
+inline bool isNumeric(const NType &type) { return isInteger(type) || isRune(type)|| isFloat(type); }
+inline bool isOrdered(const NType &type) { return isNumeric(type) || isString(type); }
+inline bool isBaseType(const NType &type) { return isNumeric(type) || isString(type) || isBoolean(type); }
 
 #endif /* !NTYPE_HPP */

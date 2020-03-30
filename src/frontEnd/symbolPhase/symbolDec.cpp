@@ -55,7 +55,7 @@ void SymbolHelper::dispatch(const NDecType &typeDec) {
 void SymbolHelper::dispatch(const NDecVar &varDec) {
     for(const auto &expId : varDec.lhs) {
         Symbol *sym = currSymTable->insertSymbol(expId->name, SymbolKind::SLocal, &varDec.type);
-        expId->symbol = *sym;
+        expId->symbol = sym;
 
         //print to console
         cout << tabs << sym->name << " [" << sym->kind << "]" << " = ";

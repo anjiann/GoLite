@@ -3,16 +3,17 @@
 
 #include <string>
 #include "NStatement.hpp"
+#include "../Expression/NExpIdentifier.hpp"
 #include "../../abstractDispatcher.hpp"
 
 using std::string;
 
 class NStmtIncDec : public NStatement {
     public:
-        string id;
+        const NExpIdentifier &exp;
         bool isIncrement;
 
-        NStmtIncDec(string id, bool isIncrement) : id{id}, isIncrement{isIncrement} {}
+        NStmtIncDec(const NExpIdentifier &exp, bool isIncrement) : exp{exp}, isIncrement{isIncrement} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);

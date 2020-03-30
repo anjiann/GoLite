@@ -10,6 +10,10 @@ void PrettyDispatcher::dispatch(const NExpression &exp) const {
     exp.accept(*this);
 }
 
+void PrettyDispatcher::dispatch(const NExpArrIdentifier &arrIdExp) const {
+
+}
+
 void PrettyDispatcher::dispatch(const NExpBinary &binaryExp) const {
     cout << "(";
     binaryExp.lhs.accept(*this);

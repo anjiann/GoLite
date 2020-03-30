@@ -58,16 +58,17 @@ class SymbolHelper {
         void dispatch(const NStmtReturn &returnStmt);
         void dispatch(const NStmtSwitch &switchStmt);
 
-        void dispatch(const NExpression &exp) {}
-        void dispatch(const NExpBinary &binaryExp) {}
-        void dispatch(const NExpBuiltin &unaryExp) {}
-        void dispatch(const NExpFunc &funcExp) {}
-        void dispatch(const NExpIdentifier &idExp) {}
-        void dispatch(const NExpIndexer &indexerExp) {}
-        void dispatch(const NExpLiteral &literalExp) {}
-        void dispatch(const NExpUnary &unaryExp) {}
-        void dispatch(const NExpCaseClause &caseClauseExp) {}
-        void dispatch(const NExpSwitchCase &switchCaseExp) {}
+        void dispatch(const NExpression &exp);
+        void dispatch(const NExpArrIdentifier &arrIdExp);
+        void dispatch(const NExpBinary &binaryexp);
+        void dispatch(const NExpBuiltin &unaryexp);
+        void dispatch(const NExpFunc &funcexp);
+        void dispatch(const NExpIdentifier &idexp);
+        void dispatch(const NExpIndexer &indexerexp);
+        void dispatch(const NExpLiteral &literalexp);
+        void dispatch(const NExpUnary &unaryexp);
+        void dispatch(const NExpCaseClause &caseClauseexp);
+        void dispatch(const NExpSwitchCase &switchCaseexp);
 
         void dispatch(const NType &type);
         void dispatch(const NTypeArray &arrayType);

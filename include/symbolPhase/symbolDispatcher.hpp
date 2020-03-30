@@ -35,6 +35,7 @@ class SymbolDispatcher : public AbstractDispatcher {
         virtual void dispatch(const NStmtSwitch &switchStmt) const { symbolHelper->dispatch(switchStmt); }
 
         virtual void dispatch(const NExpression &exp) const { symbolHelper->dispatch(exp); }
+        virtual void dispatch(const NExpArrIdentifier &arrIdExp) const { symbolHelper->dispatch(arrIdExp); }
         virtual void dispatch(const NExpBinary &binaryExp) const { symbolHelper->dispatch(binaryExp); }
         virtual void dispatch(const NExpBuiltin &unaryExp) const { symbolHelper->dispatch(unaryExp); }
         virtual void dispatch(const NExpFunc &funcExp) const { symbolHelper->dispatch(funcExp); }

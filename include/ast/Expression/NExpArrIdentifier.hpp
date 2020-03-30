@@ -12,7 +12,7 @@ using std::string;
 
 class NExpArrIdentifier : public NExpIdentifier {    
     public:
-        std::vector<NExpression*> sizes;
+        std::vector<NExpression*> sizeExps;
 
         NExpArrIdentifier(string name) : NExpIdentifier(name) {}
 };

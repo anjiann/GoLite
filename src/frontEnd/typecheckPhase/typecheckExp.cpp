@@ -5,28 +5,6 @@ using std::cout;
 using std::endl;
 using std::cerr;
 
-//HELPERS
-
-bool isInteger(const NType &type) {
-    return type == NType::intType || type == NType::runeType;
-}
-
-bool isNumeric(const NType &type) {
-    return isInteger(type) || type == NType::floatType;
-}
-
-bool isBoolean(const NType &type) {
-    return type == NType::boolType;
-}
-
-bool isString(const NType &type) {
-    return type == NType::stringType;
-}
-
-bool isOrdered(const NType &type) {
-    return isNumeric(type) || isString(type);
-}
-
 //binary expressions: assert that lhs has type1 and rhs has type2
 void assert(const NExpression &lhs, const NType &type1, const NExpression &rhs, const NType &type2) {
     if(lhs.type != type1 || rhs.type != type2) {
@@ -72,7 +50,7 @@ void assertNumeric(const NExpUnary &unaryExp) {
 void assertInteger(const NExpBinary &binaryExp) {
     const NExpression &lhs = binaryExp.lhs;
     const NExpression &rhs = binaryExp.rhs;
-    if(!isInteger(lhs.type) || !isInteger(rhs.type)) {
+    if(!(isInteger(lhs.type) || isRune(rhs.type)) || !(isInteger(rhs.type) || isRune(lhs.type))) {
         cerr << "Error: (line " << binaryExp.lineno << ") incompatible type in arithmetic op " << binaryExp.op;
         cerr << " [received "<< lhs.type << ", expected integer (int, rune)]" << endl;
     }
@@ -89,7 +67,7 @@ void assertBool(const NExpUnary &unaryExp) {
 
 void assertInteger(const NExpUnary &unaryExp) {
     const NExpression &exp = unaryExp.exp;
-    if(!isInteger) {
+    if(!(isInteger(unaryExp.type) || isRune(unaryExp.type))) {
         cerr << "Error: (line " << unaryExp.lineno << ") incompatible type in unary op " << unaryExp.op;
         cerr << " [received" << exp.type << ", expected integer (int, rune)]" << endl;
     }
@@ -99,6 +77,17 @@ void assertInteger(const NExpUnary &unaryExp) {
 
 void TypecheckDispatcher::dispatch(const NExpression &exp) const {
     exp.accept(*this);
+}
+
+void TypecheckDispatcher::dispatch(const NExpArrIdentifier &arrIdExp) const {
+    for(const auto &sizeExp : arrIdExp.sizeExps) {
+        sizeExp->accept(*this);
+        if(!isInteger(sizeExp->type)) {
+            cerr << "Error: (line " << arrIdExp.lineno << ") index must be an int";
+            cerr << "[received " << sizeExp->type << "]" << endl;
+            exit(EXIT_FAILURE);
+        }
+    }
 }
 
 void TypecheckDispatcher::dispatch(const NExpBinary &binaryExp) const {
@@ -191,14 +180,6 @@ void TypecheckDispatcher::dispatch(const NExpBinary &binaryExp) const {
 void TypecheckDispatcher::dispatch(const NExpBuiltin &builtinExp) const {}
 void TypecheckDispatcher::dispatch(const NExpFunc &funcExp) const {}
 void TypecheckDispatcher::dispatch(const NExpIdentifier &idExp) const {
-    // switch(literalExp) {
-    //     case NType::intType.id : literalExp.type = NType::intType; break;
-    //     case NType::floatType.id : literalExp.type = NType::floatType; break;
-    //     case NType::runeType.id : literalExp.type = NType::runeType; break;
-    //     case NType::boolType.id : literalExp.type = NType::boolType; break;
-    //     case NType::stringType.id : literalExp.type = NType::stringType; break;
-    //     default: literalExp.type = NType(literalExp.literal);
-    // }
 }
 
 void TypecheckDispatcher::dispatch(const NExpIndexer &indexerExp) const {
@@ -206,6 +187,13 @@ void TypecheckDispatcher::dispatch(const NExpIndexer &indexerExp) const {
 }
 
 void TypecheckDispatcher::dispatch(const NExpLiteral &literalExp) const {
+    switch(literalExp.kind) {
+        case NExpLiteralKind::intLiteral : literalExp.type = NType::intType; break;
+        case NExpLiteralKind::floatLiteral : literalExp.type = NType::floatType; break;
+        case NExpLiteralKind::runeLiteral : literalExp.type = NType::runeType; break;
+        case NExpLiteralKind::boolLiteral : literalExp.type = NType::boolType; break;
+        case NExpLiteralKind::stringLiteral : literalExp.type = NType::stringType; break;
+    }
 }
 
 void TypecheckDispatcher::dispatch(const NExpUnary &unaryExp) const {
@@ -234,5 +222,15 @@ void TypecheckDispatcher::dispatch(const NExpUnary &unaryExp) const {
     }
 }
 
-void TypecheckDispatcher::dispatch(const NExpCaseClause &caseClauseExp) const {}
-void TypecheckDispatcher::dispatch(const NExpSwitchCase &switchCaseExp) const {}
+void TypecheckDispatcher::dispatch(const NExpCaseClause &caseClauseExp) const {
+    caseClauseExp.switchCase.accept(*this);
+    for(const auto &stmt : caseClauseExp.stmts) {
+        stmt->accept(*this);
+    }
+}
+
+void TypecheckDispatcher::dispatch(const NExpSwitchCase &switchCaseExp) const {
+    for(const auto &exp : switchCaseExp.explist) {
+        exp->accept(*this);
+    }
+}

@@ -13,7 +13,7 @@ using std::string;
 class NExpIdentifier : public NExpression {    
     public:
         string name;
-        mutable Symbol symbol;
+        mutable Symbol *symbol;
         NExpIdentifier(string name) : name{name} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {

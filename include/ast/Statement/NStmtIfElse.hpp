@@ -10,10 +10,10 @@ class NStmtIfElse : public NStatement{
     public:
         const NExpression &condition;
         const NStatementList &body;
-        const NStatementList &elsebody;
+        const NStatementList &elseBody;
 
-        NStmtIfElse(const NExpression &condition, const NStatementList &body, const NStatementList &elsebody) 
-            : condition{condition}, body{body}, elsebody{elsebody} {}
+        NStmtIfElse(const NExpression &condition, const NStatementList &body, const NStatementList &elseBody) 
+            : condition{condition}, body{body}, elseBody{elseBody} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);

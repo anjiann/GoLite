@@ -49,6 +49,7 @@ void yyerror(const char *s) {
 
     NExpSwitchCase *switchcase;
 
+    NExpIdentifier *id;
     NExpArrIdentifier *arrid;
     NDecVar *param;
     std::vector<NExpCaseClause*> *caseclauselist;
@@ -73,6 +74,7 @@ void yyerror(const char *s) {
 
 %type <switchcase> switchcase
 %type <param> param
+%type <id> id expid
 %type <arrid> arrayid
 
 %type <caseclauselist> caseclauselist
@@ -270,8 +272,8 @@ ifstmt          : tIF exp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtIfEls
                 | tIF exp tLPAREN stmts tRPAREN tELSE tLPAREN stmts tRPAREN { $$ = new NStmtIfElse(*$2, *$4, *$8); }
                 ;
 
-simplestmt      : tIDENTIFIER tINCREMENT { $$ = new NStmtIncDec(string($1), true); }
-                | tIDENTIFIER tDECREMENT { $$ = new NStmtIncDec(string($1), false); }
+simplestmt      : expid tINCREMENT { $$ = new NStmtIncDec(*$1, true); }
+                | expid tDECREMENT { $$ = new NStmtIncDec(*$1, false); }
                 | explist tASSIGN explist { $$ = new NStmtAssign(*$1, *$3); delete $1; delete $3; }
                 ;
 
@@ -301,7 +303,7 @@ exp             : literalexp {$$ = $1;}
 literalexp      : tINTLITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::intLiteral);}
                 | tFLOATLITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::floatLiteral);}
                 | tBOOLLITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::boolLiteral);}
-                | tRUNELITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::charLiteral);}
+                | tRUNELITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::runeLiteral);}
                 | tSTRINGLITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::stringLiteral);}
                 ;
 
@@ -354,17 +356,24 @@ arrtype         : tLBRACKET tINTLITERAL tRBRACKET tIDENTIFIER { $$ = new NTypeAr
 
 param : tIDENTIFIER type { $$ = new NDecVar(string($1), *$2); }
 
+id              : tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
+                ;
+                
+arrayid         : tIDENTIFIER tLBRACKET exp tRBRACKET { $$ = new NExpArrIdentifier(string($1)); $$->sizeExps.push_back($3); }
+                | arrayid tLBRACKET exp tRBRACKET { $1->sizeExps.push_back($3); }
+                ;
+
+expid           : id { $$ = $1; }
+                | arrayid { $$ = $1; }
+                ;
+
 // === vector of ast nodes; used as parameters for constructors ===
 params          : param { $$ = new NDecVarList(); $$->push_back($1); }
                 | params tCOMMA param { $1->push_back($3); }
                 ;
 
-idlist          : tIDENTIFIER { $$ = new NExpIdentifierList(); $$->push_back(new NExpIdentifier(string($1))); }
-                | idlist tCOMMA tIDENTIFIER { $1->push_back(new NExpIdentifier(string($3))); }
-                ;
-
-arrayid         : tIDENTIFIER tLBRACKET exp tRBRACKET { $$ = new NExpArrIdentifier(string($1)); $$->sizes.push_back($3); }
-                | arrayid tLBRACKET exp tRBRACKET { $1->sizes.push_back($3); }
+idlist          : id { $$ = new NExpIdentifierList(); $$->push_back($1); }
+                | idlist tCOMMA id{ $1->push_back($3); }
                 ;
                 
 /* TODO weed for no exp for case, assign(stmt and decl) */

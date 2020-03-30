@@ -1,12 +1,13 @@
-#ifndef TYPECHECKDISPATCHER_HPP
-#define TYPECHECKDISPATCHER_HPP
+#ifndef WEEDERDISPATCHER_HPP
+#define WEEDERDISPATCHER_HPP
+
 
 #include "abstractDispatcher.hpp"
 #include "tree.hpp"
 
-class TypecheckDispatcher : public AbstractDispatcher {
+class WeederDispatcher : public AbstractDispatcher {
     public:
-        TypecheckDispatcher() {}
+        WeederDispatcher() {}
 
         virtual void dispatch(const NProgram &program) const;
 

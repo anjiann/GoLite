@@ -42,7 +42,7 @@ enum class NExpLiteralKind {
 	intLiteral,
 	floatLiteral,
 	boolLiteral,
-	charLiteral,
+	runeLiteral,
 	stringLiteral
 };
 
