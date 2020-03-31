@@ -8,7 +8,7 @@
 
 class NStmtBlock : public NStatement {
     public:
-        const NStatementList &stmts;
+        const NStatementList stmts;
         NStmtBlock(const NStatementList &stmts) : stmts{stmts} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {

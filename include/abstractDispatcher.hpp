@@ -41,9 +41,6 @@ class NType;
 class NTypeArray;
 class NTypeIdentifier;
 
-typedef std::vector<NDeclaration*> NDeclarationList;
-typedef std::vector<NStatement*> NStatementList;
-
 class AbstractDispatcher {
     public:
         virtual void dispatch(const NProgram &program) const = 0;

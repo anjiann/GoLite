@@ -8,7 +8,7 @@
 
 class NStmtExp : public NStatement {
     public:
-        const NExpression &exp;
+        const NExpression exp;
 
         NStmtExp(const NExpression &exp) : exp{exp} {}
 

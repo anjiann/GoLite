@@ -12,9 +12,9 @@ using std::string;
 class NDecType : public NDeclaration {
     public:
         string id;
-        const NType &type;
+        const NType type;
         
-        NDecType(string id, const NType &type) : id{id}, type{type} {}
+        NDecType(const string &id, const NType &type) : id{id}, type{type} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);

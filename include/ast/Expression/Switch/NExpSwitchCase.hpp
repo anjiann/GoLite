@@ -9,7 +9,7 @@
 // refer to https://golang.org/ref/spec#ExprSwitchStmt
 class NExpSwitchCase : NExpression {
     public:
-        const NExpressionList &explist; //"default" if size == 0, "case" otherwise
+        const NExpressionList explist; //"default" if size == 0, "case" otherwise
         
         NExpSwitchCase(const NExpressionList &explist) : explist{explist} {}
 

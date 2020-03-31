@@ -14,12 +14,14 @@ using std::string;
 class NDecFunc : public NDeclaration {
     public:
         string id;
-        const NDecVarList &params;
-        const NType &type;
-        const NStatementList &stmts;
+        const NDecVarList params;
+        const NType type;
+        const NStatementList stmts;
 
         NDecFunc(string id, const NDecVarList &params, const NType &type, const NStatementList &stmts) 
             : id{id}, params{params}, type{type}, stmts{stmts} {}
+
+        NDecFunc(NDecFunc &&src) = default;
 
         void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);

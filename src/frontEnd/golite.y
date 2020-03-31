@@ -11,6 +11,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <memory>
 #include <vector>
 #include <string>
 #include "tree.hpp"
@@ -41,22 +42,21 @@ void yyerror(const char *s) {
 	std::string *identifier;
 
     NProgram *prog;
-    std::vector<NDeclaration*> *declist;
-    std::vector<NStatement*> *stmtlist;
+    std::vector<std::shared_ptr<NDeclaration>> *declist;
+    std::vector<std::shared_ptr<NStatement>> *stmtlist;
     NDeclaration *dec;
     NStatement *stmt;
     NExpression *exp;
     NType *type;
 
     NExpSwitchCase *switchcase;
-
     NExpIdentifier *id;
     NExpArrIdentifier *arrid;
-    NDecVar *param;
-    std::vector<NExpCaseClause*> *caseclauselist;
-    std::vector<NExpression*> *explist;
-    std::vector<NDecVar*> *decvarlist;
-    std::vector<NExpIdentifier*> *idlist;
+
+    std::vector<std::shared_ptr<NExpCaseClause>> *caseclauselist;
+    std::vector<std::shared_ptr<NExpression>> *explist;
+    std::vector<std::shared_ptr<NDecVar>> *decvarlist;
+    std::vector<std::shared_ptr<NExpIdentifier>> *idlist;
 }
 
 /* Token directives define the token types to be returned by the scanner (excluding character
@@ -74,8 +74,7 @@ void yyerror(const char *s) {
 %type <type> type opttype arrtype
 
 %type <switchcase> switchcase
-%type <param> param
-%type <id> id expid
+%type <id> expid
 %type <arrid> arrayid
 
 %type <caseclauselist> caseclauselist
@@ -219,48 +218,48 @@ void yyerror(const char *s) {
 %% 
 
 /* Represents the entire program. Makes sure there is only one package dec */
-program         : tPACKAGE tIDENTIFIER tSEMICOLON topdec { program = new NProgram(*$2, *$4); delete $2; }
+program         : tPACKAGE tIDENTIFIER tSEMICOLON topdec { program = new NProgram(*$2, *$4); delete $2; delete $4; }
                 ;
 
 topdec          : %empty { $$ = new NDeclarationList(); }
-                | topdec dec { $1->push_back($2); }
-                | topdec funcdec { $1->push_back($2); }
+                | topdec dec { $1->push_back(std::shared_ptr<NDeclaration>($2)); delete $2; }
+                | topdec funcdec { $1->push_back(std::shared_ptr<NDeclaration>($2)); delete $2; }
                 ;
 
 stmts           : %empty { $$ = new NStatementList(); }
-                | stmts stmt { $1->push_back($2); }
+                | stmts stmt { $1->push_back(std::shared_ptr<NStatement>($2)); delete $2; }
                 ;
 
 /* ================= DECLARATIONS ================= */
 dec             : tVAR vardec { $$ = $2; }
-                | tTYPE tIDENTIFIER type tSEMICOLON { $$ = new NDecType(*$2, *$3); delete $2; }
+                | tTYPE tIDENTIFIER type tSEMICOLON { $$ = new NDecType(*$2, *$3); delete $2; delete $3; }
                 ;
 
 vardec          : idlist type tSEMICOLON { $$ = new NDecVar(*$1, *$2, NExpressionList()); delete $1; delete $2; }
-                | idlist opttype tASSIGN explist tSEMICOLON { $$ = new NDecVar(*$1, *$2, *$4); delete $1; delete $4; delete $2; }
+                | idlist opttype tASSIGN explist tSEMICOLON { $$ = new NDecVar(*$1, *$2, *$4); delete $1; delete $2; delete $4; }
                 ;
 
 /* function definitions */
 funcdec         : tFUNC tIDENTIFIER tLBRACE optparams tRBRACE tLPAREN stmts tRPAREN tSEMICOLON
-                    { $$ = new NDecFunc(*$2, *$4, NType(), *$7); delete $2; }
+                    { $$ = new NDecFunc(*$2, *$4, NType(), *$7); delete $2; delete $4; delete $7; }
                 | tFUNC tIDENTIFIER tLBRACE optparams tRBRACE type tLPAREN stmts tRPAREN tSEMICOLON
-                    { $$ = new NDecFunc(*$2, *$4, *$6, *$8); delete $2; }
+                    { $$ = new NDecFunc(*$2, *$4, *$6, *$8); delete $2; delete $4; delete $6; delete $8; }
                 ;
 
 /* ================== STATEMENTS ================== */
 
 /* TODO weeder for break, continue, return*/
-stmt            : dec { $$ = new NStmtDec(*$1); }
-                | exp %prec EXPSTMT { $$ = new NStmtExp(*$1); }
+stmt            : dec { $$ = new NStmtDec(*$1); delete $1; }
+                | exp %prec EXPSTMT { $$ = new NStmtExp(*$1); delete $1; }
                 | printstmt { $$ = $1; }
                 | ifstmt { $$ = $1; }
                 | forstmt {$$ = $1;}
                 | simplestmt tSEMICOLON { $$ = $1; }
-                | tBREAK tSEMICOLON { $$ = new NStmtBreakContinue(breakStmt);}
-                | tCONTINUE tSEMICOLON { $$ = new NStmtBreakContinue(continueStmt);}
-                | tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtBlock(*$2); }
-                | tSWITCH optexp tLPAREN caseclauselist tRPAREN tSEMICOLON { $$ = new NStmtSwitch(*$2, *$4); delete $4; }
-                | tRETURN optexp tSEMICOLON { $$ = new NStmtReturn(*$2); }
+                | tBREAK tSEMICOLON { $$ = new NStmtBreakContinue(breakStmt); }
+                | tCONTINUE tSEMICOLON { $$ = new NStmtBreakContinue(continueStmt); }
+                | tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtBlock(*$2); delete $2; }
+                | tSWITCH optexp tLPAREN caseclauselist tRPAREN tSEMICOLON { $$ = new NStmtSwitch(*$2, *$4); delete $2; delete $4; }
+                | tRETURN optexp tSEMICOLON { $$ = new NStmtReturn(*$2); delete $2; }
                 | tSEMICOLON { $$ = new NStmtEmpty(); }
                 ;
 
@@ -268,14 +267,14 @@ printstmt       : tPRINT tLBRACE optexplist tRBRACE tSEMICOLON { $$ = new NStmtP
                 | tPRINTLN tLBRACE optexplist tRBRACE tSEMICOLON { $$ = new NStmtPrint(*$3, true); delete $3; }
                 ;
 
-ifstmt          : tIF exp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtIfElse(*$2, *$4, NStatementList()); }
-                | tIF exp tLPAREN stmts tRPAREN tELSE ifstmt { $$ = new NStmtIfElse(*$2, *$4, {$7}); }
-                | tIF exp tLPAREN stmts tRPAREN tELSE tLPAREN stmts tRPAREN { $$ = new NStmtIfElse(*$2, *$4, *$8); }
+ifstmt          : tIF exp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtIfElse(*$2, *$4, NStatementList()); delete $2; delete $4; }
+                | tIF exp tLPAREN stmts tRPAREN tELSE ifstmt { $$ = new NStmtIfElse(*$2, *$4, {std::shared_ptr<NStatement>($7)}); delete $2; delete $4; delete $7; }
+                | tIF exp tLPAREN stmts tRPAREN tELSE tLPAREN stmts tRPAREN { $$ = new NStmtIfElse(*$2, *$4, *$8); delete $2; delete $4; delete $8; }
                 ;
 
-simplestmt      : expid tINCREMENT { $$ = new NStmtIncDec(*$1, true); }
-                | expid tDECREMENT { $$ = new NStmtIncDec(*$1, false); }
-                | explist tASSIGN explist { $$ = new NStmtAssign(*$1, *$3); delete $1; delete $3; }
+simplestmt      : expid tINCREMENT { $$ = new NStmtIncDec(*$1, true); delete $1; }
+                | expid tDECREMENT { $$ = new NStmtIncDec(*$1, false); delete $1; }
+                | explist tASSIGN explist { $$ = new NStmtAssign(*$1, std::move(*$3)); delete $1; delete $3; }
                 ;
 
 forstmt         : tFOR optexp tLPAREN stmts tRPAREN tSEMICOLON { $$ = new NStmtFor(NStatement(), *$2, NStatement(), *$4); }
@@ -296,9 +295,9 @@ exp             : literalexp {$$ = $1;}
                 | binaryexp {$$ = $1;}
                 | builtinexp { $$ = $1; }
                 | arrayid { $$ = $1; }
-                | exp tLBRACE optexplist tRBRACE { $$ = new NExpFunc(*$1, *$3); delete $1; delete $3; }  
+                | exp tLBRACE optexplist tRBRACE { $$ = new NExpFunc(*$1, std::move(*$3)); delete $1; delete $3; }  
                 | tLBRACE exp tRBRACE { $$ = $2; }
-                | id { $$ = $1; }
+                | tIDENTIFIER { $$ = new NExpIdentifier(*$1); delete $1; }
                 ;
 
 literalexp      : tINTLITERAL {$$ = new NExpLiteral(*$1, NExpLiteralKind::intLiteral); delete $1; }
@@ -350,44 +349,38 @@ type            : tIDENTIFIER { $$ = new NTypeIdentifier(*$1); delete $1; }
                 ;
 
 arrtype         : tLBRACKET tINTLITERAL tRBRACKET tIDENTIFIER { $$ = new NTypeArray(stoi(*$2), NType(*$4)); delete $2; delete $4; }
-                | tLBRACKET tINTLITERAL tRBRACKET arrtype { $$ = new NTypeArray(stoi(*$2), *$4); delete $2; }
+                | tLBRACKET tINTLITERAL tRBRACKET arrtype { $$ = new NTypeArray(stoi(*$2), *$4); delete $2; delete $4; }
                 ;
 
 /* ================ HELPERS ================= */
 
-param           : tIDENTIFIER type { $$ = new NDecVar(*$1, *$2); delete $1; delete $2; }
+arrayid         : tIDENTIFIER tLBRACKET exp tRBRACKET { $$ = new NExpArrIdentifier(*$1); $$->sizeExps.push_back(std::shared_ptr<NExpression>($3)); delete $1; delete $3; }
+                | arrayid tLBRACKET exp tRBRACKET { $1->sizeExps.push_back(std::shared_ptr<NExpression>($3)); delete $3; }
                 ;
 
-id              : tIDENTIFIER { $$ = new NExpIdentifier(*$1); delete $1; }
-                ;
-                
-arrayid         : tIDENTIFIER tLBRACKET exp tRBRACKET { $$ = new NExpArrIdentifier(*$1); $$->sizeExps.push_back($3); delete $1; }
-                | arrayid tLBRACKET exp tRBRACKET { $1->sizeExps.push_back($3); }
-                ;
-
-expid           : id { $$ = $1; }
+expid           : tIDENTIFIER { $$ = new NExpIdentifier(*$1); delete $1; }
                 | arrayid { $$ = $1; }
                 ;
 
 // === vector of ast nodes; used as parameters for constructors ===
-params          : param { $$ = new NDecVarList(); $$->push_back($1); }
-                | params tCOMMA param { $1->push_back($3); }
+params          : tIDENTIFIER type { $$ = new NDecVarList(); $$->push_back(std::shared_ptr<NDecVar>(new NDecVar(*$1, *$2))); delete $1; delete $2; }
+                | params tCOMMA tIDENTIFIER type { $1->push_back(std::shared_ptr<NDecVar>(new NDecVar(*$3, *$4))); delete $3; delete $4; }
                 ;
 
-idlist          : id { $$ = new NExpIdentifierList(); $$->push_back($1); }
-                | idlist tCOMMA id{ $1->push_back($3); }
+idlist          : tIDENTIFIER { $$ = new NExpIdentifierList(); $$->push_back(std::shared_ptr<NExpIdentifier>(new NExpIdentifier(*$1))); delete $1; }
+                | idlist tCOMMA tIDENTIFIER { $1->push_back(std::shared_ptr<NExpIdentifier>(new NExpIdentifier(*$3))); delete $3;}
                 ;
                 
 /* TODO weed for no exp for case, assign(stmt and decl) */
-explist         : exp %prec EXPLIST { $$ = new NExpressionList(); $$->push_back($1); }
-                | explist tCOMMA exp { $1->push_back($3); }
+explist         : exp %prec EXPLIST { $$ = new NExpressionList(); $$->push_back(std::shared_ptr<NExpression>($1)); delete $1; }
+                | explist tCOMMA exp { $1->push_back(std::shared_ptr<NExpression>($3)); delete $3; }
                 ; 
 
 caseclauselist  : %empty { $$ = new NExpCaseClauseList(); }
-                | caseclauselist switchcase tCOLON stmts 
-                    { $1->push_back(new NExpCaseClause(*$2, *$4)); }
+                | caseclauselist switchcase tCOLON stmts { $1->push_back(std::shared_ptr<NExpCaseClause>(new NExpCaseClause(*$2, *$4))); delete $2; delete $4;}
+                ;
 
-switchcase      : tCASE explist { $$ = new NExpSwitchCase(*$2); }
+switchcase      : tCASE explist { $$ = new NExpSwitchCase(*$2); delete $2; }
                 | tDEFAULT { $$ = new NExpSwitchCase(NExpressionList()); }
 
 // === optionals; used to reduce the size of ast non-terminals ===

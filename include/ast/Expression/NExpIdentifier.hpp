@@ -2,6 +2,7 @@
 #define NEXPIDENTIFIER_H
 
 #include <string>
+#include <memory>
 #include <vector>
 #include "../../abstractDispatcher.hpp"
 #include "../../symbolPhase/symbols/symbol.hpp"
@@ -13,7 +14,7 @@ using std::string;
 class NExpIdentifier : public NExpression {    
     public:
         const string name;
-        mutable const Symbol *symbol = nullptr;
+        mutable const Symbol *symbol = nullptr; //TODO unique ptr
 
         NExpIdentifier(const string &name) : name{name} {}
 
@@ -22,6 +23,6 @@ class NExpIdentifier : public NExpression {
         }
 };
 
-typedef std::vector<NExpIdentifier*> NExpIdentifierList;
+typedef std::vector<std::shared_ptr<NExpIdentifier>> NExpIdentifierList;
 
 #endif /* !NEXPIDENTIFIER_H */

@@ -1,6 +1,7 @@
 #ifndef PRETTYPRINTPHASE_HPP
 #define PRETTYPRINTPHASE_HPP
 
+#include <memory>
 #include <iostream>
 #include "abstractDispatcher.hpp"
 #include "tree.hpp"

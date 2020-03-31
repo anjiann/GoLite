@@ -10,7 +10,7 @@ using std::string;
 
 class NStmtIncDec : public NStatement {
     public:
-        const NExpIdentifier &exp;
+        const NExpIdentifier exp;
         bool isIncrement;
 
         NStmtIncDec(const NExpIdentifier &exp, bool isIncrement) : exp{exp}, isIncrement{isIncrement} {}

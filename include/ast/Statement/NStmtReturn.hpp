@@ -8,7 +8,7 @@
 
 class NStmtReturn : public NStatement {
     public:
-        const NExpression &exp;
+        const NExpression exp;
         NStmtReturn(const NExpression &exp) : exp{exp} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {

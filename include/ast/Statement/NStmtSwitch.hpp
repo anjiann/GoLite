@@ -8,11 +8,11 @@
 
 class NStmtSwitch : public NStatement {
     public:
-        const NExpression &condition;
+        const NExpression condition;
         const NExpCaseClauseList caseClauses;
 
         NStmtSwitch(const NExpression &condition, const NExpCaseClauseList &caseClauses)
-            : condition{condition}, caseClauses{caseClauses} {}
+            : condition{condition}, caseClauses{std::move(caseClauses)} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);

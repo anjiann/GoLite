@@ -12,7 +12,7 @@ using std::string;
 class NProgram : public NAbstractAstNode {
     public:
         string package;
-        const NDeclarationList &topdecs;
+        const NDeclarationList topdecs;
 
         NProgram(const string &package, const NDeclarationList &topdecs) : package{package}, topdecs{topdecs} {}
 

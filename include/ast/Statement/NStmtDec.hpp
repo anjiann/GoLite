@@ -8,7 +8,7 @@
 
 class NStmtDec : public NStatement {
     public:
-        const NDeclaration &dec;
+        const NDeclaration dec;
 
         NStmtDec(const NDeclaration &dec) : dec{dec} {}
 

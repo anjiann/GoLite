@@ -9,17 +9,22 @@
 
 class NExpCaseClause : NExpression {
     public:
-        const NExpSwitchCase &switchCase;
+        const NExpSwitchCase switchCase;
         const NStatementList stmts;
+
         NExpCaseClause(const NExpSwitchCase &switchCase, const NStatementList &stmts) 
             : switchCase{switchCase}, stmts{stmts} {}
+
+        NExpCaseClause(NExpCaseClause &&src) = default;
 
         void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);
         }
+
+
 };
 
-typedef std::vector<NExpCaseClause*> NExpCaseClauseList;
+typedef std::vector<std::shared_ptr<NExpCaseClause>> NExpCaseClauseList;
 
 
 #endif /* !NEXPCASECLAUSE_H */

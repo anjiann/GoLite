@@ -1,6 +1,7 @@
 #ifndef NSTATEMENT_H
 #define NSTATEMENT_H
 
+#include <memory>
 #include <vector>
 #include "../../abstractDispatcher.hpp"
 
@@ -8,17 +9,14 @@
 
 class NStatement : public NAbstractAstNode {
     public:
-        int lineno;
-
         NStatement() {}
-        NStatement(int lineno) : lineno{lineno} {}
 
         virtual void accept(const AbstractDispatcher &dispatcher) const {
             dispatcher.dispatch(*this);
         }
 };
 
-typedef std::vector<NStatement*> NStatementList;
+typedef std::vector<std::shared_ptr<NStatement>> NStatementList;
 
 
 #endif /* !NSTATEMENT_H */

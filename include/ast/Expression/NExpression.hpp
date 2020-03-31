@@ -1,6 +1,7 @@
 #ifndef NEXPRESSION_H
 #define NEXPRESSION_H
 
+#include <memory>
 #include <vector>
 #include "../../abstractDispatcher.hpp"
 
@@ -17,7 +18,7 @@ class NExpression : public NAbstractAstNode {
         }
 };
 
-typedef std::vector<NExpression*> NExpressionList;
+typedef std::vector<std::shared_ptr<NExpression>> NExpressionList;
 
 
 #endif /* !NEXPRESSION_H */
