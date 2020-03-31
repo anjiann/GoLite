@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <memory>
 #include "symbolDefs.hpp"
 #include "symbols/symbol.hpp"
 #include "../ast/NAbstractAstNode.hpp"
@@ -12,23 +13,12 @@ using std::string;
 
 class SymbolTable {
     public:
-        SymbolTable *parent = nullptr;
-        std::unordered_map<string, const Symbol*> hashMap;
+        SymbolTable *parent;
+        std::unordered_map<string, std::shared_ptr<Symbol>> hashMap;
 
-        SymbolTable() {
-        }
+        SymbolTable() {}
 
-        ~SymbolTable() {
-            // delete parent;
-        }
-
-        SymbolTable *scopeSymbolTable() {
-            SymbolTable *t = new SymbolTable();
-            t->parent = this;
-            return t;
-        }
-
-        const Symbol *insertSymbol(const string &name, const Symbol *symbol) {
+        std::shared_ptr<Symbol> insertSymbol(const string &name, std::shared_ptr<Symbol> symbol) {
             auto it = hashMap.find(name);
             if(it != hashMap.end()) {
                 std::cerr << name << " was already declared in the current scope" << std::endl;
@@ -36,20 +26,20 @@ class SymbolTable {
             }
 
             hashMap.insert(std::make_pair(name, symbol));
-            return getSymbol(name);
+            return symbol;
         }
 
-        const Symbol *getSymbol(const string &name) const {
+        std::shared_ptr<Symbol> getSymbol(const string &name) const {
             //check current scope
             for(auto it = hashMap.begin(); it != hashMap.end(); it++) {
                 if(it->first == name) {
-                    return it->second;
+                    return std::move(it->second);
                 }
             }
 
             //check for existence of a parent scope
-            if(parent == nullptr) {
-                return nullptr;
+            if(!parent) {
+                return std::shared_ptr<Symbol>(nullptr);
             }
 
             //check the parent scope

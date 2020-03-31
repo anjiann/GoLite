@@ -36,11 +36,22 @@ class SymbolHelper {
 
         void initPrimitives();
 
+        void scopeSymbolTable() {
+            SymbolTable *t = new SymbolTable();
+            t->parent = currSymTable;
+            currSymTable = t;
+        }
+
+        void unscopeSymbolTable() {
+            SymbolTable *t = currSymTable->parent;
+            delete currSymTable;
+            currSymTable = t;
+        }
+
      public:
         SymbolHelper(AbstractDispatcher *symbolDispatcher) : symbolDispatcher{symbolDispatcher} {}
         ~SymbolHelper() {
-            // delete symbolDispatcher;
-            // delete currSymTable;
+            delete symbolDispatcher;
         }
 
         void dispatch(const NProgram &program);

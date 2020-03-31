@@ -14,9 +14,10 @@ using std::string;
 class NExpIdentifier : public NExpression {    
     public:
         const string name;
-        mutable const Symbol *symbol = nullptr; //TODO unique ptr
+        mutable std::shared_ptr<const Symbol> symbol;
 
         NExpIdentifier(const string &name) : name{name} {}
+        NExpIdentifier(const NExpIdentifier &src) : name{name}, symbol{std::move(src.symbol)} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);

@@ -5,13 +5,13 @@ using std::cout;
 using std::endl;
 
 void SymbolHelper::initPrimitives() {
-    const Symbol *intSym = currSymTable->insertSymbol("int", new TypeSymbol("int", NType::intType));
-    const Symbol *floatSym = currSymTable->insertSymbol("float", new TypeSymbol("float", NType::floatType));
-    const Symbol *boolSym = currSymTable->insertSymbol("bool", new TypeSymbol("bool", NType::boolType));
-    const Symbol *runeSym = currSymTable->insertSymbol("rune", new TypeSymbol("rune", NType::runeType));
-    const Symbol *stringSym = currSymTable->insertSymbol("string", new TypeSymbol("string", NType::stringType));
-    const Symbol *trueSym = currSymTable->insertSymbol("true", new ConstantSymbol("true", NType::boolType));
-    const Symbol *falseSym = currSymTable->insertSymbol("false", new ConstantSymbol("false", NType::boolType));
+    auto intSym = currSymTable->insertSymbol("int", std::shared_ptr<Symbol>(new TypeSymbol("int", NType::intType)));
+    auto floatSym = currSymTable->insertSymbol("float", std::shared_ptr<Symbol>(new TypeSymbol("float", NType::floatType)));
+    auto boolSym = currSymTable->insertSymbol("bool", std::shared_ptr<Symbol>(new TypeSymbol("bool", NType::boolType)));
+    auto runeSym = currSymTable->insertSymbol("rune", std::shared_ptr<Symbol>(new TypeSymbol("rune", NType::runeType)));
+    auto stringSym = currSymTable->insertSymbol("string", std::shared_ptr<Symbol>(new TypeSymbol("string", NType::stringType)));
+    auto trueSym = currSymTable->insertSymbol("true", std::shared_ptr<Symbol>(new ConstantSymbol("true", NType::boolType)));
+    auto falseSym = currSymTable->insertSymbol("false", std::shared_ptr<Symbol>(new ConstantSymbol("false", NType::boolType)));
 
     cout << tabs << *intSym << " = " << NType::intType << endl;
     cout << tabs << *floatSym << " = " << NType::floatType << endl;;
@@ -25,7 +25,7 @@ void SymbolHelper::initPrimitives() {
 void SymbolHelper::dispatch(const NProgram &program) {
     cout << tabs++ << "{" << endl; 
     initPrimitives();
-    currSymTable = currSymTable->scopeSymbolTable();
+    scopeSymbolTable();
 
     cout << tabs++ << "{" << endl;
     for(const auto &dec : program.topdecs) {
@@ -33,5 +33,6 @@ void SymbolHelper::dispatch(const NProgram &program) {
     }
     cout << --tabs << "}" << endl;
 
+    unscopeSymbolTable();
     cout << --tabs << "}" << endl;
 }

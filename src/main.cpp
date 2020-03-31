@@ -35,6 +35,7 @@ int main(int argc, char* argv[]) {
         
         AbstractDispatcher *prettyDispatcher = new PrettyDispatcher();
         program->accept(*prettyDispatcher);
+        delete prettyDispatcher;
         return 0;
     }
     else if(!strcmp(argv[1], "symbol")) {
@@ -42,6 +43,7 @@ int main(int argc, char* argv[]) {
 
         AbstractDispatcher *symbolDispatcher = new SymbolDispatcher();
         program->accept(*symbolDispatcher);
+        delete symbolDispatcher;
         return 0;
     }
     else if(!strcmp(argv[1], "typecheck")) {
@@ -49,6 +51,7 @@ int main(int argc, char* argv[]) {
 
         AbstractDispatcher *typecheckDispatcher = new TypecheckDispatcher();
         program->accept(*typecheckDispatcher);
+        delete typecheckDispatcher;
         printf("OK\n");
         return 0;
     }

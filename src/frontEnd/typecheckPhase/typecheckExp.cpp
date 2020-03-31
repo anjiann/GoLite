@@ -200,7 +200,26 @@ void TypecheckDispatcher::dispatch(const NExpBuiltin &builtinExp) const {
 }
 
 void TypecheckDispatcher::dispatch(const NExpFunc &funcExp) const {
+    funcExp.expId.accept(*this);
+    // try {
+    //     FuncSymbol &funcSym = dynamic_cast<FuncSymbol&>(funcExp.expId.sym);
+    // }
+    // catch() {
+    //     cerr << "Error: (line 8) foo is not a function type";
+    // }
 
+    // const NDecVarList &params = funcSym.decFunc.params;
+    // const NExpressionList &args = funcExp.args;
+    // auto itParams = params.begin();
+    // auto itArgs = args.begin();
+    // while(itParams != )
+    // while(itParams != params.end() || itArgs != args.end()) {
+    //     auto &decVar = *itParams++;
+    //     auto &exp = *itArgs++;
+
+    //     NExpIdentifier &expId = decVar->lhs.front();
+    //     assert(expId.type, exp.type);
+    // }
 }
 
 void TypecheckDispatcher::dispatch(const NExpIdentifier &idExp) const {

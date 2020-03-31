@@ -13,7 +13,8 @@ void SymbolHelper::dispatch(const NDeclaration &dec) {
 
 void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     funcDecs.push_back(&funcDec);
-    const Symbol *funcSym = currSymTable->insertSymbol(funcDec.id, new FuncSymbol(funcDec.id, funcDec));
+    std::shared_ptr<Symbol> funcSym { new FuncSymbol(funcDec.id, funcDec) };
+    currSymTable->insertSymbol(funcDec.id, funcSym);
 
     //func definition
     cout << tabs << *funcSym << " = (";
@@ -35,21 +36,21 @@ void SymbolHelper::dispatch(const NDecFunc &funcDec) {
 
     //func body
     cout << tabs++ << "{" << endl;
-    currSymTable = currSymTable->scopeSymbolTable();
+    scopeSymbolTable();
     for(const auto &param : funcDec.params) {
         param->accept(*symbolDispatcher);
     }
     for(const auto &stmt : funcDec.stmts) {
         stmt->accept(*symbolDispatcher);
     }
+    unscopeSymbolTable();
     cout << --tabs << "}" << endl;
-
-    currSymTable = currSymTable->parent;
 }
 
 // type t1 t2
 void SymbolHelper::dispatch(const NDecType &typeDec) {    
-    const Symbol *typeSym = currSymTable->insertSymbol(typeDec.id, new TypeSymbol(typeDec.id, typeDec.type));
+    std::shared_ptr<Symbol> typeSym { new TypeSymbol(typeDec.id, typeDec.type) };
+    currSymTable->insertSymbol(typeDec.id, typeSym);
 
     //print to console 
     cout << tabs << *typeSym << " = ";
@@ -61,7 +62,8 @@ void SymbolHelper::dispatch(const NDecType &typeDec) {
 
 void SymbolHelper::dispatch(const NDecVar &varDec) {
     for(const auto &expId : varDec.lhs) {
-        const Symbol *localSym = currSymTable->insertSymbol(expId->name, new LocalSymbol(expId->name, *expId));
+        std::shared_ptr<Symbol> localSym { new LocalSymbol(expId->name, *expId) };
+        currSymTable->insertSymbol(expId->name, localSym);
         expId->symbol = localSym;
 
         //print to console

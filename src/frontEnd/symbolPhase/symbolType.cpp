@@ -15,13 +15,13 @@ void SymbolHelper::dispatch(const NTypeArray &arrayType) {
 }
 
 void SymbolHelper::dispatch(const NTypeIdentifier &idType) {
-    const Symbol *symbol = currSymTable->getSymbol(idType.id);
+    auto symbol = currSymTable->getSymbol(idType.id);
     //check that the id is in the symbol table
     if(symbol == nullptr) {
        cerr << "Error: (line " << idType.lineno << ") type " << idType.id << " is not declared";
        exit(EXIT_FAILURE);
     }
     //don't recurse if id is a base type
-    const TypeSymbol *typeSym = dynamic_cast<const TypeSymbol*>(symbol);
+    // const TypeSymbol *typeSym = dynamic_cast<const TypeSymbol*>(symbol);
     cout << " -> ";
 }

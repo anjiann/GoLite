@@ -2,16 +2,14 @@
 #define SYMBOLPHASE_HPP
 
 #include "symbolHelper.hpp"
+#include "memory"
 
 class SymbolDispatcher : public AbstractDispatcher {
     private:
-        SymbolHelper *const symbolHelper = new SymbolHelper(this);
+        std::unique_ptr<SymbolHelper> const symbolHelper { new SymbolHelper(this) };
 
     public:
         SymbolDispatcher() {}
-        ~SymbolDispatcher() {
-            // delete symbolHelper;
-        }
 
         virtual void dispatch(const NProgram &program) const { symbolHelper->dispatch(program); }
 
