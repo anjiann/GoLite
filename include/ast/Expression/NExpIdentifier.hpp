@@ -12,10 +12,10 @@ using std::string;
 
 class NExpIdentifier : public NExpression {    
     public:
-        string name;
+        const string name;
         mutable const Symbol *symbol = nullptr;
 
-        NExpIdentifier(string name) : name{name} {}
+        NExpIdentifier(const string &name) : name{name} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);

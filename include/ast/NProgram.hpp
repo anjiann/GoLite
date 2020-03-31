@@ -14,7 +14,7 @@ class NProgram : public NAbstractAstNode {
         string package;
         const NDeclarationList &topdecs;
 
-        NProgram(string package, const NDeclarationList &topdecs) : package{package}, topdecs{topdecs} {}
+        NProgram(const string &package, const NDeclarationList &topdecs) : package{package}, topdecs{topdecs} {}
 
         virtual void accept(const AbstractDispatcher &dispatcher) const {
             dispatcher.dispatch(*this);

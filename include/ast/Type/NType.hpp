@@ -21,7 +21,7 @@ class NType : public NAbstractAstNode {
         static const NType inferType;
 
         NType() : id{inferType.id} {}
-        NType(string id) : id{id} {} 
+        NType(const string &id) : id{id} {} 
 
         inline NType &operator=(const NType &rhs) {
             this->id = rhs.id;

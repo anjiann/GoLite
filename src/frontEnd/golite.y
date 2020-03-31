@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
+#include <string>
 #include "tree.hpp"
 
 extern NProgram *program;
@@ -37,7 +38,7 @@ void yyerror(const char *s) {
  * optionally (b) non-terminals (variables in productions) with AST information if any.
  */
 %union {
-	char *identifier;
+	std::string *identifier;
 
     NProgram *prog;
     std::vector<NDeclaration*> *declist;
@@ -218,7 +219,7 @@ void yyerror(const char *s) {
 %% 
 
 /* Represents the entire program. Makes sure there is only one package dec */
-program         : tPACKAGE tIDENTIFIER tSEMICOLON topdec { program = new NProgram(string($2), *$4); }
+program         : tPACKAGE tIDENTIFIER tSEMICOLON topdec { program = new NProgram(*$2, *$4); delete $2; }
                 ;
 
 topdec          : %empty { $$ = new NDeclarationList(); }
@@ -232,18 +233,18 @@ stmts           : %empty { $$ = new NStatementList(); }
 
 /* ================= DECLARATIONS ================= */
 dec             : tVAR vardec { $$ = $2; }
-                | tTYPE tIDENTIFIER type tSEMICOLON { $$ = new NDecType(string($2), *$3); }
+                | tTYPE tIDENTIFIER type tSEMICOLON { $$ = new NDecType(*$2, *$3); delete $2; }
                 ;
 
-vardec          : idlist type tSEMICOLON { $$ = new NDecVar(*$1, *$2, *(new NExpressionList())); delete $1; }
-                | idlist opttype tASSIGN explist tSEMICOLON { $$ = new NDecVar(*$1, *$2, *$4); delete $1; delete $4; }
+vardec          : idlist type tSEMICOLON { $$ = new NDecVar(*$1, *$2, NExpressionList()); delete $1; delete $2; }
+                | idlist opttype tASSIGN explist tSEMICOLON { $$ = new NDecVar(*$1, *$2, *$4); delete $1; delete $4; delete $2; }
                 ;
 
 /* function definitions */
 funcdec         : tFUNC tIDENTIFIER tLBRACE optparams tRBRACE tLPAREN stmts tRPAREN tSEMICOLON
-                    { $$ = new NDecFunc(string($2), *$4, *(new NTypeIdentifier("void")), *$7); }
+                    { $$ = new NDecFunc(*$2, *$4, NType(), *$7); delete $2; }
                 | tFUNC tIDENTIFIER tLBRACE optparams tRBRACE type tLPAREN stmts tRPAREN tSEMICOLON
-                    { $$ = new NDecFunc(string($2), *$4, *$6, *$8); }
+                    { $$ = new NDecFunc(*$2, *$4, *$6, *$8); delete $2; }
                 ;
 
 /* ================== STATEMENTS ================== */
@@ -295,16 +296,16 @@ exp             : literalexp {$$ = $1;}
                 | binaryexp {$$ = $1;}
                 | builtinexp { $$ = $1; }
                 | arrayid { $$ = $1; }
-                | id tLBRACE optexplist tRBRACE { $$ = new NExpFunc(*$1, *$3); delete $3; }  
+                | exp tLBRACE optexplist tRBRACE { $$ = new NExpFunc(*$1, *$3); delete $1; delete $3; }  
                 | tLBRACE exp tRBRACE { $$ = $2; }
-                | tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
+                | id { $$ = $1; }
                 ;
 
-literalexp      : tINTLITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::intLiteral);}
-                | tFLOATLITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::floatLiteral);}
-                | tBOOLLITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::boolLiteral);}
-                | tRUNELITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::runeLiteral);}
-                | tSTRINGLITERAL {$$ = new NExpLiteral(string($1), NExpLiteralKind::stringLiteral);}
+literalexp      : tINTLITERAL {$$ = new NExpLiteral(*$1, NExpLiteralKind::intLiteral); delete $1; }
+                | tFLOATLITERAL {$$ = new NExpLiteral(*$1, NExpLiteralKind::floatLiteral); delete $1; }
+                | tBOOLLITERAL {$$ = new NExpLiteral(*$1, NExpLiteralKind::boolLiteral); delete $1; }
+                | tRUNELITERAL {$$ = new NExpLiteral(*$1, NExpLiteralKind::runeLiteral); delete $1; }
+                | tSTRINGLITERAL {$$ = new NExpLiteral(*$1, NExpLiteralKind::stringLiteral); delete $1; }
                 ;
 
 unaryexp        : tPLUS exp %prec UNARY {$$ = new NExpUnary(*$2, NExpOpKind::plusExp);}
@@ -343,23 +344,24 @@ opttype         : %empty { $$ = new NType(); }
                 | type { $$ = $1; }
                 ;
 
-type            : tIDENTIFIER { $$ = new NTypeIdentifier($1); }
+type            : tIDENTIFIER { $$ = new NTypeIdentifier(*$1); delete $1; }
                 | arrtype { $$ = $1; }
                 | tLBRACE type tRBRACE { $$ = $2; }
                 ;
 
-arrtype         : tLBRACKET tINTLITERAL tRBRACKET tIDENTIFIER { $$ = new NTypeArray(atoi($2), *(new NType(string($4)))); }
-                | tLBRACKET tINTLITERAL tRBRACKET arrtype { $$ = new NTypeArray(atoi($2), *$4); }
+arrtype         : tLBRACKET tINTLITERAL tRBRACKET tIDENTIFIER { $$ = new NTypeArray(stoi(*$2), NType(*$4)); delete $2; delete $4; }
+                | tLBRACKET tINTLITERAL tRBRACKET arrtype { $$ = new NTypeArray(stoi(*$2), *$4); delete $2; }
                 ;
 
 /* ================ HELPERS ================= */
 
-param : tIDENTIFIER type { $$ = new NDecVar(string($1), *$2); }
+param           : tIDENTIFIER type { $$ = new NDecVar(*$1, *$2); delete $1; delete $2; }
+                ;
 
-id              : tIDENTIFIER { $$ = new NExpIdentifier(string($1)); }
+id              : tIDENTIFIER { $$ = new NExpIdentifier(*$1); delete $1; }
                 ;
                 
-arrayid         : tIDENTIFIER tLBRACKET exp tRBRACKET { $$ = new NExpArrIdentifier(string($1)); $$->sizeExps.push_back($3); }
+arrayid         : tIDENTIFIER tLBRACKET exp tRBRACKET { $$ = new NExpArrIdentifier(*$1); $$->sizeExps.push_back($3); delete $1; }
                 | arrayid tLBRACKET exp tRBRACKET { $1->sizeExps.push_back($3); }
                 ;
 
@@ -386,7 +388,7 @@ caseclauselist  : %empty { $$ = new NExpCaseClauseList(); }
                     { $1->push_back(new NExpCaseClause(*$2, *$4)); }
 
 switchcase      : tCASE explist { $$ = new NExpSwitchCase(*$2); }
-                | tDEFAULT { $$ = new NExpSwitchCase(*(new NExpressionList())); }
+                | tDEFAULT { $$ = new NExpSwitchCase(NExpressionList()); }
 
 // === optionals; used to reduce the size of ast non-terminals ===
 

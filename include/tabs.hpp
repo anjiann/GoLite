@@ -7,7 +7,7 @@ class Tabs {
     friend std::ostream &operator<<(std::ostream &os, const Tabs &rhs);
 
     private:
-        int numTabs;
+        int numTabs = 0;
     public:
         Tabs() {}
 

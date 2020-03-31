@@ -13,7 +13,7 @@
 class NDecVar : public NDeclaration {
     public:
         NExpIdentifierList lhs;
-        const NType &type;
+        const NType type;
         const NExpressionList rhs;
         NDecVar(string id, const NType &type) : NDecVar(*(new NExpIdentifierList()), type, *(new NExpressionList())) {
             NExpIdentifier *tempId = new NExpIdentifier(id);
