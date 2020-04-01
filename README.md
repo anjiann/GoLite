@@ -1,3 +1,9 @@
+name: Andy Jian
+student id: 260741607
+
+2020_group08b$ ./build.sh //regenerates the makefile and build whole project
+2020_group08b$ make -C build //incremental build (need to rebuild project if new files were added)
+
 # Assignment Template
 
 To organize your assignments and project for class, please follow the skeleton provided in this repository
