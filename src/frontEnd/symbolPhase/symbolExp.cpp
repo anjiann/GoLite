@@ -31,12 +31,13 @@ void SymbolHelper::dispatch(const NExpFunc &funcExp) {
 }
 
 void SymbolHelper::dispatch(const NExpIdentifier &idExp) {
-    auto sym = currSymTable->getSymbol(idExp.name);
-    if(sym == nullptr) {
-        cerr << "Error: (line " << idExp.lineno << ") "<< idExp.name << "is not declared" << endl;
+    std::shared_ptr<Symbol> symbol = currSymTable->getSymbol(idExp.name);
+    std::shared_ptr<LocalSymbol> localSym = std::dynamic_pointer_cast<LocalSymbol>(symbol);   
+    if(!localSym) {
+        cerr << "Error: (line " << idExp.lineno << ") "<< idExp.name << " is not a variable";
         exit(EXIT_FAILURE);
-    }
-    idExp.symbol = sym;
+    } 
+    idExp.symbol = localSym;
 }
 
 void SymbolHelper::dispatch(const NExpIndexer &indexerExp) {

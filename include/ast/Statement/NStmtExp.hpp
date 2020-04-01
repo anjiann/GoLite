@@ -1,6 +1,7 @@
 #ifndef NSTMTEXP_H
 #define NSTMTEXP_H
 
+#include <memory>
 #include "NStatement.hpp"
 #include "../../abstractDispatcher.hpp"
 
@@ -8,9 +9,9 @@
 
 class NStmtExp : public NStatement {
     public:
-        const NExpression exp;
+        std::shared_ptr<NExpression> exp;
 
-        NStmtExp(const NExpression &exp) : exp{exp} {}
+        NStmtExp(std::shared_ptr<NExpression> exp) : exp{exp} {}
 
         void accept(const AbstractDispatcher &dispatcher) const override {
             dispatcher.dispatch(*this);

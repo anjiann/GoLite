@@ -3,6 +3,7 @@ package main
 func main() {
 	type num int
 	type natural num
+	type foo natural
 
 	type floats [5]float64
 	type naturals [5]natural

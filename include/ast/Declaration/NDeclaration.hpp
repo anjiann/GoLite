@@ -9,6 +9,9 @@
 class NDeclaration : public NAbstractAstNode {
     public:
         NDeclaration() {}
+
+        NDeclaration(const NDeclaration &src) = default;
+        NDeclaration(NDeclaration &&src) = default;
         
         virtual void accept(const AbstractDispatcher &dispatcher) const {
             dispatcher.dispatch(*this);

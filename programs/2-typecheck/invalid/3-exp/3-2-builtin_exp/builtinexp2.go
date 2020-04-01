@@ -1,5 +1,5 @@
 package main
 
 func main() {
-	var ca int = 0
+	var cap int = 0
 }

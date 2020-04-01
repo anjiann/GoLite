@@ -11,6 +11,8 @@ class NStatement : public NAbstractAstNode {
     public:
         NStatement() {}
 
+        NStatement(const NStatement &src) = default;
+        
         virtual void accept(const AbstractDispatcher &dispatcher) const {
             dispatcher.dispatch(*this);
         }

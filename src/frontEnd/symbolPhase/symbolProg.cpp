@@ -6,7 +6,7 @@ using std::endl;
 
 void SymbolHelper::initPrimitives() {
     auto intSym = currSymTable->insertSymbol("int", std::shared_ptr<Symbol>(new TypeSymbol("int", NType::intType)));
-    auto floatSym = currSymTable->insertSymbol("float", std::shared_ptr<Symbol>(new TypeSymbol("float", NType::floatType)));
+    auto floatSym = currSymTable->insertSymbol("float64", std::shared_ptr<Symbol>(new TypeSymbol("float64", NType::floatType)));
     auto boolSym = currSymTable->insertSymbol("bool", std::shared_ptr<Symbol>(new TypeSymbol("bool", NType::boolType)));
     auto runeSym = currSymTable->insertSymbol("rune", std::shared_ptr<Symbol>(new TypeSymbol("rune", NType::runeType)));
     auto stringSym = currSymTable->insertSymbol("string", std::shared_ptr<Symbol>(new TypeSymbol("string", NType::stringType)));

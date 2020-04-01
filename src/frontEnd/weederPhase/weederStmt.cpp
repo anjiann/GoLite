@@ -25,12 +25,12 @@ void WeederDispatcher::dispatch(const NStmtBlock &blockStmt) const {
 void WeederDispatcher::dispatch(const NStmtBreakContinue &breakContinueStmt) const {}
 
 void WeederDispatcher::dispatch(const NStmtDec &decStmt) const {
-    decStmt.dec.accept(*this);
+    decStmt.dec->accept(*this);
 }
 
 void WeederDispatcher::dispatch(const NStmtEmpty &emptyStmt) const {}
 void WeederDispatcher::dispatch(const NStmtExp &expStmt) const {
-    expStmt.exp.accept(*this);
+    expStmt.exp->accept(*this);
 }
 void WeederDispatcher::dispatch(const NStmtFor &forStmt) const {}
 void WeederDispatcher::dispatch(const NStmtIfElse &ifElseStmt) const {}

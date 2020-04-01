@@ -49,6 +49,10 @@ int main(int argc, char* argv[]) {
     else if(!strcmp(argv[1], "typecheck")) {
         yyparse();
 
+        // AbstractDispatcher *symbolDispatcher = new SymbolDispatcher();
+        // program->accept(*symbolDispatcher);
+        // delete symbolDispatcher;
+
         AbstractDispatcher *typecheckDispatcher = new TypecheckDispatcher();
         program->accept(*typecheckDispatcher);
         delete typecheckDispatcher;

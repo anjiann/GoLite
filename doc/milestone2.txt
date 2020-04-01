@@ -1,30 +1,49 @@
+invalid programs/scoping rules:
+1) cactus stack like usual. when scope 2 is opened scope2.parent = scope1, and currentScope = scope2. When getting out of a scope, scope = currentScope.parent
+        func main() { //scope 1 opened
+            { //scope 2 opened
+                var x string = "x declared in this block"
+            } //scope 2 closed
+            x = "outside block, x not declared in this scope" //Error: x is not declared
+        } //scope 1 closed
+2) declarations of NDecType, NDecVar, NDecFunc in the same scope cannot have the same identifier
+        //scope 1
+        func foo() {
+            //scope 2
+        }
+        var foo int // Error: foo redeclared in this block
+3) declarations in new scope shadows parent scope
+        //scope 1
+        var num int
+        func main() { 
+            //scope 2
+            var num string = "hello world"
+            var x num = (num) 1 // Error: num is not a type
+        }
 
-since our group split up, I redid milestone 1. See milestone1.txt
 
 milestone 2 notes:
     - for the symbol table, I followed the scoping rule as in the reference compiler by using the valid programs I wrote.
     - design decisions
-        - for the internal symbol table, I decided to use a map<string, Symbol> where symbol stores the declaration node and symbol kind. (see symbolTable.png for mappings).
-        - 
+        - symbol table internal uses a map<string, Symbol> (see symbolTable.png for the initial design).
+        - Symbol is an abstract base class. LocalSymbol, FuncSymbol, TypeSymbol, ConstantSymbol extend from Symbol
+        - split into symbol phase and a typechecker phase. Symbol phase solely creates the symbols that points to the definition nodes and assigns them to appropriate ast nodes.
+        - recursive type: recursion stops once it encounters NTypeArray or if the current NType is a base type
 
     - issues/challenges/notes
         - each concrete element accepts a concrete visitor as a constant reference so the visitor is read-only. This implies that the dispatch methods in each concrete visitor has to be const as well. This was resolved by using a helper for each concrete visitor
         - to reduce print code clutter, SymbolKind overloads << operator and Tabs overloads <<, ++t, --t, t++, t--
-        - recursive type
-            -   //in func main
-                type x int
-                type num x
-                //symbol table
-                x [type] = int -> int
-                num [type] = num -> int -> int
-            - encountered issue where base type is printed twice since the mapping in symbol table is "int"->NTypeIdentifier("int")
-                - solution: all primitive type declarations do not point to the declaration node in the symbol table. Therefore "int"->nullptr in symbol table
         - added <infer> to be initialized to the type of NDecVar in the parser to separate typecheck phase from symbol phase
         - since the visitor pattern is used, I kept and manipulated the symbol table scope in the concrete visitor instead of passing symbol table scopes as arguments.
+        - ran into weird segfaults when running typecheck test solutions. Ran valgrind and found that there were a lot of memory leak so I refactored the ast to use smart pointers.
+        - *** no polymorphism with values so had to refactor ast using references/pointers.
 
     - typecheck
         - to check the the type of rhs is assignable to lhs, I added a member type : NType to NExpression. Variables on the lhs already have a type : NType, so we can just overload comparison operators, and write an assignType function like on the slides.
         - 
+    
+    - grammar change:
+        - grammar did not take into account multidimensional array indexing, change is trivial due to use of vectors (see commit 99d1109b6aa2f26f157dbc3be3a7c62c893f2aae)
 
     - invalid programs:
         - 

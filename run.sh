@@ -29,3 +29,4 @@ fi
 # You MUST replace the following command with the command for invoking your compiler
 
 ./build/bin/golite "$1" < "$2"
+# ./golitec "$1" < "$2" #reference compiler

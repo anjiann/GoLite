@@ -28,10 +28,8 @@ void TypecheckDispatcher::dispatch(const NDecFunc &funcDec) const {
 void TypecheckDispatcher::dispatch(const NDecType &typeDec) const {}
 
 void TypecheckDispatcher::dispatch(const NDecVar &varDec) const {
-    if(varDec.rhs.size() == 0) {
-        for(const auto &expId : varDec.lhs) {
-            expId->type = varDec.type;
-        }
+    for(const auto &expId : varDec.lhs) {
+        expId->type = *varDec.type;
     }
 
     for(const auto &exp : varDec.rhs) {
@@ -44,7 +42,7 @@ void TypecheckDispatcher::dispatch(const NDecVar &varDec) const {
         auto &expId = *itLhs++;
         auto &exp = *itRhs++;
 
-        if(varDec.type == NType::inferType) {
+        if(*varDec.type == NType::inferType) {
             expId->type = exp->type;
         }
         else {

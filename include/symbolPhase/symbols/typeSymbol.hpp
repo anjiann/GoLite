@@ -14,6 +14,7 @@ class TypeSymbol : public Symbol {
         const NType &type;
 
         TypeSymbol(string name, const NType &type) : name{name}, type{type} {}
+        TypeSymbol(const TypeSymbol &src) : name{src.name}, type{src.type} {}
 
         void print(std::ostream &os) const {
             std::cout << name << " [type]";

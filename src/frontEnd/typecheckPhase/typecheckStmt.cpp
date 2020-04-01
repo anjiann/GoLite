@@ -49,13 +49,13 @@ void TypecheckDispatcher::dispatch(const NStmtBlock &blockStmt) const {
 void TypecheckDispatcher::dispatch(const NStmtBreakContinue &breakContinueStmt) const {}
 
 void TypecheckDispatcher::dispatch(const NStmtDec &decStmt) const {
-    decStmt.dec.accept(*this);
+    decStmt.dec->accept(*this);
 }
 
 void TypecheckDispatcher::dispatch(const NStmtEmpty &emptyStmt) const {}
 
 void TypecheckDispatcher::dispatch(const NStmtExp &expStmt) const {
-    expStmt.exp.accept(*this);
+    expStmt.exp->accept(*this);
 }
 
 void TypecheckDispatcher::dispatch(const NStmtFor &forStmt) const {

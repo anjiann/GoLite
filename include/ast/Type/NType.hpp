@@ -12,7 +12,6 @@ using std::string;
 
 class NType : public NAbstractAstNode {
     public:
-        string id;
         static const NType intType;
         static const NType floatType;
         static const NType runeType;
@@ -20,8 +19,13 @@ class NType : public NAbstractAstNode {
         static const NType stringType;
         static const NType inferType;
 
+        mutable string id;
+
         NType() : id{inferType.id} {}
         NType(const string &id) : id{id} {} 
+
+        NType(const NType &src) = default;
+        NType(NType &&src) = default;
 
         inline NType &operator=(const NType &rhs) {
             this->id = rhs.id;
@@ -54,17 +58,14 @@ inline bool operator==(NType &lhs, const NType &rhs) {
 }
 
 inline bool operator!=(const NType &lhs, const NType &rhs) {
-    std::cout << "NType.hpp, lhs: " << lhs.id << ", rhs: " << rhs.id << std::endl;
     return lhs.id != rhs.id;
 }
 
 inline bool operator!=(const NType &lhs, NType &rhs) {
-    std::cout << "NType.hpp, lhs: " << lhs.id << ", rhs: " << rhs.id << std::endl;
     return lhs.id != rhs.id;
 }
 
 inline bool operator!=(NType &lhs, const NType &rhs) {
-    std::cout << "NType.hpp, lhs: " << lhs.id << ", rhs: " << rhs.id << std::endl;
     return lhs.id != rhs.id;
 }
 

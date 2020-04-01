@@ -1,8 +1,8 @@
 #ifndef SYMBOLPHASE_HPP
 #define SYMBOLPHASE_HPP
 
+#include <memory>
 #include "symbolHelper.hpp"
-#include "memory"
 
 class SymbolDispatcher : public AbstractDispatcher {
     private:

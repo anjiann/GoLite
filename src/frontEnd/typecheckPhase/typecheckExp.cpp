@@ -223,6 +223,10 @@ void TypecheckDispatcher::dispatch(const NExpFunc &funcExp) const {
 }
 
 void TypecheckDispatcher::dispatch(const NExpIdentifier &idExp) const {
+    auto localSym = idExp.symbol;
+    localSym->expId.accept(*this);
+
+    idExp.type = localSym->expId.type;
 }
 
 void TypecheckDispatcher::dispatch(const NExpIndexer &indexerExp) const {

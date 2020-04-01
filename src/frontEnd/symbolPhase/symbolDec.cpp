@@ -20,17 +20,15 @@ void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     cout << tabs << *funcSym << " = (";
     string separator = "";
     for(const auto &param : funcDec.params) {
-        cout << separator;
-
-        param->type.accept(*symbolDispatcher);
+        cout << separator << *param.second;
         separator = ", ";
     }
     cout << ") -> ";
-    if(funcDec.type.id == NType::inferType) {
+    if(*funcDec.type == NType::inferType) {
         cout << "void";
     }
     else {
-        funcDec.type.accept(*symbolDispatcher);
+        cout << *funcDec.type;
     }
     cout << endl;
 
@@ -38,25 +36,25 @@ void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     cout << tabs++ << "{" << endl;
     scopeSymbolTable();
     for(const auto &param : funcDec.params) {
-        param->accept(*symbolDispatcher);
+        const NDecVar &paramDec = NDecVar(param.first, param.second);
+        paramDec.accept(*symbolDispatcher);
     }
     for(const auto &stmt : funcDec.stmts) {
         stmt->accept(*symbolDispatcher);
     }
-    unscopeSymbolTable();
     cout << --tabs << "}" << endl;
 }
 
 // type t1 t2
 void SymbolHelper::dispatch(const NDecType &typeDec) {    
-    std::shared_ptr<Symbol> typeSym { new TypeSymbol(typeDec.id, typeDec.type) };
+    std::shared_ptr<Symbol> typeSym { new TypeSymbol(typeDec.id, *(typeDec.type)) };
     currSymTable->insertSymbol(typeDec.id, typeSym);
 
     //print to console 
     cout << tabs << *typeSym << " = ";
     cout << typeDec.id << " -> ";
 
-    typeDec.type.accept(*symbolDispatcher);
+    typeDec.type->accept(*symbolDispatcher);
     cout << endl;
 }
 
@@ -64,10 +62,11 @@ void SymbolHelper::dispatch(const NDecVar &varDec) {
     for(const auto &expId : varDec.lhs) {
         std::shared_ptr<Symbol> localSym { new LocalSymbol(expId->name, *expId) };
         currSymTable->insertSymbol(expId->name, localSym);
-        expId->symbol = localSym;
+        expId->symbol = std::dynamic_pointer_cast<LocalSymbol>(localSym);
 
         //print to console
-        cout << tabs << *localSym << " = " << expId->type;
+        cout << tabs << *localSym << " = ";
+        varDec.type->accept(*symbolDispatcher);
         expId->accept(*symbolDispatcher);
         cout << endl;
     }

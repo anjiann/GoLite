@@ -1,7 +1,9 @@
 #ifndef NDECFUNC_HPP
 #define NDECFUNC_HPP
 
+#include <vector>
 #include <string>
+#include <memory>
 #include "../../abstractDispatcher.hpp"
 
 #include "../Statement/NStatement.hpp"
@@ -11,15 +13,16 @@
 
 using std::string;
 
+typedef std::vector<std::pair<string, std::shared_ptr<NType>>> ParamList;
 class NDecFunc : public NDeclaration {
     public:
-        string id;
-        const NDecVarList params;
-        const NType type;
+        const string id;
+        const ParamList params;
+        std::shared_ptr<NType> type;
         const NStatementList stmts;
 
-        NDecFunc(string id, const NDecVarList &params, const NType &type, const NStatementList &stmts) 
-            : id{id}, params{params}, type{type}, stmts{stmts} {}
+        NDecFunc(const string &id, const ParamList &params, std::shared_ptr<NType> type, const NStatementList &stmts) 
+            : id{id}, params{std::move(params)}, type{type}, stmts{std::move(stmts)} {}
 
         NDecFunc(NDecFunc &&src) = default;
 

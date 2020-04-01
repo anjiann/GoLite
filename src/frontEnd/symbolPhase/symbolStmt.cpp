@@ -26,13 +26,13 @@ void SymbolHelper::dispatch(const NStmtBlock &blockStmt) {
 
 void SymbolHelper::dispatch(const NStmtBreakContinue &breakContinueStmt) {}
 void SymbolHelper::dispatch(const NStmtDec &decStmt) { 
-    decStmt.dec.accept(*symbolDispatcher); 
+    decStmt.dec->accept(*symbolDispatcher); 
 }
 
 void SymbolHelper::dispatch(const NStmtEmpty &emptyStmt) {}
 
 void SymbolHelper::dispatch(const NStmtExp &expStmt) {
-    expStmt.exp.accept(*symbolDispatcher);
+    expStmt.exp->accept(*symbolDispatcher);
 }
 
 void SymbolHelper::dispatch(const NStmtFor &forStmt) {
