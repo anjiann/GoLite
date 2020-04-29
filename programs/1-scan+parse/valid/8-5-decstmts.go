@@ -8,7 +8,7 @@ func dec_stmts() {
 
 	// multiple variable declarations
 	var a4, a5 string
-	var a6, a7 string = "a", "b"
+	var a6, a7 string = "a", `b`
 	var a8, a9 = 'a', 0
 
 	// type alias
