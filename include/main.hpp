@@ -2,6 +2,7 @@
 #define MAIN_H
 
 #include "abstractDispatcher.hpp"
+#include "weederPhase/weederDispatcher.hpp"
 #include "prettyPrintPhase/prettyDispatcher.hpp"
 #include "symbolPhase/symbolDispatcher.hpp"
 #include "typecheckPhase/typecheckDispatcher.hpp"

@@ -9,7 +9,9 @@ class SymbolDispatcher : public AbstractDispatcher {
         std::unique_ptr<SymbolHelper> const symbolHelper { new SymbolHelper(this) };
 
     public:
-        SymbolDispatcher() {}
+        SymbolDispatcher(bool symbol_mode) {
+            symbolHelper->symbol_mode = symbol_mode;
+        }
 
         virtual void dispatch(const NProgram &program) const { symbolHelper->dispatch(program); }
 

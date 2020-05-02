@@ -15,8 +15,8 @@ void WeederDispatcher::dispatch(const NDecFunc &funcDec) const {
 void WeederDispatcher::dispatch(const NDecType &typeDec) const {}
 void WeederDispatcher::dispatch(const NDecVar &varDec) const {
     if(varDec.rhs.size() != 0 && varDec.lhs.size() != varDec.rhs.size()) {
-        cerr << "assignment mismatch: " << varDec.lhs.size() << " variables";
-        cerr << " but " << varDec.rhs.size() << " values" << endl;
+        cerr << "Error: (line " << varDec.lineno << ") assignment";
+        cerr << "lhs(" << varDec.lhs.size() << ") != rhs(" << varDec.rhs.size() << ")" << endl;
         exit(EXIT_FAILURE);
     }
 } 

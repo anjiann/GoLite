@@ -13,26 +13,28 @@ void SymbolHelper::initPrimitives() {
     auto trueSym = currSymTable->insertSymbol("true", std::shared_ptr<Symbol>(new ConstantSymbol("true", NType::boolType)));
     auto falseSym = currSymTable->insertSymbol("false", std::shared_ptr<Symbol>(new ConstantSymbol("false", NType::boolType)));
 
-    cout << tabs << *intSym << " = " << NType::intType << endl;
-    cout << tabs << *floatSym << " = " << NType::floatType << endl;;
-    cout << tabs << *boolSym << " = " << NType::boolType << endl;
-    cout << tabs << *runeSym << " = " << NType::runeType << endl;
-    cout << tabs << *stringSym << " = " << NType::stringType << endl;
-    cout << tabs << *trueSym << " = " << NType::boolType << endl;
-    cout << tabs << *falseSym << " = " << NType::boolType << endl;
+    if(symbol_mode) {
+        cout << tabs << *intSym << " = " << NType::intType << endl;
+        cout << tabs << *floatSym << " = " << NType::floatType << endl;;
+        cout << tabs << *boolSym << " = " << NType::boolType << endl;
+        cout << tabs << *runeSym << " = " << NType::runeType << endl;
+        cout << tabs << *stringSym << " = " << NType::stringType << endl;
+        cout << tabs << *trueSym << " = " << NType::boolType << endl;
+        cout << tabs << *falseSym << " = " << NType::boolType << endl;
+    }
 }
 
 void SymbolHelper::dispatch(const NProgram &program) {
-    cout << tabs++ << "{" << endl; 
+    if(symbol_mode) { cout << tabs++ << "{" << endl; }
     initPrimitives();
     scopeSymbolTable();
 
-    cout << tabs++ << "{" << endl;
+    if(symbol_mode) { cout << tabs++ << "{" << endl; }
     for(const auto &dec : program.topdecs) {
         dec->accept(*symbolDispatcher);
     }
-    cout << --tabs << "}" << endl;
+    if(symbol_mode) { cout << --tabs << "}" << endl; }
 
     unscopeSymbolTable();
-    cout << --tabs << "}" << endl;
+    if(symbol_mode) { cout << --tabs << "}" << endl; }
 }

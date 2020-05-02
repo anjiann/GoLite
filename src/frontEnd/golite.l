@@ -223,6 +223,12 @@ RUNELIT \\[abfnrtv\\\']
     RETURN(tSTRINGLITERAL);
 }
 
+\`({VALIDSTRINGCHARS}|{ESCAPE})*\` {
+	yylval.identifier = new string(yytext);
+    if (g_tokens) cout << "tSTRINGLITERAL(" << yytext << ")" << endl;
+    RETURN(tSTRINGLITERAL);
+}
+
 ([a-zA-Z]|"_")([a-zA-Z]|[0-9]|"_")* {//IDENTIFIERS
     yylval.identifier = new string(yytext);
     if (g_tokens) cout << "tIDENTIFIER(" << yytext << ")" << endl;

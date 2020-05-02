@@ -103,7 +103,9 @@ void TypecheckDispatcher::dispatch(const NStmtPrint &printStmt) const {
     }
 }
 
-void TypecheckDispatcher::dispatch(const NStmtReturn &returnStmt) const {}
+void TypecheckDispatcher::dispatch(const NStmtReturn &returnStmt) const {
+    
+}
 
 void TypecheckDispatcher::dispatch(const NStmtSwitch &switchStmt) const {
     const NExpression &switchExp = switchStmt.condition;

@@ -32,8 +32,9 @@ void SymbolHelper::dispatch(const NExpFunc &funcExp) {
 
 void SymbolHelper::dispatch(const NExpIdentifier &idExp) {
     std::shared_ptr<Symbol> symbol = currSymTable->getSymbol(idExp.name);
-    std::shared_ptr<LocalSymbol> localSym = std::dynamic_pointer_cast<LocalSymbol>(symbol);   
-    if(!localSym) {
+    std::shared_ptr<LocalSymbol> localSym = std::dynamic_pointer_cast<LocalSymbol>(symbol);
+    std::shared_ptr<ConstantSymbol> constantSym = std::dynamic_pointer_cast<ConstantSymbol>(symbol);    
+    if(!localSym || !constantSym) {
         cerr << "Error: (line " << idExp.lineno << ") "<< idExp.name << " is not a variable";
         exit(EXIT_FAILURE);
     } 

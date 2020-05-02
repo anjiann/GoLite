@@ -17,23 +17,28 @@ void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     currSymTable->insertSymbol(funcDec.id, funcSym);
 
     //func definition
-    cout << tabs << *funcSym << " = (";
-    string separator = "";
-    for(const auto &param : funcDec.params) {
-        cout << separator << *param.second;
-        separator = ", ";
+    if(symbol_mode) {
+        cout << tabs << *funcSym << " = (";
+        string separator = "";
+        for(const auto &param : funcDec.params) {
+            cout << separator << *param.second;
+            separator = ", ";
+        }
+        cout << ") -> ";
+        if(*funcDec.type == NType::inferType) {
+            cout << "void";
+        }
+        else {
+            cout << *funcDec.type;
+        }
+        cout << endl;
     }
-    cout << ") -> ";
-    if(*funcDec.type == NType::inferType) {
-        cout << "void";
-    }
-    else {
-        cout << *funcDec.type;
-    }
-    cout << endl;
 
     //func body
-    cout << tabs++ << "{" << endl;
+    if(symbol_mode) {
+        cout << tabs++ << "{" << endl;
+    }
+
     scopeSymbolTable();
     for(const auto &param : funcDec.params) {
         const NDecVar &paramDec = NDecVar(param.first, param.second);
@@ -42,7 +47,10 @@ void SymbolHelper::dispatch(const NDecFunc &funcDec) {
     for(const auto &stmt : funcDec.stmts) {
         stmt->accept(*symbolDispatcher);
     }
-    cout << --tabs << "}" << endl;
+
+    if(symbol_mode) {
+        cout << --tabs << "}" << endl;
+    }
 }
 
 // type t1 t2
@@ -51,11 +59,15 @@ void SymbolHelper::dispatch(const NDecType &typeDec) {
     currSymTable->insertSymbol(typeDec.id, typeSym);
 
     //print to console 
-    cout << tabs << *typeSym << " = ";
-    cout << typeDec.id << " -> ";
+    if(symbol_mode) {
+        cout << tabs << *typeSym << " = ";
+        cout << typeDec.id << " -> ";
+    }
 
     typeDec.type->accept(*symbolDispatcher);
-    cout << endl;
+    if(symbol_mode) { 
+        cout << endl; 
+    }
 }
 
 void SymbolHelper::dispatch(const NDecVar &varDec) {
@@ -65,9 +77,9 @@ void SymbolHelper::dispatch(const NDecVar &varDec) {
         expId->symbol = std::dynamic_pointer_cast<LocalSymbol>(localSym);
 
         //print to console
-        cout << tabs << *localSym << " = ";
+        if(symbol_mode) { cout << tabs << *localSym << " = "; }
         varDec.type->accept(*symbolDispatcher);
         expId->accept(*symbolDispatcher);
-        cout << endl;
+        if(symbol_mode) { cout << endl; }
     }
 }

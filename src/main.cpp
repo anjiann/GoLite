@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
 
     g_tokens = 0;
     if(!strcmp(argv[1], "scan")) {
-         while(yylex());
+        while(yylex());
         printf("OK\n");
         return 0;
     }
@@ -27,6 +27,11 @@ int main(int argc, char* argv[]) {
     }
     else if(!strcmp(argv[1], "parse")) {
         yyparse();
+
+        AbstractDispatcher *weederDispatcher = new WeederDispatcher();
+        program->accept(*weederDispatcher);
+        delete weederDispatcher;
+
         printf("OK\n");
         return 0;
     }
@@ -41,7 +46,7 @@ int main(int argc, char* argv[]) {
     else if(!strcmp(argv[1], "symbol")) {
         yyparse();
 
-        AbstractDispatcher *symbolDispatcher = new SymbolDispatcher();
+        AbstractDispatcher *symbolDispatcher = new SymbolDispatcher(true);
         program->accept(*symbolDispatcher);
         delete symbolDispatcher;
         return 0;
@@ -49,9 +54,9 @@ int main(int argc, char* argv[]) {
     else if(!strcmp(argv[1], "typecheck")) {
         yyparse();
 
-        // AbstractDispatcher *symbolDispatcher = new SymbolDispatcher();
-        // program->accept(*symbolDispatcher);
-        // delete symbolDispatcher;
+        AbstractDispatcher *symbolDispatcher = new SymbolDispatcher(false);
+        program->accept(*symbolDispatcher);
+        delete symbolDispatcher;
 
         AbstractDispatcher *typecheckDispatcher = new TypecheckDispatcher();
         program->accept(*typecheckDispatcher);

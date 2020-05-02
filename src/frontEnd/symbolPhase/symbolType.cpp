@@ -10,14 +10,14 @@ void SymbolHelper::dispatch(const NType &type) {
     type.accept(*symbolDispatcher);
 }
 void SymbolHelper::dispatch(const NTypeArray &arrayType) {
-    cout << "[" << arrayType.size << "]";
+    if(symbol_mode) { cout << "[" << arrayType.size << "]"; }
     arrayType.type->accept(*symbolDispatcher);
     // arrayType.id += arrayType.type->id;
 }
 
 void SymbolHelper::dispatch(const NTypeIdentifier &idType) {
     if(idType == NType::inferType) {
-        cout << NType::inferType;
+        if(symbol_mode) { cout << NType::inferType; }
         return;
     }
     
@@ -34,9 +34,9 @@ void SymbolHelper::dispatch(const NTypeIdentifier &idType) {
         exit(EXIT_FAILURE);
     } 
 
-    cout << idType.id;
+    if(symbol_mode) { cout << idType.id; }
     if(!(idType.isArrayId || isBaseType(idType))) {
-        cout << " -> ";
+        if(symbol_mode) { cout << " -> "; }
         typeSym->type.accept(*symbolDispatcher);
     }
 }

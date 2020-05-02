@@ -49,6 +49,8 @@ class SymbolHelper {
         }
 
      public:
+        bool symbol_mode;
+
         SymbolHelper(AbstractDispatcher *symbolDispatcher) : symbolDispatcher{symbolDispatcher} {}
         ~SymbolHelper() {
             delete symbolDispatcher;
